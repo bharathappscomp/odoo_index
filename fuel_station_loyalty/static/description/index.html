@@ -54,9 +54,9 @@
             .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 { flex: 0 0 100%; max-width: 100%; }
         }
         /* Force dark backgrounds for Odoo Apps Store (overrides injected styles) */
-        .fsl-dark-wrap { background-color: #1a2234 !important; }
-        .fsl-dark-card { background-color: #242d3f !important; }
-        .fsl-dark-specs { background-color: #111827 !important; }
+        .fsl-dark-wrap, div.fsl-dark-wrap { background-color: #1a2234 !important; background: #1a2234 !important; background-image: none !important; }
+        .fsl-dark-card, div.fsl-dark-card { background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; }
+        .fsl-dark-specs, div.fsl-dark-specs { background-color: #111827 !important; background: #111827 !important; background-image: none !important; }
         /* FAQ Accordion */
         .fsl-accordion-item { border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
         .fsl-accordion-item.fsl-open { border-color: #875A7B; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.12); }
@@ -118,7 +118,7 @@
 <section class="oe_container">
 
     <!-- HERO SECTION -->
-    <section class="oe_container" style="background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #eff6ff 100%); font-family: sans-serif; padding: 32px 4% 24px; margin: 0;">
+    <section class="oe_container" style="background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #eff6ff 100%) !important; background-color: #f5f3ff !important; font-family: sans-serif; padding: 32px 4% 24px; margin: 0;">
         <div class="row" style="align-items: center; margin: 0 -16px;">
             <div class="col-md-6" style="padding: 0 16px 24px;">
                 <div style="display: inline-block; background: #fff; color: #875A7B; padding: 6px 14px; border-radius: 50px; font-size: 11px; font-weight: 700; margin-bottom: 20px; border: 1px solid #e9d5ff;">
@@ -135,7 +135,7 @@
                     <span style="display: inline-block; background: #fff; color: #3b82f6; border: 1px solid #3b82f6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;">✓ Enterprise</span>
                     <span style="display: inline-block; background: #fff; color: #8b5cf6; border: 1px solid #8b5cf6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;">✓ Community</span>
                 </div>
-                <div style="background: linear-gradient(135deg, #875A7B 0%, #6d4a6a 100%); border-radius: 14px; padding: 20px 24px; max-width: 400px;">
+                <div style="background: linear-gradient(135deg, #875A7B 0%, #6d4a6a 100%) !important; background-color: #875A7B !important; border-radius: 14px; padding: 20px 24px; max-width: 400px;">
                     <div style="color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 12px;">Book Your Personalized Demo</div>
                     <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
                         <a href="mailto:support@appscomp.com" style="display: inline-block; background: #fff; color: #875A7B; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">Get in Touch →</a>
@@ -151,19 +151,19 @@
         <div style="padding: 24px 4% 32px; max-width: 1000px; margin: 0 auto;">
             <div class="row" style="justify-content: center; margin: 0 -12px;">
                 <div class="col-md-4 mb-3" style="padding: 0 12px;">
-                    <div style="background: #fff; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #875A7B; height: 100%;">
+                    <div style="background: #fff !important; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #875A7B !important; height: 100%;">
                         <h3 style="color: #875A7B; font-size: 28px; font-weight: 800; margin: 0;">100%</h3>
                         <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-top: 8px; letter-spacing: 0.5px;">Native Odoo</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3" style="padding: 0 12px;">
-                    <div style="background: #fff; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #3b82f6; height: 100%;">
+                    <div style="background: #fff !important; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #3b82f6 !important; height: 100%;">
                         <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0;">500+</h3>
                         <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-top: 8px; letter-spacing: 0.5px;">Global Installs</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3" style="padding: 0 12px;">
-                    <div style="background: #fff; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #10b981; height: 100%;">
+                    <div style="background: #fff !important; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #10b981 !important; height: 100%;">
                         <h3 style="color: #875A7B; font-size: 28px; font-weight: 800; margin: 0;">24/7</h3>
                         <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-top: 8px; letter-spacing: 0.5px;">Expert Support</p>
                     </div>
@@ -173,12 +173,12 @@
     </section>
 
     <!-- MAIN HERO IMAGE -->
-    <div class="oe_container" style="text-align: center; padding: 24px 20px; background: #f8fafc;">
+    <div class="oe_container" style="text-align: center; padding: 24px 20px; background: #f8fafc !important; background-color: #f8fafc !important;">
         <img src="hero_gas_station.jpg" alt="Fuel Station Loyalty" style="width: 90%; max-width: 1000px; border-radius: 12px; box-shadow: 0 16px 48px rgba(0,0,0,0.12);"/>
     </div>
 
     <!-- WHAT SETS FUEL STATION LOYALTY APART -->
-    <section class="oe_container" style="background: #f8fafc; padding: 32px 4%;">
+    <section class="oe_container" style="background: #f8fafc !important; background-color: #f8fafc !important; padding: 32px 4%;">
         <div class="text-center mb-5" style="margin-bottom: 24px;">
             <h2 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0 0 12px;">What Sets Fuel Station Loyalty Apart?</h2>
             <p style="color: #64748b; font-size: 16px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">The only loyalty module built specifically for fuel retail. Native Odoo integration, forecourt-ready workflows, and zero manual entry.</p>
@@ -186,28 +186,28 @@
         </div>
         <div class="row" style="justify-content: center; margin: 0 -12px;">
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #875A7B; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(135, 90, 123, 0.12);">
+                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #875A7B !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(135, 90, 123, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f5f3ff; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">✓</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Native Odoo</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">100% integrated with sale_loyalty. No third-party dependencies.</p>
                 </div>
             </div>
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #10b981; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);">
+                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #10b981 !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f0fdf4; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">⛽</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Forecourt-Ready</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">Works with Advance Fuel Station. Loyalty at the pump.</p>
                 </div>
             </div>
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #3b82f6; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);">
+                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #3b82f6 !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f0f9ff; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">⚡</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Zero Manual Entry</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">Automatic point calculation and redemption. Set it and forget it.</p>
                 </div>
             </div>
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #8b5cf6; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.12);">
+                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #8b5cf6 !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f5f3ff; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">🛡️</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Enterprise Grade</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">OCA standards. PEP8 compliant. Battle-tested security.</p>
@@ -217,7 +217,7 @@
     </section>
 
     <!-- FEATURE TABS SECTION (Left sidebar + content) -->
-    <div class="oe_container" style="padding: 28px 4% 24px; background: #fcfaff;">
+    <div class="oe_container" style="padding: 28px 4% 24px; background: #fcfaff !important; background-color: #fcfaff !important;">
         <div class="row" style="margin: 0 -12px;">
             <div class="col-md-3" style="padding: 0 12px;">
                 <div style="border: 1px solid #e2e8f0; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); background: #fafafa;">
@@ -301,7 +301,7 @@
     </div>
 
     <!-- INTERFACE GALLERY -->
-    <section class="oe_container" style="background: #eff6ff; padding: 28px 4%;">
+    <section class="oe_container" style="background: #eff6ff !important; background-color: #eff6ff !important; padding: 28px 4%;">
         <div class="text-center mb-5" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0 0 12px;">Interface Gallery</h2>
             <p style="color: #64748b; font-size: 16px; margin: 0;">Explore the clean and intuitive user interface of our module</p>
@@ -402,7 +402,7 @@
     </section>
 
     <!-- BUILT FOR FUEL STATIONS -->
-    <section class="oe_container" style="background: #f0fdf4; padding: 32px 4%;">
+    <section class="oe_container" style="background: #f0fdf4 !important; background-color: #f0fdf4 !important; padding: 32px 4%;">
         <div class="text-center mb-5" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0 0 12px;">Built for Fuel Stations</h2>
             <p style="color: #64748b; font-size: 15px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">Designed for forecourt retail, fleet operators, and fuel retail chains</p>
@@ -435,33 +435,33 @@
 
     <!-- WHY CHOOSE -->
     <section class="oe_container" style="padding: 0; margin: 24px 4%;">
-        <div class="fsl-dark-wrap" style="background-color: #1a2234 !important; background: #1a2234 !important; padding: 32px 20px; border-radius: 16px;">
+        <div class="fsl-dark-wrap" style="background-color: #1a2234 !important; background: #1a2234 !important; background-image: none !important; padding: 32px 20px; border-radius: 16px;">
         <div class="text-center mb-5" style="margin-bottom: 20px;">
             <div style="display: inline-block; background: #875A7B; color: #fff; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">The Gold Standard</div>
-            <h2 style="color: #fff; font-size: 26px; font-weight: 800; margin: 0 0 12px;">Why Choose This Module?</h2>
+            <h2 style="color: #fff !important; font-size: 26px; font-weight: 800; margin: 0 0 12px;">Why Choose This Module?</h2>
             <div style="width: 48px; height: 3px; background: #875A7B; margin: 0 auto;"></div>
         </div>
 
         <div class="row" style="margin: 0 -12px;">
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155; height: 100%; text-align: center;">
+                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155 !important; height: 100%; text-align: center;">
                     <div style="font-size: 36px; margin-bottom: 16px;">⚡</div>
-                    <h4 style="color: #fff; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Lightning Fast</h4>
-                    <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0;">Optimized backend logic for instant reward lookups and point calculations.</p>
+                    <h4 style="color: #fff !important; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Lightning Fast</h4>
+                    <p style="color: #94a3b8 !important; font-size: 13px; line-height: 1.5; margin: 0;">Optimized backend logic for instant reward lookups and point calculations.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155; height: 100%; text-align: center;">
+                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155 !important; height: 100%; text-align: center;">
                     <div style="font-size: 36px; margin-bottom: 16px;">🛡️</div>
-                    <h4 style="color: #fff; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Enterprise Grade</h4>
-                    <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0;">Battle-tested security and data integrity built into the core.</p>
+                    <h4 style="color: #fff !important; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Enterprise Grade</h4>
+                    <p style="color: #94a3b8 !important; font-size: 13px; line-height: 1.5; margin: 0;">Battle-tested security and data integrity built into the core.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155; height: 100%; text-align: center;">
+                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155 !important; height: 100%; text-align: center;">
                     <div style="font-size: 36px; margin-bottom: 16px;">🔧</div>
-                    <h4 style="color: #fff; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Fully Customizable</h4>
-                    <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0;">Adapt loyalty rules and rewards to match your exact fuel retail processes.</p>
+                    <h4 style="color: #fff !important; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Fully Customizable</h4>
+                    <p style="color: #94a3b8 !important; font-size: 13px; line-height: 1.5; margin: 0;">Adapt loyalty rules and rewards to match your exact fuel retail processes.</p>
                 </div>
             </div>
         </div>
@@ -469,25 +469,25 @@
     </section>
 
     <!-- TECHNICAL SPECS & QA -->
-    <section class="oe_container" style="background: #f8fafc; padding: 28px 4%;">
+    <section class="oe_container" style="background: #f8fafc !important; background-color: #f8fafc !important; padding: 28px 4%;">
         <div class="row" style="margin: 0 -12px;">
             <div class="col-md-6 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-specs" style="background-color: #111827 !important; background: #111827 !important; border-radius: 14px; padding: 24px; height: 100%;">
-                    <h3 style="color: #fff; font-size: 20px; font-weight: 700; margin: 0 0 20px;"><span style="color: #875A7B;">&gt;</span> Technical Specs</h3>
+                <div class="fsl-dark-specs" style="background-color: #111827 !important; background: #111827 !important; background-image: none !important; border-radius: 14px; padding: 24px; height: 100%;">
+                    <h3 style="color: #fff !important; font-size: 20px; font-weight: 700; margin: 0 0 20px;"><span style="color: #875A7B !important;">&gt;</span> Technical Specs</h3>
                     <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
-                        <span style="color: #94a3b8; font-size: 14px;">Compatibility</span>
-                        <span style="color: #fff; font-weight: 600; font-size: 14px;">v16.0 - v19.0+</span>
+                        <span style="color: #94a3b8 !important; font-size: 14px;">Compatibility</span>
+                        <span style="color: #fff !important; font-weight: 600; font-size: 14px;">v16.0 - v19.0+</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
-                        <span style="color: #94a3b8; font-size: 14px;">Odoo.sh Support</span>
+                        <span style="color: #94a3b8 !important; font-size: 14px;">Odoo.sh Support</span>
                         <span style="color: #10b981; font-weight: 600; font-size: 14px;">Full Support ✓</span>
                     </div>
                     <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
-                        <span style="color: #94a3b8; font-size: 14px;">License</span>
-                        <span style="color: #fff; font-weight: 600; font-size: 14px;">LGPL-3</span>
+                        <span style="color: #94a3b8 !important; font-size: 14px;">License</span>
+                        <span style="color: #fff !important; font-weight: 600; font-size: 14px;">LGPL-3</span>
                     </div>
                     <div style="display: flex; justify-content: space-between;">
-                        <span style="color: #94a3b8; font-size: 14px;">Updates</span>
+                        <span style="color: #94a3b8 !important; font-size: 14px;">Updates</span>
                         <span style="color: #f59e0b; font-weight: 600; font-size: 14px;">Lifetime Free</span>
                     </div>
                 </div>
@@ -516,7 +516,7 @@
     </section>
 
     <!-- QUICK INSTALLATION -->
-    <section class="oe_container" style="background: linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%); border-radius: 16px; padding: 28px 20px; margin: 24px 4%;">
+    <section class="oe_container" style="background: linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%) !important; background-color: #eef2ff !important; border-radius: 16px; padding: 28px 20px; margin: 24px 4%;">
         <div class="text-center mb-5" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-size: 26px; font-weight: 800; margin: 0 0 12px;">Quick Installation</h2>
             <p style="color: #64748b; font-size: 15px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">Get started in 3 simple steps. No technical expertise required.</p>
@@ -525,21 +525,21 @@
 
         <div class="row text-center" style="margin: 0 -12px;">
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
+                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B !important; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
                     <div style="background: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">1</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Download & Install</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Download from Odoo Apps Store and install via the Apps menu. Requires sale_loyalty.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
+                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B !important; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
                     <div style="background: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">2</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Configure Loyalty</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Set up loyalty programs in Odoo. For full fuel station features, install Advance Fuel Station.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
+                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B !important; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
                     <div style="background: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">3</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Start Using</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Process loyalty sales and redeem rewards. Your fuel station loyalty is ready!</p>
@@ -549,37 +549,37 @@
     </section>
 
     <!-- FAQ -->
-    <section class="oe_container" style="background: #fcfaff; padding: 28px 4%;">
+    <section class="oe_container" style="background: #fcfaff !important; background-color: #fcfaff !important; padding: 28px 4%;">
         <div class="text-center mb-5" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-weight: 800; font-size: 26px;">Frequently Asked Questions</h2>
             <div style="width: 40px; height: 3px; background: #875A7B; margin: 12px auto;"></div>
         </div>
 
         <div style="max-width: 720px; margin: 0 auto;" class="fsl-faq-accordion">
-            <div class="fsl-accordion-item fsl-open">
-                <div class="fsl-accordion-header">Is this compatible with custom modules?<span class="fsl-accordion-icon">▼</span></div>
-                <div class="fsl-accordion-body">
-                    <div class="fsl-accordion-body-inner"><p>Yes! We follow Odoo best practices and OCA standards. The module is designed to work seamlessly with other installed modules without conflicts. Our code is clean, documented, and tested across multiple environments.</p></div>
+            <div class="fsl-accordion-item fsl-open" style="border: 2px solid #875A7B !important; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.12);">
+                <div class="fsl-accordion-header" style="padding: 18px 24px; cursor: pointer; display: flex !important; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b !important;">Is this compatible with custom modules?<span class="fsl-accordion-icon" style="font-size: 18px; color: #875A7B;">▼</span></div>
+                <div class="fsl-accordion-body" style="max-height: 400px; overflow: hidden;">
+                    <div class="fsl-accordion-body-inner" style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">Yes! We follow Odoo best practices and OCA standards. The module is designed to work seamlessly with other installed modules without conflicts. Our code is clean, documented, and tested across multiple environments.</p></div>
                 </div>
             </div>
-            <div class="fsl-accordion-item">
-                <div class="fsl-accordion-header">Do I need the Advance Fuel Station module?<span class="fsl-accordion-icon">▼</span></div>
-                <div class="fsl-accordion-body">
-                    <div class="fsl-accordion-body-inner"><p>This module works standalone with Odoo's standard loyalty. For full fuel station features (User Screen, loyalty dialog, credit sale loyalty), install the Advance Fuel Station Management System, which depends on this module.</p></div>
+            <div class="fsl-accordion-item" style="border: 2px solid #e2e8f0 !important; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff !important; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                <div class="fsl-accordion-header" style="padding: 18px 24px; cursor: pointer; display: flex !important; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b !important;">Do I need the Advance Fuel Station module?<span class="fsl-accordion-icon" style="font-size: 18px; color: #875A7B;">▼</span></div>
+                <div class="fsl-accordion-body" style="max-height: 0; overflow: hidden;">
+                    <div class="fsl-accordion-body-inner" style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">This module works standalone with Odoo's standard loyalty. For full fuel station features (User Screen, loyalty dialog, credit sale loyalty), install the Advance Fuel Station Management System, which depends on this module.</p></div>
                 </div>
             </div>
-            <div class="fsl-accordion-item">
-                <div class="fsl-accordion-header">What about future Odoo versions?<span class="fsl-accordion-icon">▼</span></div>
-                <div class="fsl-accordion-body">
-                    <div class="fsl-accordion-body-inner"><p>We provide free migration updates within 30 days of any new Odoo release. When Odoo v20 launches, you'll get the updated module at no extra cost.</p></div>
+            <div class="fsl-accordion-item" style="border: 2px solid #e2e8f0 !important; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff !important; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                <div class="fsl-accordion-header" style="padding: 18px 24px; cursor: pointer; display: flex !important; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b !important;">What about future Odoo versions?<span class="fsl-accordion-icon" style="font-size: 18px; color: #875A7B;">▼</span></div>
+                <div class="fsl-accordion-body" style="max-height: 0; overflow: hidden;">
+                    <div class="fsl-accordion-body-inner" style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">We provide free migration updates within 30 days of any new Odoo release. When Odoo v20 launches, you'll get the updated module at no extra cost.</p></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="oe_container" style="background: linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%); padding: 32px 4%;">
-        <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 40px 32px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,0.08); max-width: 640px; margin: 0 auto;">
+    <section class="oe_container" style="background: linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%) !important; background-color: #eef2ff !important; padding: 32px 4%;">
+        <div style="background: #fff !important; border: 2px solid #e2e8f0 !important; border-radius: 16px; padding: 40px 32px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,0.08); max-width: 640px; margin: 0 auto;">
             <div style="width: 56px; height: 56px; background: linear-gradient(135deg, #875A7B 0%, #6d4a6a 100%); border-radius: 50%; line-height: 56px; font-size: 26px; margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.3);">✉️</div>
             <h3 style="color: #0f172a; font-size: 28px; font-weight: 800; margin: 0 0 12px;">Still Have Questions?</h3>
             <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 24px; max-width: 480px; margin-left: auto; margin-right: auto;">Our expert team is ready to assist. Whether you need technical clarification, pricing info, or custom development services, we are just a click away.</p>
@@ -589,7 +589,7 @@
     </section>
 
     <!-- RELATED MODULE -->
-    <section class="oe_container" style="padding: 20px 4%; background: #f8fafc;">
+    <section class="oe_container" style="padding: 20px 4%; background: #f8fafc !important; background-color: #f8fafc !important;">
         <div style="background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
             <div class="row" style="margin: 0;">
                 <div style="flex: 0 0 40%; max-width: 40%; padding: 24px; background: #fff; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center;">

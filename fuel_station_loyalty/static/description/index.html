@@ -343,11 +343,12 @@
             </div><!-- /.carousel-inner -->
 
             <!-- Prev / Next controls - using <a> tags (Odoo strips <button> elements) -->
-            <a class="carousel-control-prev" href="#fsl-gallery-carousel" role="button" data-bs-slide="prev" style="width: 48px; height: 48px; background-color: #875A7B; border-radius: 50%; top: 45%; left: 16px; opacity: 1;">
+            <!-- position/top/left/right stripped by Odoo; Bootstrap's carousel-control-prev/next classes handle absolute positioning -->
+            <a class="carousel-control-prev" href="#fsl-gallery-carousel" role="button" data-bs-slide="prev" style="background-color: rgba(135,90,123,0.75); width: 10%; opacity: 1;">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#fsl-gallery-carousel" role="button" data-bs-slide="next" style="width: 48px; height: 48px; background-color: #875A7B; border-radius: 50%; top: 45%; right: 16px; opacity: 1;">
+            <a class="carousel-control-next" href="#fsl-gallery-carousel" role="button" data-bs-slide="next" style="background-color: rgba(135,90,123,0.75); width: 10%; opacity: 1;">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </a>
@@ -469,21 +470,21 @@
         <div class="row text-center" style="margin: 0 -12px;">
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
                 <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background-color: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
-                    <div style="background-color: #875A7B; color: #875A7B; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">1</div>
+                    <div style="background-color: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">1</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Download &amp; Install</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Download from Odoo Apps Store and install via the Apps menu. Requires sale_loyalty.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
                 <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background-color: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
-                    <div style="background-color: #875A7B; color: #875A7B; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">2</div>
+                    <div style="background-color: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">2</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Configure Loyalty</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Set up loyalty programs in Odoo. For full fuel station features, install Advance Fuel Station.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
                 <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background-color: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
-                    <div style="background-color: #875A7B; color: #875A7B; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">3</div>
+                    <div style="background-color: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">3</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Start Using</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Process loyalty sales and redeem rewards. Your fuel station loyalty is ready!</p>
                 </div>

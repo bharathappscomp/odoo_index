@@ -81,6 +81,15 @@
         .fsl-row-align { align-items: center; }
         .fsl-row-center { justify-content: center; }
         .fsl-flex-gap-12 { display: flex; align-items: center; gap: 12px; }
+        /* Feature Tabs - Odoo store overrides */
+        .fsl-feature-tabs .nav-link { display: flex !important; align-items: center !important; gap: 10px !important; text-decoration: none !important; }
+        .fsl-feature-tabs .nav-link.active { background-color: #875A7B !important; background: #875A7B !important; color: #fff !important; }
+        .fsl-feature-tabs .nav-link.active .fsl-tab-icon { background: rgba(255,255,255,0.25) !important; }
+        .fsl-feature-sidebar { border: 2px solid #e2e8f0 !important; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); background: #fafafa !important; }
+        .fsl-feature-content { display: flex !important; align-items: center !important; gap: 24px !important; flex-wrap: wrap !important; }
+        .fsl-feature-tab-text { flex: 1 1 240px !important; min-width: 240px; }
+        .fsl-feature-tab-img { flex: 1 1 200px !important; min-width: 200px; }
+        .fsl-feature-content-box { background: #fff !important; padding: 28px; border-radius: 16px; border-width: 2px !important; border-style: solid !important; box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
     </style>
     <script>
         (function() {
@@ -210,22 +219,22 @@
     </section>
 
     <!-- FEATURE TABS SECTION (Left sidebar + content) -->
-    <div class="oe_container" style="padding: 28px 4% 24px; background: #fcfaff !important; background-color: #fcfaff !important;">
+    <div class="oe_container fsl-feature-tabs" style="padding: 28px 4% 24px; background: #fcfaff !important; background-color: #fcfaff !important;">
         <div class="row" style="margin: 0 -12px;">
             <div class="col-md-3" style="padding: 0 12px;">
-                <div style="border: 1px solid #e2e8f0; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); background: #fafafa;">
+                <div class="fsl-feature-sidebar">
                     <ul role="tablist" class="nav nav-pills fsl-nav-col">
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_dashboard" class="nav-link active fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f0f9ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📊</span> Dashboard</a>
+                            <a href="#tab_dashboard" class="nav-link active" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #f0f9ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📊</span> Dashboard</a>
                         </li>
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_automation" class="nav-link fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #eff6ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">⚙️</span> Automation</a>
+                            <a href="#tab_automation" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #eff6ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">⚙️</span> Automation</a>
                         </li>
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_reporting" class="nav-link fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f0fdf4; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📈</span> Reporting</a>
+                            <a href="#tab_reporting" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #f0fdf4; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📈</span> Reporting</a>
                         </li>
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_integration" class="nav-link fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f5f3ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">🔗</span> Integration</a>
+                            <a href="#tab_integration" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #f5f3ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">🔗</span> Integration</a>
                         </li>
                     </ul>
                 </div>
@@ -233,26 +242,26 @@
             <div class="col-md-9" style="padding: 0 12px;">
                 <div class="tab-content" id="feature_tabs_content">
                     <div class="tab-pane active" id="tab_dashboard" role="tabpanel">
-                        <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #875A7B; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div class="fsl-flex-row">
-                                <div style="flex: 1; min-width: 240px;">
+                        <div class="fsl-feature-content-box" style="border-color: #875A7B;">
+                            <div class="fsl-feature-content">
+                                <div class="fsl-feature-tab-text">
                                     <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Intelligence</span>
                                     <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Dashboard</h3>
                                     <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Experience your Odoo data like never before with lightning-fast visual interfaces.</p>
                                 </div>
-                                <div style="flex: 1; min-width: 200px;">
+                                <div class="fsl-feature-tab-img">
                                     <img src="integration.jpg" alt="Intelligent Dashboard" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_automation" role="tabpanel">
-                        <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #3b82f6; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div class="fsl-flex-row">
-                                <div style="flex: 1; min-width: 200px;">
+                        <div class="fsl-feature-content-box" style="border-color: #3b82f6;">
+                            <div class="fsl-feature-content">
+                                <div class="fsl-feature-tab-img">
                                     <img src="fuel_pump.jpg" alt="Advanced Automation" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
                                 </div>
-                                <div style="flex: 1; min-width: 240px;">
+                                <div class="fsl-feature-tab-text">
                                     <span style="color: #3b82f6; font-weight: 800; font-size: 12px; text-transform: uppercase;">Workflows</span>
                                     <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Advanced Automation</h3>
                                     <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Eliminate manual entry and trigger actions based on smart business logic.</p>
@@ -261,26 +270,26 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_reporting" role="tabpanel">
-                        <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #10b981; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div class="fsl-flex-row">
-                                <div style="flex: 1; min-width: 240px;">
+                        <div class="fsl-feature-content-box" style="border-color: #10b981;">
+                            <div class="fsl-feature-content">
+                                <div class="fsl-feature-tab-text">
                                     <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Analytics</span>
                                     <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Reporting</h3>
                                     <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Track loyalty points, redemption rates, and customer engagement with comprehensive reports.</p>
                                 </div>
-                                <div style="flex: 1; min-width: 200px;">
+                                <div class="fsl-feature-tab-img">
                                     <img src="integration.jpg" alt="Reporting" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-pane" id="tab_integration" role="tabpanel">
-                        <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #8b5cf6; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div class="fsl-flex-row">
-                                <div style="flex: 1; min-width: 200px;">
+                        <div class="fsl-feature-content-box" style="border-color: #8b5cf6;">
+                            <div class="fsl-feature-content">
+                                <div class="fsl-feature-tab-img">
                                     <img src="loyalty_rewards.jpg" alt="Integration" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
                                 </div>
-                                <div style="flex: 1; min-width: 240px;">
+                                <div class="fsl-feature-tab-text">
                                     <span style="color: #3b82f6; font-weight: 800; font-size: 12px; text-transform: uppercase;">Seamless</span>
                                     <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Fuel Station Integration</h3>
                                     <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Works seamlessly with Advance Fuel Station. Process loyalty sales and redeem rewards from the forecourt.</p>

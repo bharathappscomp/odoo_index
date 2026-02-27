@@ -5,123 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Fuel Station Loyalty | Odoo Loyalty for Fuel Stations</title>
     <style>
-        /* Fallback for local rendering when Bootstrap is not injected */
+        /* LOCAL FALLBACK ONLY - Odoo Apps Store strips this entire block */
         * { box-sizing: border-box; }
         body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #334155; }
         .oe_container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
         .row { display: flex; flex-wrap: wrap; margin: 0 -12px; }
         .col-md-3 { flex: 0 0 25%; max-width: 25%; padding: 0 12px; }
         .col-md-4 { flex: 0 0 33.333%; max-width: 33.333%; padding: 0 12px; }
-        .col-md-5 { flex: 0 0 41.666%; max-width: 41.666%; padding: 0 12px; }
         .col-md-6 { flex: 0 0 50%; max-width: 50%; padding: 0 12px; }
-        .col-md-7 { flex: 0 0 58.333%; max-width: 58.333%; padding: 0 12px; }
         .col-md-8 { flex: 0 0 66.666%; max-width: 66.666%; padding: 0 12px; }
         .col-md-9 { flex: 0 0 75%; max-width: 75%; padding: 0 12px; }
-        .col-md-12, .col, .col-12 { flex: 1; padding: 0 12px; }
-        .container { max-width: 1140px; margin: 0 auto; padding: 0 16px; }
-        .container-fluid { width: 100%; padding: 0 16px; }
+        .col-md-12 { flex: 0 0 100%; max-width: 100%; padding: 0 12px; }
         .d-flex { display: flex; }
-        .d-inline-block { display: inline-block; }
+        .flex-column { flex-direction: column; }
+        .flex-wrap { flex-wrap: wrap; }
         .justify-content-center { justify-content: center; }
-        .justify-content-between { justify-content: space-between; }
         .align-items-center { align-items: center; }
         .text-center { text-align: center; }
-        .text-left { text-align: left; }
         .mb-2 { margin-bottom: 0.5rem; }
         .mb-3 { margin-bottom: 0.75rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-5 { margin-bottom: 3rem; }
-        .mt-4 { margin-top: 1.5rem; }
-        .p-2 { padding: 0.5rem; }
-        .p-3 { padding: 1rem; }
-        .p-4 { padding: 1.5rem; }
-        .px-2 { padding-left: 0.5rem; padding-right: 0.5rem; }
-        .px-4 { padding-left: 1.5rem; padding-right: 1.5rem; }
-        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-        .rounded-3 { border-radius: 0.5rem; }
-        .rounded-4 { border-radius: 0.75rem; }
-        .shadow-sm { box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
         .img-fluid { max-width: 100%; height: auto; }
         .nav { display: flex; list-style: none; padding: 0; margin: 0; flex-wrap: wrap; gap: 8px; }
-        .nav-pills .nav-link { padding: 0.5rem 1rem; border-radius: 0.375rem; color: #64748b; text-decoration: none; }
-        .nav-pills .nav-link.active { background-color: #875A7B !important; background: #875A7B !important; color: #fff !important; }
+        .nav-pills .nav-link { padding: 0.5rem 1rem; border-radius: 0.375rem; color: #64748b; text-decoration: none; display: block; }
+        .nav-pills .nav-link.active { background-color: #875A7B; color: #fff; }
         .tab-content .tab-pane { display: none; }
         .tab-content .tab-pane.active { display: block; }
-        .gallery-card { transition: transform 0.2s ease; }
-        .gallery-card:hover { transform: translateY(-4px); border-color: #875A7B; }
         .badge { display: inline-block; padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight: 600; border-radius: 0.25rem; }
         @media (max-width: 768px) {
-            .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 { flex: 0 0 100%; max-width: 100%; }
+            .col-md-3, .col-md-4, .col-md-6, .col-md-8, .col-md-9 { flex: 0 0 100%; max-width: 100%; }
         }
-        /* Force dark backgrounds for Odoo Apps Store (overrides injected styles) */
-        .fsl-dark-wrap, div.fsl-dark-wrap { background-color: #1a2234 !important; background: #1a2234 !important; background-image: none !important; }
-        .fsl-dark-card, div.fsl-dark-card { background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; }
-        .fsl-dark-specs, div.fsl-dark-specs { background-color: #111827 !important; background: #111827 !important; background-image: none !important; }
-        /* FAQ - Native details/summary (no JS, works on Odoo store) */
-        .fsl-faq-item { border: 2px solid #cbd5e1; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .fsl-faq-item[open] { border-color: #875A7B; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.12); }
-        .fsl-faq-item summary { padding: 18px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b; user-select: none; list-style: none; }
-        .fsl-faq-item summary::-webkit-details-marker { display: none; }
-        .fsl-faq-item summary::after { content: '▼'; font-size: 18px; color: #875A7B; transition: transform 0.2s; }
-        .fsl-faq-item[open] summary::after { transform: rotate(180deg); }
-        .fsl-faq-item summary:hover { background: #f8fafc; }
-        .fsl-faq-body { padding: 0 24px 20px; }
-        .fsl-faq-body p { margin: 0; color: #64748b; font-size: 14px; line-height: 1.6; }
-        /* Override Odoo Apps Store link styles - ensure CTA buttons stay visible */
-        a.fsl-cta-btn, a[href^="mailto:support@appscomp.com"] { display: inline-block !important; text-decoration: none !important; }
-        /* Flex layouts - Odoo strips flex-wrap/gap/align-items from inline styles; use classes instead */
-        .fsl-flex-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
-        .fsl-flex-wrap-center { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-        .fsl-flex-row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-        .fsl-flex-between { display: flex; justify-content: space-between; align-items: center; }
-        .fsl-flex-col { display: flex; flex-direction: column; justify-content: center; }
-        .fsl-nav-col { flex-direction: column; gap: 4px; }
-        .fsl-nav-link-inner { display: flex; align-items: center; gap: 10px; }
-        .fsl-gallery-nav { gap: 4px; }
-        .fsl-row-align { align-items: center; }
-        .fsl-row-center { justify-content: center; }
-        .fsl-flex-gap-12 { display: flex; align-items: center; gap: 12px; }
-        /* Feature Tabs - Odoo store overrides */
-        .fsl-feature-tabs .nav-link { display: flex !important; align-items: center !important; gap: 10px !important; text-decoration: none !important; }
-        .fsl-feature-tabs .nav-link.active { background-color: #875A7B !important; background: #875A7B !important; color: #fff !important; }
-        .fsl-feature-tabs .nav-link.active .fsl-tab-icon { background: rgba(255,255,255,0.25) !important; }
-        .fsl-feature-sidebar { border: 2px solid #e2e8f0 !important; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); background: #fafafa !important; }
-        .fsl-feature-content { display: flex !important; align-items: center !important; gap: 24px !important; flex-wrap: wrap !important; }
-        .fsl-feature-tab-text { flex: 1 1 240px !important; min-width: 240px; }
-        .fsl-feature-tab-img { flex: 1 1 200px !important; min-width: 200px; }
-        .fsl-feature-content-box { background: #fff !important; padding: 28px; border-radius: 16px; border-width: 2px !important; border-style: solid !important; box-shadow: 0 8px 32px rgba(0,0,0,0.04); }
     </style>
-    <script>
-        (function() {
-            document.querySelectorAll('[data-bs-toggle="tab"]').forEach(function(el) {
-                el.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    var target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        var parent = target.closest('.tab-content');
-                        if (parent) {
-                            parent.querySelectorAll('.tab-pane').forEach(function(p) { p.classList.remove('active'); });
-                            target.classList.add('active');
-                        }
-                        var nav = this.closest('[role="tablist"]');
-                        if (nav) {
-                            nav.querySelectorAll('.nav-link').forEach(function(n) { n.classList.remove('active'); });
-                            this.classList.add('active');
-                        }
-                    }
-                });
-            });
-        })();
-        /* FAQ uses native details/summary - no JS needed */
-    </script>
 </head>
 <body>
 
 <section class="oe_container">
 
     <!-- HERO SECTION -->
-    <section class="oe_container" style="background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #eff6ff 100%) !important; background-color: #f5f3ff !important; font-family: sans-serif; padding: 32px 4% 24px; margin: 0;">
-        <div class="row fsl-row-align" style="margin: 0 -16px;">
+    <section class="oe_container" style="background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #eff6ff 100%); background-color: #f5f3ff; font-family: sans-serif; padding: 32px 4% 24px; margin: 0;">
+        <div class="row align-items-center" style="margin: 0 -16px;">
             <div class="col-md-6" style="padding: 0 16px 24px;">
                 <div style="display: inline-block; background: #fff; color: #875A7B; padding: 6px 14px; border-radius: 50px; font-size: 11px; font-weight: 700; margin-bottom: 20px; border: 1px solid #e9d5ff;">
                     ✨ NEW RELEASE v19 COMPATIBLE
@@ -132,17 +55,15 @@
                 <p style="color: #64748b; font-size: 17px; line-height: 1.6; margin: 0 0 28px; max-width: 440px;">
                     Extend Odoo's standard loyalty system for fuel stations. Drive repeat business with intelligent rewards, point redemption, and seamless integration with the Advance Fuel Station Management System.
                 </p>
-                <div class="fsl-flex-wrap" style="margin-bottom: 24px;">
-                    <span style="display: inline-block; background: #fff; color: #10b981; border: 1px solid #10b981; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;margin-right: 15px;">✓ v16 - v19</span>
-                    <span style="display: inline-block; background: #fff; color: #3b82f6; border: 1px solid #3b82f6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;margin-right: 15px;">✓ Enterprise</span>
-                    <span style="display: inline-block; background: #fff; color: #8b5cf6; border: 1px solid #8b5cf6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;margin-right: 15px;">✓ Community</span>
+                <div style="margin-bottom: 24px;">
+                    <span style="display: inline-block; background: #fff; color: #10b981; border: 1px solid #10b981; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; margin-right: 8px; margin-bottom: 6px;">✓ v16 - v19</span>
+                    <span style="display: inline-block; background: #fff; color: #3b82f6; border: 1px solid #3b82f6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; margin-right: 8px; margin-bottom: 6px;">✓ Enterprise</span>
+                    <span style="display: inline-block; background: #fff; color: #8b5cf6; border: 1px solid #8b5cf6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; margin-bottom: 6px;">✓ Community</span>
                 </div>
-                <div style="background: linear-gradient(135deg, #875A7B 0%, #6d4a6a 100%) !important; background-color: #875A7B !important; border: 2px solid #6d4a6a !important; border-radius: 14px; padding: 20px 24px; max-width: 400px;">
-                    <div style="color: #fff !important; font-size: 14px; font-weight: 700; margin-bottom: 12px;">Book Your Personalized Demo</div>
-                    <div class="fsl-flex-wrap-center">
-                        <a href="mailto:support@appscomp.com" class="fsl-cta-btn" style="display: inline-block !important; background: #fff !important; background-color: #fff !important; color: #875A7B !important; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e2e8f0;">Get in Touch →</a>
-                        <span style="color: rgba(255,255,255,0.9); font-size: 12px;">support@appscomp.com</span>
-                    </div>
+                <div style="background: #875A7B; border: 2px solid #6d4a6a; border-radius: 14px; padding: 20px 24px; max-width: 400px;">
+                    <div style="color: #fff; font-size: 14px; font-weight: 700; margin-bottom: 12px;">Book Your Personalized Demo</div>
+                    <a href="mailto:support@appscomp.com" style="display: inline-block; background: #fff; color: #875A7B; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e2e8f0; margin-right: 10px;">Get in Touch →</a>
+                    <span style="color: rgba(255,255,255,0.9); font-size: 12px;">support@appscomp.com</span>
                 </div>
             </div>
             <div class="col-md-6" style="padding: 0 16px; text-align: center;">
@@ -151,21 +72,21 @@
         </div>
 
         <div style="padding: 24px 4% 32px; max-width: 1000px; margin: 0 auto;">
-            <div class="row fsl-row-center" style="margin: 0 -12px;">
+            <div class="row justify-content-center" style="margin: 0 -12px;">
                 <div class="col-md-4 mb-3" style="padding: 0 12px;">
-                    <div style="background: #fff !important; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #875A7B !important; height: 100%;">
+                    <div style="background: #fff; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #875A7B;">
                         <h3 style="color: #875A7B; font-size: 28px; font-weight: 800; margin: 0;">100%</h3>
                         <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-top: 8px; letter-spacing: 0.5px;">Native Odoo</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3" style="padding: 0 12px;">
-                    <div style="background: #fff !important; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #3b82f6 !important; height: 100%;">
+                    <div style="background: #fff; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #3b82f6;">
                         <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0;">500+</h3>
                         <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-top: 8px; letter-spacing: 0.5px;">Global Installs</p>
                     </div>
                 </div>
                 <div class="col-md-4 mb-3" style="padding: 0 12px;">
-                    <div style="background: #fff !important; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #10b981 !important; height: 100%;">
+                    <div style="background: #fff; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #10b981;">
                         <h3 style="color: #875A7B; font-size: 28px; font-weight: 800; margin: 0;">24/7</h3>
                         <p style="color: #94a3b8; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-top: 8px; letter-spacing: 0.5px;">Expert Support</p>
                     </div>
@@ -175,41 +96,41 @@
     </section>
 
     <!-- MAIN HERO IMAGE -->
-    <div class="oe_container" style="text-align: center; padding: 24px 20px; background: #f8fafc !important; background-color: #f8fafc !important;">
+    <div class="oe_container" style="text-align: center; padding: 24px 20px; background: #f8fafc;">
         <img src="hero_gas_station.jpg" alt="Fuel Station Loyalty" style="width: 90%; max-width: 1000px; border-radius: 12px; box-shadow: 0 16px 48px rgba(0,0,0,0.12);"/>
     </div>
 
     <!-- WHAT SETS FUEL STATION LOYALTY APART -->
-    <section class="oe_container" style="background: #f8fafc !important; background-color: #f8fafc !important; padding: 32px 4%;">
-        <div class="text-center mb-5" style="margin-bottom: 24px;">
+    <section class="oe_container" style="background: #f8fafc; padding: 32px 4%;">
+        <div class="text-center" style="margin-bottom: 24px;">
             <h2 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0 0 12px;">What Sets Fuel Station Loyalty Apart?</h2>
             <p style="color: #64748b; font-size: 16px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">The only loyalty module built specifically for fuel retail. Native Odoo integration, forecourt-ready workflows, and zero manual entry.</p>
             <div style="width: 48px; height: 3px; background: #875A7B; margin: 16px auto 0;"></div>
         </div>
-        <div class="row fsl-row-center" style="margin: 0 -12px;">
+        <div class="row justify-content-center" style="margin: 0 -12px;">
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #875A7B !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(135, 90, 123, 0.12);">
+                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #875A7B; text-align: center; box-shadow: 0 4px 12px rgba(135, 90, 123, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f5f3ff; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">✓</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Native Odoo</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">100% integrated with sale_loyalty. No third-party dependencies.</p>
                 </div>
             </div>
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #10b981 !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);">
+                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #10b981; text-align: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f0fdf4; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">⛽</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Forecourt-Ready</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">Works with Advance Fuel Station. Loyalty at the pump.</p>
                 </div>
             </div>
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #3b82f6 !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);">
+                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #3b82f6; text-align: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f0f9ff; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">⚡</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Zero Manual Entry</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">Automatic point calculation and redemption. Set it and forget it.</p>
                 </div>
             </div>
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
-                <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #8b5cf6 !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.12);">
+                <div style="background: #fff; padding: 20px 16px; border-radius: 12px; border: 2px solid #8b5cf6; text-align: center; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f5f3ff; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">🛡️</div>
                     <h4 style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0 0 8px;">Enterprise Grade</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">OCA standards. PEP8 compliant. Battle-tested security.</p>
@@ -218,99 +139,109 @@
         </div>
     </section>
 
-    <!-- FEATURE TABS SECTION (Left sidebar + content) -->
-    <div class="oe_container fsl-feature-tabs" style="padding: 28px 4% 24px; background: #fcfaff !important; background-color: #fcfaff !important;">
-        <div class="row" style="margin: 0 -12px;">
-            <div class="col-md-3" style="padding: 0 12px;">
-                <div class="fsl-feature-sidebar">
-                    <ul role="tablist" class="nav nav-pills fsl-nav-col">
-                        <li style="list-style: none; margin: 0;">
-                            <a href="#tab_dashboard" class="nav-link active" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #f0f9ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📊</span> Dashboard</a>
-                        </li>
-                        <li style="list-style: none; margin: 0;">
-                            <a href="#tab_automation" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #eff6ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">⚙️</span> Automation</a>
-                        </li>
-                        <li style="list-style: none; margin: 0;">
-                            <a href="#tab_reporting" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #f0fdf4; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📈</span> Reporting</a>
-                        </li>
-                        <li style="list-style: none; margin: 0;">
-                            <a href="#tab_integration" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span class="fsl-tab-icon" style="width: 36px; height: 36px; background: #f5f3ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">🔗</span> Integration</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-9" style="padding: 0 12px;">
-                <div class="tab-content" id="feature_tabs_content">
-                    <div class="tab-pane active" id="tab_dashboard" role="tabpanel">
-                        <div class="fsl-feature-content-box" style="border-color: #875A7B;">
-                            <div class="fsl-feature-content">
-                                <div class="fsl-feature-tab-text">
-                                    <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Intelligence</span>
-                                    <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Dashboard</h3>
-                                    <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Experience your Odoo data like never before with lightning-fast visual interfaces.</p>
-                                </div>
-                                <div class="fsl-feature-tab-img">
-                                    <img src="integration.jpg" alt="Intelligent Dashboard" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
-                                </div>
+    <!-- FEATURE TABS SECTION - Uses <table> for Odoo store compatibility -->
+    <div class="oe_container" style="padding: 28px 4% 24px; background: #fcfaff;">
+        <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border-spacing: 16px 0;">
+            <tr>
+                <td style="width: 220px; vertical-align: top;">
+                    <div style="border: 2px solid #e2e8f0; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); background: #fafafa;">
+                        <ul class="nav nav-pills flex-column" role="tablist" style="list-style: none; padding: 0; margin: 0;">
+                            <li style="list-style: none; margin: 0 0 4px;">
+                                <a href="#tab_dashboard" class="nav-link active" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; text-decoration: none; display: block;">📊 Dashboard</a>
+                            </li>
+                            <li style="list-style: none; margin: 0 0 4px;">
+                                <a href="#tab_automation" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none; display: block;">⚙️ Automation</a>
+                            </li>
+                            <li style="list-style: none; margin: 0 0 4px;">
+                                <a href="#tab_reporting" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none; display: block;">📈 Reporting</a>
+                            </li>
+                            <li style="list-style: none; margin: 0;">
+                                <a href="#tab_integration" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none; display: block;">🔗 Integration</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div class="tab-content" id="feature_tabs_content">
+                        <div class="tab-pane active" id="tab_dashboard" role="tabpanel">
+                            <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #875A7B; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 50%; vertical-align: middle; padding-right: 24px;">
+                                            <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Intelligence</span>
+                                            <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Dashboard</h3>
+                                            <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Experience your Odoo data like never before with lightning-fast visual interfaces.</p>
+                                        </td>
+                                        <td style="width: 50%; vertical-align: middle;">
+                                            <img src="integration.jpg" alt="Intelligent Dashboard" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_automation" role="tabpanel">
+                            <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #3b82f6; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 50%; vertical-align: middle; padding-right: 24px;">
+                                            <img src="fuel_pump.jpg" alt="Advanced Automation" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
+                                        </td>
+                                        <td style="width: 50%; vertical-align: middle;">
+                                            <span style="color: #3b82f6; font-weight: 800; font-size: 12px; text-transform: uppercase;">Workflows</span>
+                                            <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Advanced Automation</h3>
+                                            <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Eliminate manual entry and trigger actions based on smart business logic.</p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_reporting" role="tabpanel">
+                            <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #10b981; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 50%; vertical-align: middle; padding-right: 24px;">
+                                            <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Analytics</span>
+                                            <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Reporting</h3>
+                                            <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Track loyalty points, redemption rates, and customer engagement with comprehensive reports.</p>
+                                        </td>
+                                        <td style="width: 50%; vertical-align: middle;">
+                                            <img src="integration.jpg" alt="Reporting" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab_integration" role="tabpanel">
+                            <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #8b5cf6; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                                <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                                    <tr>
+                                        <td style="width: 50%; vertical-align: middle; padding-right: 24px;">
+                                            <img src="loyalty_rewards.jpg" alt="Integration" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
+                                        </td>
+                                        <td style="width: 50%; vertical-align: middle;">
+                                            <span style="color: #3b82f6; font-weight: 800; font-size: 12px; text-transform: uppercase;">Seamless</span>
+                                            <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Fuel Station Integration</h3>
+                                            <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Works seamlessly with Advance Fuel Station. Process loyalty sales and redeem rewards from the forecourt.</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="tab_automation" role="tabpanel">
-                        <div class="fsl-feature-content-box" style="border-color: #3b82f6;">
-                            <div class="fsl-feature-content">
-                                <div class="fsl-feature-tab-img">
-                                    <img src="fuel_pump.jpg" alt="Advanced Automation" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
-                                </div>
-                                <div class="fsl-feature-tab-text">
-                                    <span style="color: #3b82f6; font-weight: 800; font-size: 12px; text-transform: uppercase;">Workflows</span>
-                                    <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Advanced Automation</h3>
-                                    <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Eliminate manual entry and trigger actions based on smart business logic.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tab_reporting" role="tabpanel">
-                        <div class="fsl-feature-content-box" style="border-color: #10b981;">
-                            <div class="fsl-feature-content">
-                                <div class="fsl-feature-tab-text">
-                                    <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Analytics</span>
-                                    <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Reporting</h3>
-                                    <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Track loyalty points, redemption rates, and customer engagement with comprehensive reports.</p>
-                                </div>
-                                <div class="fsl-feature-tab-img">
-                                    <img src="integration.jpg" alt="Reporting" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="tab_integration" role="tabpanel">
-                        <div class="fsl-feature-content-box" style="border-color: #8b5cf6;">
-                            <div class="fsl-feature-content">
-                                <div class="fsl-feature-tab-img">
-                                    <img src="loyalty_rewards.jpg" alt="Integration" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
-                                </div>
-                                <div class="fsl-feature-tab-text">
-                                    <span style="color: #3b82f6; font-weight: 800; font-size: 12px; text-transform: uppercase;">Seamless</span>
-                                    <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Fuel Station Integration</h3>
-                                    <p style="color: #64748b; font-size: 16px; line-height: 1.7; margin: 0;">Works seamlessly with Advance Fuel Station. Process loyalty sales and redeem rewards from the forecourt.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <!-- INTERFACE GALLERY -->
-    <section class="oe_container" style="background: #eff6ff !important; background-color: #eff6ff !important; padding: 28px 4%;">
-        <div class="text-center mb-5" style="margin-bottom: 20px;">
+    <section class="oe_container" style="background: #eff6ff; padding: 28px 4%;">
+        <div class="text-center" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0 0 12px;">Interface Gallery</h2>
             <p style="color: #64748b; font-size: 16px; margin: 0;">Explore the clean and intuitive user interface of our module</p>
         </div>
 
-        <div class="d-flex justify-content-center mb-4" style="margin-bottom: 16px;">
-            <ul class="nav nav-pills fsl-gallery-nav" style="background: #fff; padding: 8px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
+        <div style="text-align: center; margin-bottom: 16px;">
+            <ul class="nav nav-pills justify-content-center" style="display: inline-flex; background: #fff; padding: 8px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
                 <li style="list-style: none;">
                     <a href="#gallery_all" class="nav-link active" data-bs-toggle="tab" role="tab" style="padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px;">All Screenshots</a>
                 </li>
@@ -330,27 +261,27 @@
             <div class="tab-pane active" id="gallery_all" role="tabpanel">
                 <div class="row" style="margin: 0 -12px;">
                     <div class="col-md-12 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #875A7B; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #875A7B; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                             <span class="badge mb-2" style="background: #875A7B; color: #fff;">MAIN INTERFACE</span>
                             <img src="hero_gas_station.jpg" alt="Main Interface" class="img-fluid" style="width: 100%; border-radius: 12px; margin-top: 12px;"/>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #3b82f6; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center; height: 100%;">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #3b82f6; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center;">
                             <span class="badge mb-2" style="background: #3b82f6; color: #fff;">ANALYTICS</span>
                             <img src="integration.jpg" alt="Analytics" class="img-fluid" style="width: 100%; border-radius: 10px; margin: 12px 0;"/>
                             <h6 style="font-weight: 700; margin: 0; font-size: 14px; color: #1e293b;">Real-time KPI</h6>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #10b981; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center; height: 100%;">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #10b981; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center;">
                             <span class="badge mb-2" style="background: #10b981; color: #fff;">AUTOMATION</span>
                             <img src="fuel_pump.jpg" alt="Automation" class="img-fluid" style="width: 100%; border-radius: 10px; margin: 12px 0;"/>
                             <h6 style="font-weight: 700; margin: 0; font-size: 14px; color: #1e293b;">Workflow Logic</h6>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #f59e0b; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center; height: 100%;">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #f59e0b; box-shadow: 0 4px 20px rgba(0,0,0,0.06); text-align: center;">
                             <span class="badge mb-2" style="background: #f59e0b; color: #fff;">REPORTS</span>
                             <img src="loyalty_rewards.jpg" alt="Reports" class="img-fluid" style="width: 100%; border-radius: 10px; margin: 12px 0;"/>
                             <h6 style="font-weight: 700; margin: 0; font-size: 14px; color: #1e293b;">Custom Builder</h6>
@@ -361,13 +292,13 @@
             <div class="tab-pane" id="gallery_dash" role="tabpanel">
                 <div class="row" style="margin: 0 -12px;">
                     <div class="col-md-8 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #06b6d4; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #06b6d4; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                             <span class="badge mb-2" style="background: #06b6d4; color: #fff;">WIDGETS</span>
                             <img src="integration.jpg" alt="Widgets" class="img-fluid" style="width: 100%; border-radius: 12px; margin-top: 12px;"/>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #ef4444; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #ef4444; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                             <span class="badge mb-2" style="background: #ef4444; color: #fff;">MOBILE</span>
                             <img src="hero_gas_station.jpg" alt="Mobile" class="img-fluid" style="width: 100%; border-radius: 12px; margin-top: 12px;"/>
                         </div>
@@ -377,13 +308,13 @@
             <div class="tab-pane" id="gallery_rep" role="tabpanel">
                 <div class="row" style="margin: 0 -12px;">
                     <div class="col-md-6 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #ef4444; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #ef4444; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                             <span class="badge mb-2" style="background: #ef4444; color: #fff;">PDF EXPORT</span>
                             <img src="integration.jpg" alt="PDF Export" class="img-fluid" style="width: 100%; border-radius: 12px; margin-top: 12px;"/>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #1e293b; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #1e293b; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                             <span class="badge mb-2" style="background: #1e293b; color: #fff;">VISUAL CHARTS</span>
                             <img src="loyalty_rewards.jpg" alt="Visual Charts" class="img-fluid" style="width: 100%; border-radius: 12px; margin-top: 12px;"/>
                         </div>
@@ -393,7 +324,7 @@
             <div class="tab-pane" id="gallery_con" role="tabpanel">
                 <div class="row" style="margin: 0 -12px;">
                     <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                        <div class="gallery-card" style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #64748b; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+                        <div style="background: #fff; padding: 16px; border-radius: 12px; border: 2px solid #64748b; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
                             <span class="badge mb-2" style="background: #64748b; color: #fff;">SETUP</span>
                             <img src="fuel_pump.jpg" alt="Setup" class="img-fluid" style="width: 100%; border-radius: 12px; margin-top: 12px;"/>
                         </div>
@@ -404,29 +335,28 @@
     </section>
 
     <!-- BUILT FOR FUEL STATIONS -->
-    <section class="oe_container" style="background: #f0fdf4 !important; background-color: #f0fdf4 !important; padding: 32px 4%;">
-        <div class="text-center mb-5" style="margin-bottom: 20px;">
+    <section class="oe_container" style="background: #f0fdf4; padding: 32px 4%;">
+        <div class="text-center" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0 0 12px;">Built for Fuel Stations</h2>
             <p style="color: #64748b; font-size: 15px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">Designed for forecourt retail, fleet operators, and fuel retail chains</p>
         </div>
-
-        <div class="row fsl-row-center" style="margin: 0 -12px;">
+        <div class="row justify-content-center" style="margin: 0 -12px;">
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="background: #f0f9ff; padding: 22px 16px; border-radius: 14px; border: 2px solid #0ea5e9; text-align: center; height: 100%; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.12);">
+                <div style="background: #f0f9ff; padding: 22px 16px; border-radius: 14px; border: 2px solid #0ea5e9; text-align: center; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.12);">
                     <div style="width: 48px; height: 48px; background: #e0f2fe; border-radius: 12px; line-height: 48px; font-size: 24px; margin: 0 auto 12px;">⛽</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Forecourt Retail</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">Loyalty rewards for walk-in and drive-through fuel customers.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="background: #f0fdf4; padding: 22px 16px; border-radius: 14px; border: 2px solid #10b981; text-align: center; height: 100%; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);">
+                <div style="background: #f0fdf4; padding: 22px 16px; border-radius: 14px; border: 2px solid #10b981; text-align: center; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.12);">
                     <div style="width: 48px; height: 48px; background: #dcfce7; border-radius: 12px; line-height: 48px; font-size: 24px; margin: 0 auto 12px;">🚚</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Fleet Operators</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">Credit sales with optional loyalty for fleet and B2B customers.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="background: #f5f3ff; padding: 22px 16px; border-radius: 14px; border: 2px solid #8b5cf6; text-align: center; height: 100%; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.12);">
+                <div style="background: #f5f3ff; padding: 22px 16px; border-radius: 14px; border: 2px solid #8b5cf6; text-align: center; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.12);">
                     <div style="width: 48px; height: 48px; background: #ede9fe; border-radius: 12px; line-height: 48px; font-size: 24px; margin: 0 auto 12px;">🏪</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Retail Chains</h4>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0;">Scale loyalty across multiple stations with centralized programs.</p>
@@ -437,66 +367,54 @@
 
     <!-- WHY CHOOSE -->
     <section class="oe_container" style="padding: 0; margin: 24px 4%;">
-        <div class="fsl-dark-wrap" style="background-color: #1a2234 !important; background: #1a2234 !important; background-image: none !important; padding: 32px 20px; border-radius: 16px;">
-        <div class="text-center mb-5" style="margin-bottom: 20px;">
-            <div style="display: inline-block; background: #875A7B; color: #fff; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">The Gold Standard</div>
-            <h2 style="color: #fff !important; font-size: 26px; font-weight: 800; margin: 0 0 12px;">Why Choose This Module?</h2>
-            <div style="width: 48px; height: 3px; background: #875A7B; margin: 0 auto;"></div>
-        </div>
-
-        <div class="row" style="margin: 0 -12px;">
-            <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155 !important; height: 100%; text-align: center;">
-                    <div style="font-size: 36px; margin-bottom: 16px;">⚡</div>
-                    <h4 style="color: #fff !important; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Lightning Fast</h4>
-                    <p style="color: #94a3b8 !important; font-size: 13px; line-height: 1.5; margin: 0;">Optimized backend logic for instant reward lookups and point calculations.</p>
+        <div style="background-color: #1a2234; padding: 32px 20px; border-radius: 16px;">
+            <div class="text-center" style="margin-bottom: 20px;">
+                <div style="display: inline-block; background: #875A7B; color: #fff; padding: 4px 12px; border-radius: 50px; font-size: 10px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px;">The Gold Standard</div>
+                <h2 style="color: #fff; font-size: 26px; font-weight: 800; margin: 0 0 12px;">Why Choose This Module?</h2>
+                <div style="width: 48px; height: 3px; background: #875A7B; margin: 0 auto;"></div>
+            </div>
+            <div class="row" style="margin: 0 -12px;">
+                <div class="col-md-4 mb-4" style="padding: 0 12px;">
+                    <div style="background-color: #242d3f; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155; text-align: center;">
+                        <div style="font-size: 36px; margin-bottom: 16px;">⚡</div>
+                        <h4 style="color: #fff; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Lightning Fast</h4>
+                        <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0;">Optimized backend logic for instant reward lookups and point calculations.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" style="padding: 0 12px;">
+                    <div style="background-color: #242d3f; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155; text-align: center;">
+                        <div style="font-size: 36px; margin-bottom: 16px;">🛡️</div>
+                        <h4 style="color: #fff; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Enterprise Grade</h4>
+                        <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0;">Battle-tested security and data integrity built into the core.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4" style="padding: 0 12px;">
+                    <div style="background-color: #242d3f; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155; text-align: center;">
+                        <div style="font-size: 36px; margin-bottom: 16px;">🔧</div>
+                        <h4 style="color: #fff; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Fully Customizable</h4>
+                        <p style="color: #94a3b8; font-size: 13px; line-height: 1.5; margin: 0;">Adapt loyalty rules and rewards to match your exact fuel retail processes.</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155 !important; height: 100%; text-align: center;">
-                    <div style="font-size: 36px; margin-bottom: 16px;">🛡️</div>
-                    <h4 style="color: #fff !important; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Enterprise Grade</h4>
-                    <p style="color: #94a3b8 !important; font-size: 13px; line-height: 1.5; margin: 0;">Battle-tested security and data integrity built into the core.</p>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-card" style="background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; padding: 24px 16px; border-radius: 12px; border: 1px solid #334155 !important; height: 100%; text-align: center;">
-                    <div style="font-size: 36px; margin-bottom: 16px;">🔧</div>
-                    <h4 style="color: #fff !important; font-weight: 700; font-size: 17px; margin: 0 0 8px;">Fully Customizable</h4>
-                    <p style="color: #94a3b8 !important; font-size: 13px; line-height: 1.5; margin: 0;">Adapt loyalty rules and rewards to match your exact fuel retail processes.</p>
-                </div>
-            </div>
-        </div>
         </div>
     </section>
 
-    <!-- TECHNICAL SPECS & QA -->
-    <section class="oe_container" style="background: #f8fafc !important; background-color: #f8fafc !important; padding: 28px 4%;">
+    <!-- TECHNICAL SPECS & QA - Uses <table> for key-value rows -->
+    <section class="oe_container" style="background: #f8fafc; padding: 28px 4%;">
         <div class="row" style="margin: 0 -12px;">
             <div class="col-md-6 mb-4" style="padding: 0 12px;">
-                <div class="fsl-dark-specs" style="background-color: #111827 !important; background: #111827 !important; background-image: none !important; border-radius: 14px; padding: 24px; height: 100%;">
-                    <h3 style="color: #fff !important; font-size: 20px; font-weight: 700; margin: 0 0 20px;"><span style="color: #875A7B !important;">&gt;</span> Technical Specs</h3>
-                    <div class="fsl-flex-between" style="border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
-                        <span style="color: #94a3b8 !important; font-size: 14px;">Compatibility</span>
-                        <span style="color: #fff !important; font-weight: 600; font-size: 14px;">v16.0 - v19.0+</span>
-                    </div>
-                    <div class="fsl-flex-between" style="border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
-                        <span style="color: #94a3b8 !important; font-size: 14px;">Odoo.sh Support</span>
-                        <span style="color: #10b981; font-weight: 600; font-size: 14px;">Full Support ✓</span>
-                    </div>
-                    <div class="fsl-flex-between" style="border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
-                        <span style="color: #94a3b8 !important; font-size: 14px;">License</span>
-                        <span style="color: #fff !important; font-weight: 600; font-size: 14px;">LGPL-3</span>
-                    </div>
-                    <div class="fsl-flex-between">
-                        <span style="color: #94a3b8 !important; font-size: 14px;">Updates</span>
-                        <span style="color: #f59e0b; font-weight: 600; font-size: 14px;">Lifetime Free</span>
-                    </div>
+                <div style="background-color: #111827; border-radius: 14px; padding: 24px;">
+                    <h3 style="color: #fff; font-size: 20px; font-weight: 700; margin: 0 0 20px;"><span style="color: #875A7B;">&gt;</span> Technical Specs</h3>
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                        <tr><td style="color: #94a3b8; font-size: 14px; padding: 0 0 10px; border-bottom: 1px solid #334155;">Compatibility</td><td style="color: #fff; font-weight: 600; font-size: 14px; text-align: right; padding: 0 0 10px; border-bottom: 1px solid #334155;">v16.0 - v19.0+</td></tr>
+                        <tr><td style="color: #94a3b8; font-size: 14px; padding: 12px 0 10px; border-bottom: 1px solid #334155;">Odoo.sh Support</td><td style="color: #10b981; font-weight: 600; font-size: 14px; text-align: right; padding: 12px 0 10px; border-bottom: 1px solid #334155;">Full Support ✓</td></tr>
+                        <tr><td style="color: #94a3b8; font-size: 14px; padding: 12px 0 10px; border-bottom: 1px solid #334155;">License</td><td style="color: #fff; font-weight: 600; font-size: 14px; text-align: right; padding: 12px 0 10px; border-bottom: 1px solid #334155;">LGPL-3</td></tr>
+                        <tr><td style="color: #94a3b8; font-size: 14px; padding: 12px 0 0;">Updates</td><td style="color: #f59e0b; font-weight: 600; font-size: 14px; text-align: right; padding: 12px 0 0;">Lifetime Free</td></tr>
+                    </table>
                 </div>
             </div>
-
             <div class="col-md-6 mb-4" style="padding: 0 12px;">
-                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px; height: 100%;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px;">
                     <div style="margin-bottom: 12px;">
                         <span style="color: #fbbf24; font-size: 16px;">★★★★★</span>
                         <span style="background: #e2e8f0; color: #475569; padding: 3px 10px; border-radius: 4px; font-size: 10px; font-weight: 700; margin-left: 8px;">VERIFIED CODE</span>
@@ -518,31 +436,30 @@
     </section>
 
     <!-- QUICK INSTALLATION -->
-    <section class="oe_container" style="background: linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%) !important; background-color: #eef2ff !important; border-radius: 16px; padding: 28px 20px; margin: 24px 4%;">
-        <div class="text-center mb-5" style="margin-bottom: 20px;">
+    <section class="oe_container" style="background: #eef2ff; border-radius: 16px; padding: 28px 20px; margin: 24px 4%;">
+        <div class="text-center" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-size: 26px; font-weight: 800; margin: 0 0 12px;">Quick Installation</h2>
             <p style="color: #64748b; font-size: 15px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">Get started in 3 simple steps. No technical expertise required.</p>
             <div style="width: 48px; height: 3px; background: #875A7B; margin: 16px auto 0;"></div>
         </div>
-
         <div class="row text-center" style="margin: 0 -12px;">
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B !important; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
-                    <div style="background: #875A7B !important; background-color: #875A7B !important; color: #fff !important; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">1</div>
-                    <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Download & Install</h4>
+                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
+                    <div style="background: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">1</div>
+                    <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Download &amp; Install</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Download from Odoo Apps Store and install via the Apps menu. Requires sale_loyalty.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B !important; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
-                    <div style="background: #875A7B !important; background-color: #875A7B !important; color: #fff !important; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">2</div>
+                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
+                    <div style="background: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">2</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Configure Loyalty</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Set up loyalty programs in Odoo. For full fuel station features, install Advance Fuel Station.</p>
                 </div>
             </div>
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
-                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B !important; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
-                    <div style="background: #875A7B !important; background-color: #875A7B !important; color: #fff !important; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">3</div>
+                <div style="padding: 20px 16px; border-radius: 14px; border: 2px solid #875A7B; background: #fff; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.1);">
+                    <div style="background: #875A7B; color: #fff; width: 48px; height: 48px; border-radius: 50%; line-height: 48px; font-size: 20px; font-weight: 800; margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.25);">3</div>
                     <h4 style="color: #1e293b; font-size: 17px; font-weight: 700; margin: 0 0 10px;">Start Using</h4>
                     <p style="color: #64748b; font-size: 14px; line-height: 1.6; margin: 0;">Process loyalty sales and redeem rewards. Your fuel station loyalty is ready!</p>
                 </div>
@@ -550,65 +467,69 @@
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="oe_container" style="background: #fcfaff !important; background-color: #fcfaff !important; padding: 28px 4%;">
-        <div class="text-center mb-5" style="margin-bottom: 20px;">
+    <!-- FAQ - Uses native <details>/<summary> (works without JS or CSS) -->
+    <section class="oe_container" style="background: #fcfaff; padding: 28px 4%;">
+        <div class="text-center" style="margin-bottom: 20px;">
             <h2 style="color: #1e293b; font-weight: 800; font-size: 26px;">Frequently Asked Questions</h2>
             <div style="width: 40px; height: 3px; background: #875A7B; margin: 12px auto;"></div>
         </div>
-
         <div style="max-width: 720px; margin: 0 auto;">
-            <details class="fsl-faq-item" open>
-                <summary>Is this compatible with custom modules?</summary>
-                <div class="fsl-faq-body"><p>Yes! We follow Odoo best practices and OCA standards. The module is designed to work seamlessly with other installed modules without conflicts. Our code is clean, documented, and tested across multiple environments.</p></div>
+            <details open style="border: 2px solid #875A7B; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                <summary style="padding: 18px 24px; cursor: pointer; font-weight: 700; font-size: 16px; color: #1e293b;">Is this compatible with custom modules?</summary>
+                <div style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">Yes! We follow Odoo best practices and OCA standards. The module is designed to work seamlessly with other installed modules without conflicts. Our code is clean, documented, and tested across multiple environments.</p></div>
             </details>
-            <details class="fsl-faq-item">
-                <summary>Do I need the Advance Fuel Station module?</summary>
-                <div class="fsl-faq-body"><p>This module works standalone with Odoo's standard loyalty. For full fuel station features (User Screen, loyalty dialog, credit sale loyalty), install the Advance Fuel Station Management System, which depends on this module.</p></div>
+            <details style="border: 2px solid #cbd5e1; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                <summary style="padding: 18px 24px; cursor: pointer; font-weight: 700; font-size: 16px; color: #1e293b;">Do I need the Advance Fuel Station module?</summary>
+                <div style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">This module works standalone with Odoo's standard loyalty. For full fuel station features (User Screen, loyalty dialog, credit sale loyalty), install the Advance Fuel Station Management System, which depends on this module.</p></div>
             </details>
-            <details class="fsl-faq-item">
-                <summary>What about future Odoo versions?</summary>
-                <div class="fsl-faq-body"><p>We provide free migration updates within 30 days of any new Odoo release. When Odoo v20 launches, you'll get the updated module at no extra cost.</p></div>
+            <details style="border: 2px solid #cbd5e1; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+                <summary style="padding: 18px 24px; cursor: pointer; font-weight: 700; font-size: 16px; color: #1e293b;">What about future Odoo versions?</summary>
+                <div style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">We provide free migration updates within 30 days of any new Odoo release. When Odoo v20 launches, you'll get the updated module at no extra cost.</p></div>
             </details>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="oe_container" style="background: linear-gradient(135deg, #eef2ff 0%, #eff6ff 100%) !important; background-color: #eef2ff !important; padding: 32px 4%;">
-        <div style="background: #fff !important; border: 2px solid #e2e8f0 !important; border-radius: 16px; padding: 40px 32px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,0.08); max-width: 640px; margin: 0 auto;">
-            <div style="width: 56px; height: 56px; background: #875A7B !important; background-color: #875A7B !important; border-radius: 50%; line-height: 56px; font-size: 26px; margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.3);">✉️</div>
+    <section class="oe_container" style="background: #eef2ff; padding: 32px 4%;">
+        <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 16px; padding: 40px 32px; text-align: center; box-shadow: 0 12px 40px rgba(0,0,0,0.08); max-width: 640px; margin: 0 auto;">
+            <div style="width: 56px; height: 56px; background: #875A7B; border-radius: 50%; line-height: 56px; font-size: 26px; margin: 0 auto 20px; box-shadow: 0 8px 24px rgba(135, 90, 123, 0.3);">✉️</div>
             <h3 style="color: #0f172a; font-size: 28px; font-weight: 800; margin: 0 0 12px;">Still Have Questions?</h3>
             <p style="color: #64748b; font-size: 16px; line-height: 1.6; margin: 0 0 24px; max-width: 480px; margin-left: auto; margin-right: auto;">Our expert team is ready to assist. Whether you need technical clarification, pricing info, or custom development services, we are just a click away.</p>
-            <a href="mailto:support@appscomp.com" class="fsl-cta-btn" style="display: inline-block !important; background: #875A7B !important; background-color: #875A7B !important; color: #fff !important; padding: 16px 40px; border-radius: 50px; font-weight: 700; font-size: 16px; text-decoration: none !important; box-shadow: 0 10px 28px rgba(135, 90, 123, 0.35); border: 2px solid #6d4a6a;">Get in Touch Now →</a>
-            <div style="display: inline-block !important; background: #f0fdf4 !important; background-color: #f0fdf4 !important; color: #059669 !important; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; margin-top: 20px; border: 2px solid #10b981;">Avg. Response Time: &lt; 24 Hours</div>
+            <a href="mailto:support@appscomp.com" style="display: inline-block; background: #875A7B; color: #fff; padding: 16px 40px; border-radius: 50px; font-weight: 700; font-size: 16px; text-decoration: none; box-shadow: 0 10px 28px rgba(135, 90, 123, 0.35); border: 2px solid #6d4a6a;">Get in Touch Now →</a>
+            <br/>
+            <span style="display: inline-block; background: #f0fdf4; color: #059669; padding: 8px 16px; border-radius: 50px; font-size: 12px; font-weight: 700; margin-top: 20px; border: 2px solid #10b981;">Avg. Response Time: &lt; 24 Hours</span>
         </div>
     </section>
 
-    <!-- RELATED MODULE -->
-    <section class="oe_container" style="padding: 20px 4%; background: #f8fafc !important; background-color: #f8fafc !important;">
-        <div style="background: #fff !important; border: 2px solid #e2e8f0 !important; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
-            <div class="row" style="margin: 0;">
-                <div class="fsl-flex-col" style="flex: 0 0 40%; max-width: 40%; padding: 24px; background: #fff; border-right: 1px solid #f1f5f9;">
-                    <h2 style="color: #0f172a; font-size: 22px; font-weight: 800; margin: 0 0 8px;">Related <span style="color: #875A7B;">Module</span></h2>
-                    <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0 0 20px;">Full fuel station management.</p>
-                    <span style="display: inline-block !important; background: #0f172a !important; background-color: #0f172a !important; color: #fff !important; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; border: 2px solid #0f172a;">Advance Fuel Station</span>
-                </div>
-                <div style="flex: 1; padding: 0; background: #fcfdfe;">
-                    <div style="padding: 16px 20px; border-bottom: 1px solid #f1f5f9;">
-                        <span style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Works With</span>
-                    </div>
-                    <div style="padding: 16px 20px;">
-                        <div class="fsl-flex-gap-12" style="padding: 12px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px;">
-                            <span style="font-size: 20px;">⛽</span>
-                            <div>
-                                <div style="color: #1e293b; font-size: 14px; font-weight: 700;">Advance Fuel Station Management System</div>
-                                <div style="color: #875A7B; font-size: 12px;">Forecourt, POS, Shifts, Reports</div>
-                            </div>
-                            <span style="margin-left: auto; color: #94a3b8; font-size: 14px;">→</span>
+    <!-- RELATED MODULE - Uses <table> for side-by-side layout -->
+    <section class="oe_container" style="padding: 20px 4%; background: #f8fafc;">
+        <div style="background: #fff; border: 2px solid #e2e8f0; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+            <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
+                <tr>
+                    <td style="width: 40%; vertical-align: middle; padding: 24px; border-right: 1px solid #f1f5f9;">
+                        <h2 style="color: #0f172a; font-size: 22px; font-weight: 800; margin: 0 0 8px;">Related <span style="color: #875A7B;">Module</span></h2>
+                        <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0 0 20px;">Full fuel station management.</p>
+                        <span style="display: inline-block; background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px;">Advance Fuel Station</span>
+                    </td>
+                    <td style="vertical-align: top; padding: 0; background: #fcfdfe;">
+                        <div style="padding: 16px 20px; border-bottom: 1px solid #f1f5f9;">
+                            <span style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Works With</span>
                         </div>
-                    </div>
-                </div>
-            </div>
+                        <div style="padding: 16px 20px;">
+                            <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px;">
+                                <tr>
+                                    <td style="padding: 12px 16px; width: 40px; vertical-align: middle;"><span style="font-size: 20px;">⛽</span></td>
+                                    <td style="padding: 12px 0; vertical-align: middle;">
+                                        <div style="color: #1e293b; font-size: 14px; font-weight: 700;">Advance Fuel Station Management System</div>
+                                        <div style="color: #875A7B; font-size: 12px;">Forecourt, POS, Shifts, Reports</div>
+                                    </td>
+                                    <td style="padding: 12px 16px; width: 30px; vertical-align: middle; text-align: right;"><span style="color: #94a3b8; font-size: 14px;">→</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </section>
 

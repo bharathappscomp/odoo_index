@@ -243,14 +243,14 @@
         <!-- Bootstrap 5 Carousel - works on Odoo Apps Store via their injected Bootstrap JS -->
         <div id="fsl-gallery-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" style="background-color: #fff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 8px 32px rgba(0,0,0,0.06); overflow: hidden;">
 
-            <!-- Slide indicators / dots -->
+            <!-- Slide indicators / dots - using <a> tags (Odoo strips <button> elements) -->
             <div class="carousel-indicators" style="margin-bottom: 0; bottom: 12px;">
-                <button type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; border: none; opacity: 0.4; margin: 0 4px;"></button>
-                <button type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="1" aria-label="Slide 2" style="background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; border: none; opacity: 0.4; margin: 0 4px;"></button>
-                <button type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="2" aria-label="Slide 3" style="background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; border: none; opacity: 0.4; margin: 0 4px;"></button>
-                <button type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="3" aria-label="Slide 4" style="background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; border: none; opacity: 0.4; margin: 0 4px;"></button>
-                <button type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="4" aria-label="Slide 5" style="background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; border: none; opacity: 0.4; margin: 0 4px;"></button>
-                <button type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="5" aria-label="Slide 6" style="background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; border: none; opacity: 0.4; margin: 0 4px;"></button>
+                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="1" aria-label="Slide 2" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="2" aria-label="Slide 3" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="3" aria-label="Slide 4" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="4" aria-label="Slide 5" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="5" aria-label="Slide 6" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
             </div>
 
             <!-- Slides -->
@@ -342,15 +342,15 @@
 
             </div><!-- /.carousel-inner -->
 
-            <!-- Prev / Next controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide="prev" style="width: 48px; height: 48px; background-color: #875A7B; border-radius: 50%; border: none; top: 50%; transform: translateY(-50%); left: 16px; position: absolute; opacity: 1;">
+            <!-- Prev / Next controls - using <a> tags (Odoo strips <button> elements) -->
+            <a class="carousel-control-prev" href="#fsl-gallery-carousel" role="button" data-bs-slide="prev" style="width: 48px; height: 48px; background-color: #875A7B; border-radius: 50%; top: 45%; left: 16px; opacity: 1;">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#fsl-gallery-carousel" data-bs-slide="next" style="width: 48px; height: 48px; background-color: #875A7B; border-radius: 50%; border: none; top: 50%; transform: translateY(-50%); right: 16px; position: absolute; opacity: 1;">
+            </a>
+            <a class="carousel-control-next" href="#fsl-gallery-carousel" role="button" data-bs-slide="next" style="width: 48px; height: 48px; background-color: #875A7B; border-radius: 50%; top: 45%; right: 16px; opacity: 1;">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
-            </button>
+            </a>
 
         </div><!-- /.carousel -->
 

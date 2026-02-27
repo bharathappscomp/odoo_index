@@ -1,0 +1,197 @@
+<odoo>
+    <record id="view_cash_settlement_tree" model="ir.ui.view">
+        <field name="name">cash.settlement.tree</field>
+        <field name="model">cash.settlement</field>
+        <field name="arch" type="xml">
+            <tree string="Settlement Confirmation" default_order="date desc">
+                <field name="date"/>
+                <field name="employee_id"/>
+                <field name="shift_id"/>
+                <field name="expected_amount"/>
+                <field name="submitted_amount"/>
+                <field
+                        name="state"
+                        widget="badge"
+                        decoration-info="state == 'draft'"
+                        decoration-success="state == 'submitted'"
+                />
+
+                <button string="Generate Sale Order" name="create_sale_order" type="object"
+                        invisible="state == 'submitted'"
+                        class="oe_highlight"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_cash_settlement_form" model="ir.ui.view">
+        <field name="name">cash.settlement.form</field>
+        <field name="model">cash.settlement</field>
+        <field name="arch" type="xml">
+            <form string="Settlement Confirmation">
+
+                <!-- HEADER -->
+                <header>
+
+                    <button string="Generate Sale Order" name="create_sale_order" type="object"
+                            invisible="state == 'submitted'"
+                            class="oe_highlight"/>
+
+                    <field name="state"
+                           widget="statusbar"
+                           statusbar_visible="draft,submitted"/>
+                </header>
+
+                <!-- MAIN -->
+                <sheet>
+
+                    <div class="oe_button_box" name="button_box">
+
+                        <!-- Sale Orders -->
+                        <button
+                                name="action_view_sale_orders"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-shopping-cart">
+                            <field name="sale_order_count" widget="statinfo"
+                                   string="Sale Orders"/>
+                        </button>
+
+                        <!-- Invoices -->
+                        <button
+                                name="action_view_invoices"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-file-text-o">
+                            <field name="invoice_count" widget="statinfo"
+                                   string="Invoices"/>
+                        </button>
+
+                        <!-- Payments -->
+                        <button
+                                name="action_view_payments"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-money">
+                            <field name="payment_count" widget="statinfo"
+                                   string="Payments"/>
+                        </button>
+
+                    </div>
+
+
+                    <!-- TITLE -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="shift_id" readonly="1"/>
+                            <span class="text-muted">-</span>
+                            <field name="date" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <!-- BASIC INFO -->
+                    <group col="4">
+                        <field name="name" readonly="1" invisible="1"/>
+                        <field name="employee_id" readonly="1"/>
+                        <field name="expected_amount" readonly="1"/>
+                        <field name="submitted_amount" readonly="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                    </group>
+
+                    <!-- NOTEBOOK -->
+                    <notebook>
+
+                        <!-- 🔹 PAYMENT SPLIT -->
+                        <page string="Payments">
+                            <field name="payment_line_ids" readonly="1">
+                                <tree editable="false">
+                                    <field name="payment_id" column_invisible="0"/>
+                                    <field name="journal_id"/>
+                                    <field name="payment_type"/>
+                                    <field name="ref"/>
+                                    <field
+                                            name="state"
+                                            widget="badge"
+                                            decoration-info="state == 'draft'"
+                                            decoration-success="state == 'posted'"
+                                    />
+
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <!-- 🔹 RAW SETTLEMENT LINES -->
+                        <page string="Settlement Lines">
+                            <field name="line_ids" readonly="1">
+                                <tree>
+                                    <field name="closing_entry_id" column_invisible="1"/>
+                                    <field name="sale_type"/>
+                                    <field name="customer_id"/>
+                                    <field name="shift_id"/>
+                                    <field name="shift_manager_id" column_invisible="1"/>
+                                    <field name="pump_id" column_invisible="1"/>
+                                    <field name="nozzle_id"/>
+                                    <field name="fuel_id"/>
+                                    <field name="price"/>
+                                    <field name="quantity"/>
+                                    <field name="amount"/>
+                                    <field name="dip_taken_qty"/>
+                                    <field name="dip_returned_qty"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                        <!-- 🔹 LINKED CLOSING ENTRIES -->
+                        <page string="Closing Entries" groups="base.group_no_one">
+                            <field name="closing_entry_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="pump_id"/>
+                                    <field name="nozzle_id"/>
+                                    <field name="fuel_id"/>
+                                    <field name="price"/>
+                                    <field name="total_sale_amount"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Employee COA">
+                            <field name="move_ids" readonly="1">
+                                <tree>
+                                    <field name="move_id"/>
+                                    <field name="move_type"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record id="action_cash_settlement_master" model="ir.actions.act_window">
+        <field name="name">Settlement Confirmation</field>
+        <field name="res_model">cash.settlement</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No cash settlements yet.
+            </p>
+            <p>
+                Cash settlements are created automatically when shifts are submitted.
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

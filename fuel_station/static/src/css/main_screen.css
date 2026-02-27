@@ -1,0 +1,831 @@
+/* === MAIN WRAPPER === */
+.fuel-dashboard {
+    padding: 25px;
+    transform-origin: top;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    height: calc(100vh - 50px); /* keeps header visible */
+    overflow-y: auto; /* enables scroll */
+    overflow-x: hidden;
+}
+
+/* === ROWS === */
+.dashboard-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.dashboard-card {
+    min-width: 0;   /* ✅ CRITICAL for flex overflow issues */
+}
+
+@media (max-width: 1200px) {
+    .dashboard-row {
+        flex-direction: column;   /* stack cards vertically */
+    }
+}
+
+/* === CARDS === */
+.dashboard-card {
+    flex: 1;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    min-height: 280px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.dashboard-card-fix-height {
+    flex: 1;
+    border: 1px solid #E0E0E0;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    height: 350px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.card-title i {
+    color: #3498db;
+}
+
+.card-badge {
+    background: #e74c3c;
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+.card-inner {
+    font-size: 14px;
+    color: #444;
+}
+
+/* === TEXT STYLES === */
+.bold {
+    font-weight: 600;
+}
+
+.sub {
+    color: #888;
+}
+
+.small {
+    font-size: 11px;
+}
+
+/* === BADGES AND STATUS === */
+.badge {
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.petrol-badge {
+    background: rgba(52, 152, 219, 0.1);
+    color: #2980b9;
+}
+
+.diesel-badge {
+    background: rgba(231, 76, 60, 0.1);
+    color: #c0392b;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.status.completed {
+    background: rgba(46, 204, 113, 0.1);
+    color: #27ae60;
+}
+
+.status.active {
+    background: rgba(52, 152, 219, 0.1);
+    color: #2980b9;
+}
+
+.status.break {
+    background: rgba(241, 196, 15, 0.1);
+    color: #f39c12;
+}
+
+.status.inactive {
+    background: rgba(149, 165, 166, 0.1);
+    color: #7f8c8d;
+}
+
+
+/* ================== TABLE ================== */
+/* Make everything smaller & compact */
+.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 12px;               /* Smaller text */
+}
+
+.matrix-table th,
+.matrix-table td {
+    border: 1px solid #e0e0e0;
+    padding: 4px 6px;             /* smaller padding */
+    vertical-align: middle;
+    text-align: center;
+}
+
+/* Left shift column */
+.corner-col,
+.shift-cell {
+    width: 150px;                 /* reduce width */
+    padding: 6px 8px;
+    font-size: 13px;              /* slightly bigger for readability */
+}
+.shift-name {
+    font-weight: 600;
+    font-size: 13px;
+}
+.shift-time {
+    font-size: 11px;
+}
+
+/* Nozzle header */
+.nozzle-col {
+    padding: 6px;
+}
+.nozzle-title {
+    font-size: 12px;
+    font-weight: 600;
+}
+.pump-sub {
+    font-size: 10px;
+    color: #777;
+}
+
+/* Smaller cells */
+.matrix-cell {
+    height: 45px;                  /* MUCH smaller cells */
+    background: #ffffff;
+    font-size: 11px;
+}
+
+/* Shrink for small screens */
+@media (max-width: 900px) {
+    .corner-col, .shift-cell {
+        width: 100px;
+        font-size: 11px;
+    }
+    .matrix-cell {
+        height: 35px;
+    }
+}
+
+/* REMOVE border and beautify select */
+.emp-select {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 11px;
+    border: none !important;
+    background: transparent;
+    appearance: none;
+    outline: none;
+    color: #293241;
+}
+
+/* Cell base style */
+.matrix-cell {
+    height: 45px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: 2px;
+}
+
+/* EMPTY cell = RED */
+.cell-empty {
+    background: #ffe5e5 !important;       /* soft red */
+    border: 1px solid #ffbdbd !important;
+}
+
+/* SELECTED cell = BLUE */
+.cell-selected {
+    background: #d5e7ff !important;       /* soft blue */
+    border: 1px solid #8bbcff !important;
+}
+
+.cell-assigned {
+    background: #dfffd5 !important;
+    border: 1px solid #93ff8b !important;
+}
+
+
+/* On hover, make it slightly darker */
+.cell-empty:hover {
+    background: #ffd0d0 !important;
+}
+
+.cell-selected:hover {
+    background: #c5dbff !important;
+}
+
+.cell-assigned:hover {
+    background: #cfffc5 !important;
+}
+
+/* Improve dropdown text color inside colored cells */
+.cell-selected .emp-select {
+    color: #0a2a5e !important;
+    font-weight: 600;
+}
+
+.cell-assigned .emp-select {
+    color: #125e0a !important;
+    font-weight: 600;
+}
+
+.cell-empty .emp-select {
+    color: #8a0000 !important;
+}
+
+.title-with-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.assign-date {
+    padding: 4px 8px;
+    font-size: 12px;
+    border: 1px solid #d0d0d0;
+    border-radius: 6px;
+}
+
+
+
+
+
+
+
+/* Enhances overall header layout */
+.enhanced-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Header title text */
+.title-text {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* Group date + button together */
+.action-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Improved date picker styling */
+.enhanced-date {
+    padding: 6px 10px;
+    font-size: 13px;
+    border: 1px solid #c5c5c5;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.enhanced-date:hover,
+.enhanced-date:focus {
+    border-color: #7aa9ff;
+    box-shadow: 0 0 3px rgba(120, 160, 255, 0.6);
+}
+
+
+/* === KPI CARDS === */
+/* === KPI CARDS — IMAGE BASED === */
+.fuel-kpi-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.fuel-kpi-card {
+    flex: 1;
+    background: white;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 80px;
+}
+
+.fuel-kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+/* KPI icons are images now */
+.kpi-icon {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    display: block;
+    border-radius: 6px;
+}
+
+/* Text content */
+.kpi-content {
+    flex: 1;
+    text-align: left;
+}
+
+.kpi-title {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7f8c8d;
+    margin-bottom: 2px;
+}
+
+.kpi-value {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.kpi-subtitle {
+    font-size: 10px;
+    color: #95a5a6;
+}
+
+
+.recent-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.recent-table th {
+    background: #52374b;
+    color: white;
+    padding: 8px;
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+}
+
+.recent-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 13px;
+}
+
+/* Rounded corners on header */
+.recent-table thead th:first-child {
+    border-top-left-radius: 8px;
+}
+.recent-table thead th:last-child {
+    border-top-right-radius: 8px;
+}
+
+.filter-label {
+    font-weight: 200;
+    font-size:12px;
+    white-space: nowrap;
+}
+
+/* Base badge */
+.fuel-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: capitalize;
+    line-height: 1;
+}
+
+/* Walk-In (Green) */
+.fuel-badge.walk {
+    background-color: #e6f4ea;
+    color: #137333;
+}
+
+/* Credit (Orange/Red like Closed) */
+.fuel-badge.credit {
+    background-color: #fdeaea;
+    color: #d93025;
+}
+
+/* Loyalty (Blue) */
+.fuel-badge.loyalty {
+    background-color: #e8f0fe;
+    color: #1a73e8;
+}
+
+
+
+
+
+
+
+/* Grid layout */
+.fuel-pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Individual tile */
+.fuel-price-tile {
+        border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #e6e6e6;
+}
+
+/* Fuel name */
+.fuel-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Price */
+.fuel-price {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+
+
+/* No data */
+.no-data {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 24px;
+    color: #6c757d;
+}
+
+.collection-toggle .btn {
+    min-width: 70px;
+}
+
+
+/* ===============================
+   STOCK GRID – DASHBOARD COMPACT
+   =============================== */
+
+/* GRID */
+.stock-grid,
+.stock-grid-top {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;        /* 👈 horizontal scroll */
+    overflow-y: hidden;
+    flex-wrap: nowrap;       /* 👈 NEVER wrap to next line */
+    padding-bottom: 10px;    /* space for scrollbar */
+}
+
+.stock-grid-top {
+    scroll-behavior: smooth;
+}
+
+
+/* Prevent shrinking */
+.stock-tile {
+    min-width: 220px;        /* same as your tile width */
+    flex-shrink: 0;          /* 👈 CRITICAL */
+}
+
+
+/* TILE */
+.stock-tile {
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    padding: 10px 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+}
+
+/* HEADER ROW */
+.stock-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ICON */
+.stock-image {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+/* NAME + LOCATION (SAME ROW) */
+.stock-header-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.stock-name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.location-name {
+    font-size: 10.5px;
+    color: #6c757d;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* QUANTITY – CENTERED */
+.stock-value {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5px;
+    margin: 8px 0;
+}
+
+.stock-value .qty {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.stock-value .uom {
+    font-size: 11px;
+    color: #6c757d;
+}
+
+/* DIVIDER */
+.stock-divider {
+    border-top: 1px dashed #ddd;
+    margin: 6px 0;
+}
+
+/* PRICE – LABEL LEFT / VALUE RIGHT */
+.stock-price-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stock-col {
+    margin-bottom: 18px;
+}
+
+
+.price-label {
+    font-size: 15px;
+    color: #6c757d;
+}
+
+.price-value {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+/* ================================
+   UNPAID CREDIT SUMMARY TILE
+   ================================ */
+
+.credit-summary-tile {
+    background: #fff5f5;
+    border: 1.5px solid #f2bcbc;
+    border-radius: 12px;
+    padding: 18px 16px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Credit Due */
+.credit-summary-tile .credit-header {
+    margin-bottom: 6px;
+}
+
+.credit-summary-tile .credit-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #800000;
+}
+
+/* SUB TEXT */
+.credit-summary-tile .credit-name + .credit-name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* AMOUNT */
+.credit-summary-tile .credit-value {
+    margin-top: 6px;
+}
+
+.credit-summary-tile .credit-value .amt {
+    font-size: 28px;          /* 👈 MAIN FIX */
+    font-weight: 700;
+    color: #d32f2f;
+    letter-spacing: 0.5px;
+}
+
+/* Day Sale */
+day-sales-tile .credit-header {
+    margin-bottom: 6px;
+    color: #013b0e;
+}
+
+.day-sales-tile .credit-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #013b0e;
+}
+
+/* SUB TEXT */
+.day-sales-tile .credit-name + .credit-name {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+/* AMOUNT */
+.day-sales-tile .credit-value {
+    margin-top: 6px;
+}
+
+.day-sales-tile .credit-value .amt {
+    font-size: 28px;          /* 👈 MAIN FIX */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.day-sales-tile {
+    background: #f8fff9;
+    border-color: #b6e2c2;
+    padding: 18px 16px;
+
+}
+
+.stock-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.price-left,
+.price-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.price-label {
+    font-size: 12px;
+    color: #888;
+}
+
+.price-value {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* ===============================
+   DASHBOARD RESPONSIVE FIXES
+   =============================== */
+
+/* Flexbox shrink fix */
+.dashboard-card {
+    min-width: 0 !important;
+}
+
+/* Table horizontal scrolling */
+/* Desktop default: no horizontal scroll */
+.table-wrapper {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Stack cards on mobile */
+@media (max-width: 768px) {
+    .dashboard-row {
+        flex-direction: column;
+    }
+}
+
+/* ===============================
+   MOBILE ONLY FIX
+   =============================== */
+@media (max-width: 768px) {
+
+    /* Reduce dashboard padding */
+    .fuel-dashboard {
+        padding: 12px;
+        overflow-x: hidden;
+    }
+
+    /* Stack cards vertically */
+    .dashboard-row {
+        flex-direction: column;
+    }
+
+    /* Enable table scroll ONLY on mobile */
+    .table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Force table width to scroll instead of overflow */
+    .table-wrapper table {
+        min-width: 700px;
+    }
+
+    /* Prevent card overflow */
+    .dashboard-card {
+        width: 100%;
+        min-width: 0;
+    }
+
+    /* Header wrap fix */
+    .card-title {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+/* ===============================
+   MATRIX TABLE – SCROLL ONLY
+   =============================== */
+
+.matrix-container {
+    width: 100%;
+}
+
+/* Scroll wrapper */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;          /* ✅ horizontal scroll */
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Table expands naturally */
+.matrix-table {
+    width: max-content;        /* expand with columns */
+    min-width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+/* Prevent text wrapping */
+.matrix-table th,
+.matrix-table td {
+    white-space: nowrap;
+}
+
+/* Column width control */
+.corner-col,
+.shift-cell {
+    min-width: 160px;
+}
+
+.nozzle-col,
+.matrix-cell {
+    min-width: 110px;
+}
+

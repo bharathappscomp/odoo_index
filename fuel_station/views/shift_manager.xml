@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_fuel_shift_manager_tree" model="ir.ui.view">
+        <field name="name">fuel.shift.manager.tree</field>
+        <field name="model">fuel.shift.manager</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="assigned_date"/>
+                <field name="shift_id"/>
+                <field name="employee_id"/>
+                <field name="pump_id"/>
+                <field name="nozzle_id"/>
+                <field name="fuel_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_fuel_shift_manager_form" model="ir.ui.view">
+        <field name="name">fuel.shift.manager.form</field>
+        <field name="model">fuel.shift.manager</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="assigned_date" readonly="state != 'open'"/>
+                            <field name="shift_id" readonly="state != 'open'"/>
+                            <field name="employee_id" readonly="state != 'open'"/>
+                            <field name="reassigned_before_closing"/>
+                            <field name="reassigned_after_closing"/>
+                            <field name="employee_coa_id" readonly="state != 'open'"/>
+                        </group>
+                        <group>
+                            <field name="pump_id" readonly="state != 'open'"/>
+                            <field name="nozzle_id" readonly="state != 'open'"/>
+                            <field name="fuel_id"/>
+                            <field name="price" widget='monetary'
+                                   options="{'currency_field': 'currency_id'}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Closed Details">
+                            <field name="start_reading" readonly="state != 'open'"/>
+                            <field name="end_reading" readonly="state != 'open'"/>
+                            <field name="opening_amount" readonly="state != 'open'"/>
+                            <field name="opening_journal_id" readonly="state != 'open'"/>
+                            <field name="closing_amount" readonly="state != 'open'"/>
+                        </group>
+                        <group>
+                            <field name="company_id" readonly="state != 'open'"/>
+                            <field name="currency_id" readonly="state != 'open'"/>
+                        </group>
+                        <group string="DIP Test">
+                            <field name="dip_test"/>
+                            <field name="dip_taken_qty"/>
+                            <field name="dip_returned_qty"/>
+                        </group>
+
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_fuel_shift_manager" model="ir.actions.act_window">
+        <field name="name">Shift Manager</field>
+        <field name="res_model">fuel.shift.manager</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

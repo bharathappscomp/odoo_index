@@ -1,0 +1,163 @@
+<odoo>
+
+    <record id="action_meter_reading_report" model="ir.actions.report">
+        <field name="name">Meter Reading Report</field>
+        <field name="model">closing.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fuel_station.meter_reading_report_template</field>
+        <field name="report_file">fuel_station.meter_reading_report_template</field>
+        <field name="print_report_name">'Meter Reading Report'</field>
+        <field name="binding_type">report</field>
+        <!--
+        <field name="paperformat_id" ref="fuel_station.paperformat_meter_reading"/>
+        -->
+    </record>
+
+    <template id="meter_reading_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+
+                <div class="page">
+
+                    <!-- ================= HEADER ================= -->
+                    <h3 style="text-align:center; margin-bottom:10px;">
+                        Meter Reading Report
+                    </h3>
+
+                    <p style="margin-bottom:15px;">
+                        Date :
+                        <strong>
+                            <t t-esc="date"/>
+                        </strong>
+                    </p>
+
+                    <!-- ================= METER READINGS ================= -->
+                    <table class="table table-bordered" style="font-size:11px;">
+                        <thead>
+                            <tr>
+                                <th>PUMP</th>
+                                <th>NOZZLE</th>
+                                <th>FUEL</th>
+                                <th class="text-end">OPENING</th>
+                                <th class="text-end">CLOSING</th>
+                                <th class="text-end">LTRS</th>
+                                <th class="text-end">RATE</th>
+                                <th class="text-end">AMOUNT</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <t t-set="ml_ltrs" t-value="0"/>
+                            <t t-set="ml_amount" t-value="0"/>
+
+                            <t t-foreach="meter_lines" t-as="line">
+                                <t t-set="ml_ltrs" t-value="ml_ltrs + line['ltrs']"/>
+                                <t t-set="ml_amount" t-value="ml_amount + line['amount']"/>
+
+                                <tr>
+                                    <td><t t-esc="line['pump']"/></td>
+                                    <td><t t-esc="line['nozzle']"/></td>
+                                    <td><t t-esc="line['fuel']"/></td>
+                                    <td class="text-end"><t t-esc="line['opening']"/></td>
+                                    <td class="text-end"><t t-esc="line['closing']"/></td>
+                                    <td class="text-end"><t t-esc="line['ltrs']"/></td>
+                                    <td class="text-end"><t t-esc="line['rate']"/></td>
+                                    <td class="text-end"><t t-esc="line['amount']"/></td>
+                                </tr>
+                            </t>
+
+                            <tr style="font-weight:bold;">
+                                <td colspan="5">TOTAL</td>
+                                <td class="text-end"><t t-esc="ml_ltrs"/></td>
+                                <td></td>
+                                <td class="text-end"><t t-esc="ml_amount"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- ================= TOTAL SALES ================= -->
+                    <div style="margin-top:20px; width:50%;">
+                        <strong>TOTAL SALES</strong>
+
+                        <table class="table table-bordered" style="font-size:11px; margin-top:5px;">
+                            <thead>
+                                <tr>
+                                    <th>PRODUCT</th>
+                                    <th class="text-end">LTRS</th>
+                                    <th class="text-end">RATE</th>
+                                    <th class="text-end">AMOUNT</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-set="ts_ltrs" t-value="0"/>
+                                <t t-set="ts_amount" t-value="0"/>
+
+                                <t t-foreach="total_sales" t-as="sale">
+                                    <t t-set="ts_ltrs" t-value="ts_ltrs + sale['ltrs']"/>
+                                    <t t-set="ts_amount" t-value="ts_amount + sale['amount']"/>
+
+                                    <tr>
+                                        <td><t t-esc="sale['product']"/></td>
+                                        <td class="text-end"><t t-esc="sale['ltrs']"/></td>
+                                        <td class="text-end"><t t-esc="sale['rate']"/></td>
+                                        <td class="text-end"><t t-esc="sale['amount']"/></td>
+                                    </tr>
+                                </t>
+
+                                <tr style="font-weight:bold;">
+                                    <td>TOTAL</td>
+                                    <td class="text-end"><t t-esc="ts_ltrs"/></td>
+                                    <td></td>
+                                    <td class="text-end"><t t-esc="ts_amount"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- ================= CREDIT SALES ================= -->
+                    <div style="margin-top:20px; width:50%;">
+                        <strong>CREDIT SALES</strong>
+
+                        <table class="table table-bordered" style="font-size:11px; margin-top:5px;">
+                            <thead>
+                                <tr>
+                                    <th>PRODUCT</th>
+                                    <th class="text-end">QTY</th>
+                                    <th class="text-end">RATE</th>
+                                    <th class="text-end">AMOUNT</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-set="cs_qty" t-value="0"/>
+                                <t t-set="cs_amount" t-value="0"/>
+
+                                <t t-foreach="credit_sales" t-as="cs">
+                                    <t t-set="cs_qty" t-value="cs_qty + cs['qty']"/>
+                                    <t t-set="cs_amount" t-value="cs_amount + cs['amount']"/>
+
+                                    <tr>
+                                        <td><t t-esc="cs['product']"/></td>
+                                        <td class="text-end"><t t-esc="cs['qty']"/></td>
+                                        <td class="text-end"><t t-esc="cs['rate']"/></td>
+                                        <td class="text-end"><t t-esc="cs['amount']"/></td>
+                                    </tr>
+                                </t>
+
+                                <tr style="font-weight:bold;">
+                                    <td>TOTAL</td>
+                                    <td class="text-end"><t t-esc="cs_qty"/></td>
+                                    <td></td>
+                                    <td class="text-end"><t t-esc="cs_amount"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

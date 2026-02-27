@@ -1,0 +1,72 @@
+.fuel_pricing_view {
+    height: 100%;
+    overflow-x: hidden;
+
+    .o_page_title {
+        font-weight: 600;
+        letter-spacing: .2px;
+    }
+
+    .fuel-pricing-scroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-height: 0;
+        min-width: 0;
+    }
+
+    .fuel-pricing-card {
+        max-width: 760px;
+    }
+
+    .o_card {
+        border-radius: 10px;
+        border: 1px solid rgba(113, 75, 103, .18);
+        overflow: hidden;
+    }
+
+    .o_form_label{
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .fuel-pricing-table {
+
+        thead th {
+            background-color: rgba(113, 75, 103, .92);
+            color: #fff;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 14px;
+            border-bottom: 0;
+        }
+
+        tbody td {
+            padding: 14px;
+            font-size: 13.5px;
+            vertical-align: middle;
+            border-top: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        tbody tr:hover {
+            background-color: var(--o-hover-background-color);
+        }
+    }
+
+    .card-footer {
+        background-color: rgba(113, 75, 103, .03);
+        border-top: 1px solid rgba(113, 75, 103, .15);
+    }
+
+    .btn-primary {
+        background-color: #714B67;
+        border-color: #714B67;
+        font-weight: 500;
+        border-radius: 6px;
+        white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+        background-color: darken(#714B67, 5%);
+        border-color: darken(#714B67, 5%);
+    }
+}

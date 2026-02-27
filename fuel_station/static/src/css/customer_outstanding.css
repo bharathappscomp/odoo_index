@@ -1,0 +1,55 @@
+.fuel_customer_outstanding_view {
+
+    .o_page_title {
+        font-weight: 600;
+        letter-spacing: .2px;
+    }
+
+    .o_card {
+        border-radius: 8px;
+        border: 1px solid rgba(113, 75, 103, .18);
+        overflow: hidden;
+    }
+
+    .card-header {
+        background-color: rgba(113, 75, 103, .06);
+        border-bottom: 1px solid rgba(113, 75, 103, .15);
+        font-size: 13.5px;
+    }
+
+    .fuel-outstanding-table {
+
+        thead th {
+            background-color: rgba(113, 75, 103, .92);
+            color: #fff;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 12px 14px;
+            border-bottom: 0;
+        }
+
+        tbody td {
+            padding: 12px 14px;
+            font-size: 13px;
+            border-top: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        tbody tr:hover {
+            background-color: var(--o-hover-background-color);
+        }
+    }
+
+    .btn-primary {
+        background-color: #714B67;
+        border-color: #714B67;
+        font-weight: 500;
+        border-radius: 6px;
+        width: -webkit-fill-available;
+
+    }
+
+    .btn-primary:hover {
+        background-color: darken(#714B67, 5%);
+        border-color: darken(#714B67, 5%);
+    }
+}

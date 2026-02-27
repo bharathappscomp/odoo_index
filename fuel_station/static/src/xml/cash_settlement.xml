@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<t t-name="fuel_station.cash_settlement">
+    <div class="px-4 pt-3">
+
+        <!-- HEADER ROW (ALL IN ONE LINE) -->
+        <div class="d-flex justify-content-between align-items-start mb-3">
+
+            <!-- LEFT TITLE -->
+            <h3 class="m-0 mt-1">Cash Settlement</h3>
+
+            <!-- RIGHT FILTERS -->
+            <div class="d-flex gap-3 align-items-start">
+
+                <!-- DATE -->
+                <div>
+                    <input type="date"
+                           class="form-control mb-1"
+                           style="width:150px"
+                           t-model="state.date"
+                           t-on-change="fetchEntries"/>
+                </div>
+
+                <!-- EMPLOYEE FILTER -->
+                <div style="width:220px">
+
+                    <select class="form-select mb-1"
+                            t-att-disabled="!state.isAdmin"
+                            t-on-change="onEmployeeSelect">
+
+                        <t t-if="!state.isAdmin">
+                            <option t-att-value="state.selectedEmployee?.id">
+                                <t t-esc="state.selectedEmployee?.name"/>
+                            </option>
+                        </t>
+
+                        <t t-if="state.isAdmin">
+                            <option value="">Employee</option>
+                            <t t-foreach="state.employees" t-as="e" t-key="e.id">
+                                <option t-att-value="e.id"
+                                        t-att-selected="state.selectedEmployee?.id === e.id">
+                                    <t t-esc="e.name"/>
+                                </option>
+                            </t>
+                        </t>
+                    </select>
+
+                </div>
+
+
+                <!-- SHIFT -->
+                <div style="width:220px">
+                    <select class="form-select mb-1"
+                            t-on-change="onShiftSelect">
+                        <option value="">Shift</option>
+                        <t t-foreach="state.shifts" t-as="shift" t-key="shift.id">
+                            <option t-att-value="shift.id">
+                                <t t-esc="shift.name"/>
+                            </option>
+                        </t>
+                    </select>
+
+                    <div class="d-flex flex-wrap gap-1"
+                         style="min-height:28px">
+                        <t t-foreach="state.selectedShifts" t-as="s" t-key="'s_'+s.id">
+                            <span class="badge rounded-pill bg-light text-dark border">
+                                <t t-esc="s.name"/>
+                                <i class="fa fa-times ms-1 cursor-pointer"
+                                   t-att-data-id="s.id"
+                                   t-on-click="onRemoveShift"/>
+                            </span>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- PUMP -->
+                <div style="width:200px">
+                    <select class="form-select mb-1"
+                            t-on-change="onPumpSelect">
+                        <option value="">Pump</option>
+                        <t t-foreach="state.pumps" t-as="pump" t-key="pump.id">
+                            <option t-att-value="pump.id">
+                                <t t-esc="pump.name"/>
+                            </option>
+                        </t>
+                    </select>
+
+                    <div class="d-flex flex-wrap gap-1"
+                         style="min-height:28px">
+                        <t t-foreach="state.selectedPumps" t-as="p" t-key="'p_'+p.id">
+                            <span class="badge rounded-pill bg-light text-dark border">
+                                <t t-esc="p.name"/>
+                                <i class="fa fa-times ms-1 cursor-pointer"
+                                   t-att-data-id="p.id"
+                                   t-on-click="onRemovePump"/>
+                            </span>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- NOZZLE -->
+                <div style="width:200px">
+                    <select class="form-select mb-1"
+                            t-on-change="onNozzleSelect">
+                        <option value="">Nozzle</option>
+                        <t t-foreach="state.nozzles" t-as="nozzle" t-key="nozzle.id">
+                            <option t-att-value="nozzle.id">
+                                <t t-esc="nozzle.name"/>
+                            </option>
+                        </t>
+                    </select>
+
+                    <div class="d-flex flex-wrap gap-1"
+                         style="min-height:28px">
+                        <t t-foreach="state.selectedNozzles" t-as="n" t-key="'n_'+n.id">
+                            <span class="badge rounded-pill bg-light text-dark border">
+                                <t t-esc="n.name"/>
+                                <i class="fa fa-times ms-1 cursor-pointer"
+                                   t-att-data-id="n.id"
+                                   t-on-click="onRemoveNozzle"/>
+                            </span>
+                        </t>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- BODY CONTENT (SCROLLABLE) -->
+        <div class="cash-settlement-body mt-4">
+
+            <t t-if="state.loading">
+                <div class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <p class="text-muted mt-2">Loading settlement data...</p>
+                </div>
+            </t>
+
+            <t t-elif="!state.cards.length">
+                <div class="text-center py-5">
+                    <i class="fa fa-inbox fa-2x text-muted mb-3"></i>
+                    <p class="text-muted">No shift records found</p>
+                </div>
+            </t>
+
+            <!-- 🔥 SHIFT CARDS -->
+            <t t-else="">
+                <t t-foreach="state.cards" t-as="card" t-key="card.shift_id">
+
+                    <div class="cash-shift-card mb-4" t-att-class="{'opacity-75 submitted-card': card._submitted}">
+                        <!-- Card Header -->
+                        <div class="cash-card-header d-flex justify-content-between align-items-center">
+                            <div class="shift-info">
+                                <h5 class="mb-0">
+                                    <i class="fa fa-clock text-primary me-2"></i>
+                                    <span t-esc="card.shift_name"/>
+                                    <small class="ms-2">(<t t-esc="card.date"/>)</small>
+                                </h5>
+                            </div>
+                            <div class="expected-amount">
+                                <span class="badge bg-light text-dark">
+                                    Expected: <t t-esc="card.expected_amount.toFixed(2)"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Fuel Details Table -->
+                        <div class="cash-table-container">
+                            <table class="table cash-fuel-table compact-table">
+                                <thead>
+                                    <tr class="table-header-row">
+                                        <th class="fuel-col">Fuel</th>
+                                        <th class="price-col text-end">Price</th>
+
+                                        <!-- Payment Type Headers -->
+                                        <th class="payment-col text-center" colspan="2">
+                                            <i class="fa fa-user me-1"></i> Walk-in
+                                        </th>
+                                        <th class="payment-col text-center" colspan="2">
+                                            <i class="fa fa-gas-pump me-1"></i> DIP
+                                        </th>
+                                        <th class="payment-col text-center" colspan="2">
+                                            <i class="fa fa-credit-card me-1"></i> Credit
+                                        </th>
+                                        <th class="payment-col text-center" colspan="2">
+                                            <i class="fa fa-star me-1"></i> Loyalty
+                                        </th>
+                                        <th class="total-col text-end">
+                                            <i class="fa fa-calculator me-1"></i> Total
+                                        </th>
+                                    </tr>
+                                    <tr class="subheader-row">
+                                        <th></th>
+                                        <th class="text-end"><small>per unit</small></th>
+                                        <th class="qty-col text-end"><small>Qty</small></th>
+                                        <th class="amount-col text-end"><small>Amount</small></th>
+                                        <th class="qty-col text-end"><small>Qty</small></th>
+                                        <th class="amount-col text-end"><small>Amount</small></th>
+                                        <th class="qty-col text-end"><small>Qty</small></th>
+                                        <th class="amount-col text-end"><small>Amount</small></th>
+                                        <th class="qty-col text-end"><small>Qty</small></th>
+                                        <th class="amount-col text-end"><small>Amount</small></th>
+                                        <th class="text-end"><small>To Submit</small></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="card.rows" t-as="row" t-key="row.fuel_id + '_' + row.price">
+                                        <tr class="fuel-data-row">
+                                            <!-- Fuel Name -->
+                                            <td class="fuel-name-cell py-1">
+                                                <span t-esc="row.fuel_name" class="fw-medium small"/>
+                                            </td>
+
+                                            <!-- Price -->
+                                            <td class="text-end price-cell py-1">
+                                                <div class="d-flex flex-column align-items-end">
+                                                    <span t-esc="row.price.toFixed(2)" class="fw-semibold text-primary"/>
+                                                    <small class="text-muted">unit</small>
+                                                </div>
+                                            </td>
+
+                                            <!-- Walk-in -->
+                                            <td class="text-end py-1">
+                                                <span t-esc="row.walkin_qty" class="fw-medium"/>
+                                            </td>
+                                            <td class="text-end fw-semibold text-primary py-1">
+                                                <span t-esc="row.walkin_amount.toFixed(2)"/>
+                                            </td>
+
+                                            <!-- DIP -->
+                                            <td class="text-end py-1">
+                                                <span t-esc="row.dip_qty" class="fw-medium"/>
+                                            </td>
+                                            <td class="text-end fw-semibold text-success py-1">
+                                                <span t-esc="row.dip_amount.toFixed(2)"/>
+                                            </td>
+
+                                            <!-- Credit -->
+                                            <td class="text-end py-1">
+                                                <span t-esc="row.credit_qty" class="fw-medium"/>
+                                            </td>
+                                            <td class="text-end fw-semibold text-warning py-1">
+                                                <span t-esc="row.credit_amount.toFixed(2)"/>
+                                            </td>
+
+                                            <!-- Loyalty -->
+                                            <td class="text-end py-1">
+                                                <span t-esc="row.loyalty_qty" class="fw-medium"/>
+                                            </td>
+                                            <td class="text-end fw-semibold text-info py-1">
+                                                <span t-esc="row.loyalty_amount.toFixed(2)"/>
+                                            </td>
+
+                                            <!-- Total -->
+                                            <td class="text-end total-cell fw-bold py-1">
+                                                <div class="d-flex flex-column align-items-end">
+                                                    <span t-esc="row.row_total.toFixed(2)"/>
+                                                    <small class="text-muted">total</small>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Settlement Input Section -->
+                        <div class="cash-settlement-section">
+                            <div class="row g-3">
+                                <!-- Left Column: Payment Inputs -->
+                                <div class="col-md-6">
+                                    <div class="payment-input-section">
+                                        <h6 class="mb-2">
+                                            <i class="fa fa-money-bill-wave me-2 text-primary"></i>
+                                            Payment Entries
+                                        </h6>
+
+                                        <!-- Payment Lines -->
+                                        <div class="payment-lines-container">
+                                            <t t-foreach="state.paymentsByShift[card.shift_id] || []"
+                                               t-as="p"
+                                               t-key="p._uid">
+                                                <div class="d-flex gap-2 mb-2 align-items-center">
+                                                    <div class="flex-grow-1">
+                                                        <input type="number"
+                                                               class="form-control form-control-sm"
+                                                               t-model="p.amount"
+                                                               placeholder="Enter amount"
+                                                               t-att-disabled="card._submitted"
+                                                               step="0.01"/>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <select class="form-select form-select-sm"
+                                                                t-model="p.journal_id"
+                                                                t-att-disabled="card._submitted">
+                                                            <option value="">Select Journal</option>
+                                                            <t t-foreach="state.journals" t-as="j" t-key="j.id">
+                                                                <option t-att-value="j.id" t-esc="j.name"/>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-outline-danger btn-sm"
+                                                                t-if="!card._submitted
+                                                                      and (state.paymentsByShift[card.shift_id] || []).length > 1"
+                                                                t-on-click.stop="removeClosingLine.bind(this, card.shift_id, p._uid)">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </div>
+
+                                        <!-- Add Payment Line Button -->
+                                        <div class="text-start mt-2">
+                                            <button class="btn btn-outline-primary btn-sm"
+                                                    t-if="!card._submitted"
+                                                    t-on-click.stop="addClosingLine.bind(this, card.shift_id)">
+                                                <i class="fa fa-plus me-1"></i> Add Payment Line
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Right Column: Totals and Submit -->
+                                <div class="col-md-6">
+                                    <div class="totals-section">
+
+                                        <div class="totals-card">
+                                            <h6 class="mb-2">
+                                                <i class="fa fa-calculator me-2 text-success"></i>
+                                                Settlement Summary
+                                            </h6>
+
+                                            <!-- Shift Total -->
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <small class="text-muted">
+                                                    Shift Total:
+                                                </small>
+                                                <strong class="text-dark"><t t-esc="card.shift_total.toFixed(2)"/></strong>
+                                            </div>
+
+                                            <!-- Petty Cash -->
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <small class="text-muted">
+                                                    Petty Cash:
+                                                </small>
+                                                <strong class="text-success"><t t-esc="card.petty_cash_balance.toFixed(2)"/></strong>
+                                            </div>
+
+                                            <!-- Expected Amount -->
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <small class="text-muted">
+                                                    Expected:
+                                                </small>
+                                                <strong class="text-primary"><t t-esc="card.expected_amount.toFixed(2)"/></strong>
+                                            </div>
+
+
+                                            <!-- Closing Total -->
+                                            <div class="d-flex justify-content-between align-items-center mb-3 border-top pt-2">
+                                                <small class="text-muted">
+                                                    <i class="fa fa-file-invoice-dollar me-2"></i>
+                                                    Closing Total:
+                                                </small>
+                                                <strong class="fs-6 text-dark"><t t-esc="getClosingTotal(card.shift_id).toFixed(2)"/></strong>
+                                            </div>
+
+                                            <!-- Submit Button -->
+                                            <div class="text-end">
+                                                <t t-if="!card._submitted">
+                                                    <button class="btn btn-success w-100"
+                                                            t-on-click="submitShiftSettlement.bind(this, card)">
+                                                        <i class="fa fa-check-circle me-2"></i>
+                                                        Submit Settlement
+                                                    </button>
+                                                </t>
+                                                <t t-if="card._submitted">
+                                                    <div class="alert alert-success mb-0 py-2 text-center">
+                                                        <i class="fa fa-check-circle me-2"></i>
+                                                        Settlement Submitted
+                                                    </div>
+                                                </t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+
+        </div>
+    </div>
+</t>
+
+</templates>

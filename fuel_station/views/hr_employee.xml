@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_employee_form_inherit_petty_cash" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.petty.cash</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Petty Cash" name="petty_cash">
+                    <group string="Petty Cash">
+                        <group>
+                            <field name="petty_cash_need" widget="boolean_toggle"/>
+                            <label for="coa_id" invisible="not petty_cash_need">Petty Cash Account</label>
+                            <div class="oe_inline" invisible="not petty_cash_need">
+                                <field name="coa_id" nolabel="1" class="oe_inline" readonly="0" force_save="1"/>
+                            </div>
+                            <button name="create_petty_cash_account"
+                                    type="object"
+                                    class="btn btn-primary oe_inline"
+                                    string="Create"
+                                    invisible="not petty_cash_need or coa_id"/>
+                        </group>
+                        <group>
+                            <field name="petty_cash_balance" invisible="not coa_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='work_email']" position="after">
+                <field name="password"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

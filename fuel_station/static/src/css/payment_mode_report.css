@@ -1,0 +1,74 @@
+.fuel_payment_mode_view {
+    height: 100%;
+    overflow-x: hidden; /* prevent page-level horizontal scroll */
+
+    .o_page_title {
+        font-weight: 600;
+        letter-spacing: .2px;
+    }
+
+    .fuel-payment-scroll {
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-width: 0;   /* 🔑 flexbox shrink fix */
+        min-height: 0;
+    }
+
+    .o_card {
+        border-radius: 8px;
+        border: 1px solid rgba(113, 75, 103, .18);
+        overflow: hidden;
+    }
+
+    .card-header {
+        background-color: rgba(113, 75, 103, .06);
+        border-bottom: 1px solid rgba(113, 75, 103, .15);
+        font-size: 13.5px;
+    }
+
+    table {
+        width: 100%;
+        max-width: 100%;
+        table-layout: fixed; /* 🔑 prevents table overflow */
+    }
+
+    .fuel-payment-table,
+    .fuel-summary-table {
+
+        thead th {
+            background-color: rgba(113, 75, 103, .92);
+            color: #fff;
+            font-weight: 500;
+            font-size: 13px;
+            padding: 12px 14px;
+            border-bottom: 0;
+        }
+
+        tbody td {
+            padding: 12px 14px;
+            font-size: 13px;
+            border-top: 1px solid rgba(0, 0, 0, .05);
+        }
+
+        tbody tr:hover {
+            background-color: var(--o-hover-background-color);
+        }
+    }
+
+    .fuel-total-row {
+        background-color: rgba(113, 75, 103, .05);
+    }
+
+    .btn-primary {
+        background-color: #714B67;
+        border-color: #714B67;
+        font-weight: 500;
+        border-radius: 6px;
+        white-space: nowrap; /* keep Print PDF single-line */
+    }
+
+    .btn-primary:hover {
+        background-color: darken(#714B67, 5%);
+        border-color: darken(#714B67, 5%);
+    }
+}

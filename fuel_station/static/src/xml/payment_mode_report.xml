@@ -1,0 +1,179 @@
+<t t-name="fuel_station.payment_mode">
+    <div class="o_view_controller fuel_payment_mode_view h-100">
+        <div class="o_content d-flex flex-column h-100">
+
+            <!-- INNER WRAPPER (padding belongs here, NOT on o_content) -->
+            <div class="d-flex flex-column h-100 p-4">
+
+                <!-- HEADER (FIXED) -->
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-shrink-0">
+                    <div>
+                        <h2 class="o_page_title mb-1">
+                            Payment Mode Report
+                        </h2>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2">
+                        <input type="date"
+                               class="form-control form-control-sm"
+                               t-model="state.start_date"/>
+
+                        <input type="date"
+                               class="form-control form-control-sm"
+                               t-model="state.end_date"/>
+
+                        <select class="form-select form-select-sm"
+                                t-model="state.journal_id">
+                            <option value="">All Payment Modes</option>
+                            <t t-foreach="state.journals" t-as="j" t-key="j.id">
+                                <option t-att-value="j.id">
+                                    <t t-esc="j.name"/>
+                                </option>
+                            </t>
+                        </select>
+
+                        <button class="btn btn-primary btn-sm o-nowrap"
+                                t-on-click="printReport">
+                            Print PDF
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CONTENT (ONLY THIS SCROLLS) -->
+                <div class="fuel-payment-scroll flex-grow-1">
+
+                    <!-- LOADING -->
+                    <t t-if="state.loading">
+                        <div class="text-center text-muted py-4">
+                            Loading…
+                        </div>
+                    </t>
+
+                    <!-- DETAILS TABLE -->
+                    <t t-if="state.rows.length">
+
+                        <div class="card o_card mb-4">
+                            <div class="card-body p-0">
+                                <table class="table o_list_view mb-0 fuel-payment-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Pump</th>
+                                            <th>Nozzle</th>
+                                            <th>Payment Mode</th>
+                                            <th class="text-end">Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="state.rows" t-as="r" t-key="r.row_key">
+                                            <tr>
+                                                <td><t t-esc="r.date"/></td>
+                                                <td><t t-esc="r.pump"/></td>
+                                                <td><t t-esc="r.nozzle"/></td>
+                                                <td><t t-esc="r.journal"/></td>
+                                                <td class="text-end fw-medium">
+                                                    <t t-esc="r.amount"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+
+                                        <tr class="fw-semibold fuel-total-row">
+                                            <td colspan="4" class="text-end">
+                                                Total
+                                            </td>
+                                            <td class="text-end">
+                                                <t t-esc="state.total"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- SUMMARY -->
+                        <div class="row g-3 mb-3">
+
+                            <div class="col-4">
+                                <div class="card o_card h-100">
+                                    <div class="card-header py-1">
+                                        <strong>Payment Mode Summary</strong>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <table class="table o_list_view mb-0 fuel-summary-table">
+                                            <tbody>
+                                                <t t-foreach="Object.entries(state.journal_summary)"
+                                                   t-as="j" t-key="j[0]">
+                                                    <tr>
+                                                        <td><t t-esc="j[0]"/></td>
+                                                        <td class="text-end fw-medium">
+                                                            <t t-esc="j[1]"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card o_card h-100">
+                                    <div class="card-header py-1">
+                                        <strong>Pump Summary</strong>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <table class="table o_list_view mb-0 fuel-summary-table">
+                                            <tbody>
+                                                <t t-foreach="Object.entries(state.pump_summary)"
+                                                   t-as="p" t-key="p[0]">
+                                                    <tr>
+                                                        <td><t t-esc="p[0]"/></td>
+                                                        <td class="text-end fw-medium">
+                                                            <t t-esc="p[1]"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card o_card h-100">
+                                    <div class="card-header py-1">
+                                        <strong>Nozzle Summary</strong>
+                                    </div>
+                                    <div class="card-body p-0">
+                                        <table class="table o_list_view mb-0 fuel-summary-table">
+                                            <tbody>
+                                                <t t-foreach="Object.entries(state.nozzle_summary)"
+                                                   t-as="n" t-key="n[0]">
+                                                    <tr>
+                                                        <td><t t-esc="n[0]"/></td>
+                                                        <td class="text-end fw-medium">
+                                                            <t t-esc="n[1]"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+
+                    <!-- NO DATA -->
+                    <t t-if="!state.loading and !state.rows.length">
+                        <div class="text-center text-muted py-4">
+                            No data for selected filters
+                        </div>
+                    </t>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</t>

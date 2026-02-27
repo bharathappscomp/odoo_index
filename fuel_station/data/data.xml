@@ -1,0 +1,6 @@
+<odoo>
+    <record id="default_customer_id" model="res.partner">
+        <field name="name">Default Customer</field>
+        <field name="is_default_customer">true</field>
+    </record>
+</odoo>

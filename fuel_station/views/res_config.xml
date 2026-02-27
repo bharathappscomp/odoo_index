@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_fuel_station"
+            model="ir.ui.view">
+        <field name="name">res.config.settings.fuel.station</field>
+        <field name="model">res.config.settings</field>
+
+        <!-- Base Settings View -->
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+
+        <field name="arch" type="xml">
+
+            <!-- Insert after last existing setting -->
+            <xpath expr="//setting[last()]" position="after">
+
+                <setting id="fuel_auto_confirm_sale_setting"
+                         string="Fuel Station Auto Confirmation"
+                         help="Configure automatic confirmation of fuel sales while closing shifts"
+                         company_dependent="0">
+
+                    <!-- Boolean Toggle -->
+                    <field name="fuel_auto_confirm_sale"/>
+
+                    <div class="content-group">
+                        <div class="mt16 text-muted">
+                            When enabled, Walk-in and Credit Sale Orders created from the Fuel Station
+                            screen will be automatically confirmed during shift closing.
+                        </div>
+                    </div>
+
+                </setting>
+
+                <!-- Allow Loyalty on Credit Sales -->
+                <setting id="fuel_credit_loyalty_allowed_setting"
+                         string="Loyalty on Credit Sales"
+                         help="Allow loyalty points for Credit Sale customers"
+                         company_dependent="0">
+
+                    <field name="fuel_credit_loyalty_allowed"/>
+
+                    <div class="content-group">
+                        <div class="mt16 text-muted">
+                            When enabled, loyalty points can be earned or redeemed
+                            for Credit Sales in the Fuel Station.
+                        </div>
+                    </div>
+                </setting>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

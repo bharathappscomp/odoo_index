@@ -1,0 +1,325 @@
+<templates id="user_screen_templates" xml:space="preserve">
+    <t t-name="fuel_station.user_screen">
+        <div class="user-screen">
+
+            <!-- HEADER -->
+            <div class="header-row mb-4 d-flex justify-content-between align-items-center">
+                <div>
+                    <h1>Fuel Station - Meter Closing</h1>
+                    <h2>Welcome <t t-esc="user.name"/></h2>
+                </div>
+
+                <div class="date-selector">
+                    <input type="date"
+                           class="form-control"
+                           t-model="state.selected_date"
+                           t-on-change="onDateChange"
+                           t-att-disabled="is_admin ? false : true"/>
+                </div>
+            </div>
+
+            <t t-if="state.shift_manager.length">
+
+                <!-- CARD GRID -->
+                <div class="fuel-shift-cards">
+
+                    <t t-foreach="state.shift_manager" t-as="s" t-key="s.id">
+
+                        <div class="card fuel-shift-card mb-3">
+
+                            <div class="card-body">
+
+                                <!-- TOP ROW -->
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <strong class="fs-6">
+                                            <t t-esc="s.employee_name"/>
+                                        </strong>
+                                        <div class="text-muted small">
+                                            <t t-esc="s.shift_name"/>
+                                        </div>
+                                    </div>
+
+                                    <span class="badge"
+                                          t-att-class="s.state === 'close' ? 'text-bg-secondary' : 'text-bg-success'">
+                                        <t t-esc="s.state === 'close' ? 'Closed' : 'Open'"/>
+                                    </span>
+                                </div>
+
+                                <!-- NOZZLE -->
+                                <div class="mb-3">
+                                    <strong>
+                                        <t t-esc="s.nozzle_name"/>
+                                    </strong>
+                                    <div class="text-muted small">
+                                        <t t-esc="s.fuel_name"/>
+                                    </div>
+                                </div>
+
+                                <!-- READINGS -->
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <small class="text-muted">Start</small>
+                                        <input type="number"
+                                               class="form-control form-control-sm text-end"
+                                               t-att-value="s.start_reading"
+                                               readonly="readonly"/>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">End</small>
+                                        <input type="number"
+                                               class="form-control form-control-sm text-end"
+                                               t-model="s.end_reading"
+                                               t-att-disabled="s.state === 'close'"/>
+                                    </div>
+                                </div>
+
+                                <!-- DIP TEST -->
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">DIP Test</small>
+
+                                        <label class="form-switch m-0">
+                                            <input type="checkbox"
+                                                   t-model="s.dip_test"
+                                                   t-att-disabled="s.state === 'close'"/>
+                                        </label>
+                                    </div>
+
+                                    <div t-if="s.dip_test" class="row g-2 mt-2">
+                                        <div class="col-6">
+                                            <small class="text-muted">Taken</small>
+                                            <input type="number"
+                                                   class="form-control form-control-sm text-end"
+                                                   t-model="s.dip_taken_qty"
+                                                   t-att-disabled="s.state === 'close'"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <small class="text-muted">Returned</small>
+                                            <input type="number"
+                                                   class="form-control form-control-sm text-end"
+                                                   t-model="s.dip_returned_qty"
+                                                   t-att-disabled="s.state === 'close'"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- ACTIONS -->
+                                <div class="d-flex gap-2 mt-3">
+                                    <button class="btn btn-outline-secondary btn-sm flex-fill"
+                                            t-on-click="openCreditPopup"
+                                            t-att-data-shift="s.id">
+                                        Credit
+                                    </button>
+
+                                    <button class="btn btn-outline-warning btn-sm flex-fill"
+                                            t-on-click="openLoyaltyPopup"
+                                            t-att-data-shift="s.id">
+                                        Loyalty
+                                    </button>
+
+                                    <button class="btn btn-primary btn-sm flex-fill"
+                                            t-on-click="onClickSubmit"
+                                            t-att-data-shift="s.id"
+                                            t-att-disabled="s.state === 'close'">
+                                        Submit
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </t>
+                </div>
+            </t>
+
+            <t t-else="">
+                <p class="text-muted">No Shifts Assigned Today.</p>
+            </t>
+        </div>
+    </t>
+
+
+    <t t-name="fuel_station.credit_dialog">
+        <Dialog t-props="{ title: 'Credit Sales' }">
+
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Vehicle</th>
+                        <th>Qty</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <t t-foreach="lines" t-as="l" t-key="l._uid">
+                        <tr>
+                            <!-- CUSTOMER -->
+                            <td>
+                                <select class="form-select form-select-sm"
+                                        t-on-change="onCustomerChange"
+                                        t-att-data-index="lines.indexOf(l)"
+                                        t-att-disabled="readonly">
+                                    <option value="">Select Customer</option>
+                                    <t t-foreach="customers" t-as="c" t-key="c.id">
+                                        <option t-att-value="c.id"
+                                                t-att-selected="c.id === l.customer_id">
+                                            <t t-esc="c.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>
+
+                            <!-- VEHICLE (INPUT + DATALIST) -->
+                            <td>
+                                <input type="text"
+                                       class="form-control form-control-sm"
+                                       t-model="l.vehicle_no"
+                                       t-att-list="'vehicle_list_' + l._uid"
+                                       t-att-disabled="readonly"
+                                       placeholder="Enter / Select Vehicle"/>
+
+                                <datalist t-att-id="'vehicle_list_' + l._uid">
+                                    <t t-foreach="l._vehicles" t-as="v" t-key="v.vehicle">
+                                        <option t-att-value="v.vehicle"/>
+                                    </t>
+                                </datalist>
+                            </td>
+
+                            <!-- QTY -->
+                            <td>
+                                <input type="number"
+                                       class="form-control form-control-sm"
+                                       t-model="l.quantity"
+                                       t-att-disabled="readonly"
+                                       min="0"
+                                       step="0.01"/>
+                            </td>
+
+                            <!-- REMOVE -->
+                            <td class="text-center">
+                                <button class="btn btn-outline-danger btn-sm"
+                                        t-on-click="removeLine"
+                                        t-att-data-index="lines.indexOf(l)"
+                                        t-att-disabled="readonly">
+                                    <i class="fa fa-trash"/>
+                                </button>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <button class="btn btn-secondary"
+                    t-on-click="addLine"
+                    t-att-disabled="readonly">
+                Add Line
+            </button>
+
+            <button class="btn btn-primary float-end"
+                    t-on-click="save"
+                    t-att-disabled="readonly">
+                Save
+            </button>
+
+        </Dialog>
+    </t>
+
+    <t t-name="fuel_station.loyalty_dialog">
+        <Dialog t-props="{ title: 'Loyalty Sales' }">
+
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th style="width:25%">Customer</th>
+                        <th style="width:25%">Qty</th>
+                        <th style="width:15%">Redeem ?</th>
+                        <th style="width:30%">Reward</th>
+                        <th style="width:15%"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <t t-foreach="lines" t-as="l" t-key="l._uid">
+                        <tr>
+                            <td>
+                                <select class="form-select form-select-sm"
+                                        t-att-disabled="readonly"
+                                        t-att-data-index="lines.indexOf(l)"
+                                        t-on-change="onCustomerChange">
+                                    <option value="">Select Customer</option>
+                                    <t t-foreach="customers" t-as="c" t-key="c.id">
+                                        <option t-att-value="c.id"
+                                                t-att-selected="c.id === l.customer_id">
+                                            <t t-esc="c.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>
+
+                            <td>
+                                <input type="number"
+                                       class="form-control form-control-sm"
+                                       t-model="l.quantity"
+                                       min="0"
+                                       step="0.01"
+                                       t-att-disabled="readonly"/>
+                            </td>
+
+                            <td class="text-center">
+                                <div class="form-check form-switch d-flex justify-content-center">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           t-att-data-index="lines.indexOf(l)"
+                                           t-att-checked="l.use_reward"
+                                           t-att-disabled="readonly || !l.customer_id"
+                                           t-on-change="onRewardToggle"/>
+                                </div>
+                            </td>
+
+                            <!-- ⭐ REWARD SELECT -->
+                            <td>
+                                <select class="form-select form-select-sm"
+                                        t-if="l.use_reward"
+                                        t-model="l.selected_reward_id"
+                                        t-att-disabled="readonly">
+                                    <option value="">Select Reward</option>
+                                    <t t-foreach="l.available_rewards" t-as="r" t-key="r.id">
+                                        <option t-att-value="r.id">
+                                            <t t-esc="r.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </td>
+
+                            <td>
+                                <button class="btn btn-outline-danger btn-sm"
+                                        t-on-click="removeLine"
+                                        t-att-data-index="lines.indexOf(l)"
+                                        t-att-disabled="readonly">
+                                    <i class="fa fa-trash"/>
+                                </button>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <button class="btn btn-secondary"
+                    t-on-click="addLine"
+                    t-att-disabled="readonly">
+                Add Line
+            </button>
+
+            <button class="btn btn-primary float-end"
+                    t-on-click="save"
+                    t-att-disabled="readonly">
+                Save
+            </button>
+
+        </Dialog>
+    </t>
+
+</templates>

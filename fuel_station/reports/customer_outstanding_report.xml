@@ -1,0 +1,92 @@
+<odoo>
+
+    <record id="action_customer_outstanding_report" model="ir.actions.report">
+        <field name="name">Customer Outstanding Report</field>
+        <field name="model">closing.entry</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fuel_station.report_customer_outstanding_template</field>
+        <field name="report_file">fuel_station.report_customer_outstanding_template</field>
+        <field name="print_report_name">'Customer Outstanding Report'</field>
+    </record>
+
+
+    <template id="report_customer_outstanding_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <div class="page">
+
+                    <h3>Customer Outstanding Report</h3>
+                    <p>
+                        Period :
+                        <strong>
+                            <t t-esc="start_date"/>
+                        </strong>
+                        to
+                        <strong>
+                            <t t-esc="end_date"/>
+                        </strong>
+                    </p>
+
+                    <t t-foreach="data" t-as="cust">
+                        <h4 class="mt-4">
+                            <t t-esc="cust['name']"/>
+                        </h4>
+
+                        <p>
+                            <strong>Invoices :</strong>
+                            <t t-esc="cust['count']"/>
+                            |
+                            <strong>Total :</strong>
+                            <t t-esc="cust['total']"/>
+                            |
+                            <strong>Outstanding :</strong>
+                            <t t-esc="cust['outstanding']"/>
+                        </p>
+
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>Date</th>
+                                    <th>Due Date</th>
+                                    <th>Total</th>
+                                    <th>Outstanding</th>
+                                    <th>Inv State</th>
+                                    <th>Payment Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="cust['invoices']" t-as="inv">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="inv['name']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="inv['date']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="inv['due']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="inv['total']"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="inv['balance']"/>
+                                        </td>
+                                        <td class="text-capitalize">
+                                            <t t-esc="inv['state']"/>
+                                        </td>
+                                        <td class="text-capitalize">
+                                            <t t-esc="inv['payment_state'].replace('_', ' ')"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </t>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

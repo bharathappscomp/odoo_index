@@ -1,0 +1,65 @@
+<odoo>
+    <record id="view_fuel_pricing_form" model="ir.ui.view">
+        <field name="name">fuel.pricing.form</field>
+        <field name="model">fuel.pricing</field>
+        <field name="arch" type="xml">
+            <form string="Fuel Pricing">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="pricing_date"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Fuel Prices">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="product_id"
+                                           domain="[('is_fuel_product', '=', True)]"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_fuel_pricing_tree" model="ir.ui.view">
+        <field name="name">fuel.pricing.tree</field>
+        <field name="model">fuel.pricing</field>
+        <field name="arch" type="xml">
+            <tree string="Fuel Pricing">
+                <field name="name"/>
+                <field name="pricing_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_fuel_pricing" model="ir.actions.act_window">
+        <field name="name">Fuel Pricing</field>
+        <field name="res_model">fuel.pricing</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="seq_fuel_pricing" model="ir.sequence">
+        <field name="name">Fuel Pricing</field>
+        <field name="code">fuel.pricing</field>
+        <field name="prefix">FP/%(year)s/%(month)s/%(day)s/</field>
+        <field name="padding">4</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="fuel_pricing_apply_today_cron" model="ir.cron">
+        <field name="name">Apply Fuel Pricing (Today)</field>
+        <field name="model_id" ref="model_fuel_pricing"/>
+        <field name="state">code</field>
+        <field name="code">model.apply_today_pricing_cron()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">True</field>
+    </record>
+
+</odoo>

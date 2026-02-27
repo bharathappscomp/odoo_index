@@ -1,0 +1,286 @@
+/* Cash Settlement Main Container */
+.cash-settlement-body {
+    background: #f8f9fa;
+    height: calc(100vh - 170px);
+    overflow-y: auto;
+}
+
+/* Shift Card Container */
+.cash-shift-card {
+    background: white;
+    border: 1px solid #e6e9ec;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+}
+
+.cash-shift-card.submitted-card {
+    border-color: #28a745;
+    border-left: 4px solid #28a745;
+}
+
+/* Card Header */
+.cash-card-header {
+    padding: 12px 16px;
+    background: #714B67;
+    color: white;
+}
+
+.cash-card-header .shift-info h5 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.cash-card-header .badge {
+    background: white;
+    color: #714B67;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+/* Fuel Table Container */
+.cash-table-container {
+    padding: 0;
+    overflow-x: auto;
+}
+
+/* Compact Fuel Table */
+.cash-fuel-table.compact-table {
+    margin: 0;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.85rem;
+}
+
+.cash-fuel-table.compact-table thead {
+    background: #f8f9fa;
+}
+
+.cash-fuel-table.compact-table .table-header-row {
+    height: 36px;
+    border-bottom: 1px solid #e6e9ec;
+}
+
+.cash-fuel-table.compact-table .table-header-row th {
+    font-weight: 600;
+    color: #495057;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    padding: 6px 10px;
+    vertical-align: middle;
+}
+
+.cash-fuel-table.compact-table .subheader-row {
+    height: 30px;
+    background: #f1f3f5;
+}
+
+.cash-fuel-table.compact-table .subheader-row th {
+    font-weight: 400;
+    color: #6c757d;
+    font-size: 0.75rem;
+    padding: 6px 10px;
+}
+
+.cash-fuel-table.compact-table tbody tr {
+    height: 40px;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.cash-fuel-table.compact-table tbody tr:hover {
+    background-color: rgba(102, 126, 234, 0.04);
+}
+
+.cash-fuel-table.compact-table tbody td {
+    padding: 4px 10px;
+    vertical-align: middle;
+    border: none;
+}
+
+/* Table Column Sizes */
+.cash-fuel-table.compact-table .fuel-col { width: 10%; min-width: 100px; }
+.cash-fuel-table.compact-table .price-col { width: 6%; min-width: 80px; }
+.cash-fuel-table.compact-table .payment-col { width: 16%; min-width: 140px; }
+.cash-fuel-table.compact-table .qty-col { width: 5%; min-width: 50px; }
+.cash-fuel-table.compact-table .amount-col { width: 5%; min-width: 70px; }
+.cash-fuel-table.compact-table .total-col { width: 8%; min-width: 80px; }
+
+/* Special Table Cells */
+.fuel-name-cell {
+    font-weight: 500;
+    color: #343a40;
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.price-cell {
+    color: #0d6efd;
+    font-weight: 600;
+}
+
+.total-cell {
+    background: rgba(255, 243, 205, 0.3);
+    color: #856404;
+    border-left: 2px solid #ffc107;
+}
+
+/* Compact Table Utilities */
+.compact-table .small {
+    font-size: 0.85rem;
+}
+
+.compact-table .text-muted {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+.compact-table .fa {
+    font-size: 0.75rem;
+}
+
+/* Settlement Section - Two Column Layout */
+.cash-settlement-section {
+    padding: 20px;
+    border-top: 1px solid #e6e9ec;
+    background: #f8f9fa;
+}
+
+/* Payment Inputs - Left Column */
+.payment-input-section {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    height: 100%;
+}
+
+.payment-input-section h6 {
+    color: #495057;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.payment-lines-container {
+    max-height: 200px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+
+
+/* Totals Section - Right Column */
+.totals-section {
+    height: 100%;
+}
+
+.totals-section h6 {
+    color: #495057;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+}
+
+.totals-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.totals-card small {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.totals-card strong {
+    font-size: 0.95rem;
+}
+
+.totals-card .border-top {
+    border-top: 2px dashed #dee2e6 !important;
+    padding-top: 12px;
+}
+
+/* Submit Button */
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+}
+
+/* Submitted State */
+.alert-success {
+    background: rgba(40, 167, 69, 0.1);
+    border: 1px solid rgba(40, 167, 69, 0.2);
+    color: #155724;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    padding: 12px;
+    text-align: center;
+}
+
+/* Card Footer - Removed since we moved content to right column */
+
+/* Loading & Empty States */
+.text-center.py-5 {
+    color: #6c757d;
+}
+
+.text-center.py-5 .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.text-center.py-5 .fa-inbox {
+    color: #dee2e6;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .cash-settlement-body {
+        padding: 12px;
+    }
+
+    .cash-shift-card {
+        margin-bottom: 12px;
+    }
+
+    .cash-card-header {
+        padding: 12px;
+    }
+
+    .cash-settlement-section {
+        padding: 16px;
+    }
+
+    .payment-input-section,
+    .totals-card {
+        padding: 12px;
+    }
+
+    .totals-card .d-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        margin-bottom: 12px;
+    }
+
+    .totals-card strong {
+        align-self: flex-end;
+    }
+}

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="petty_cash_templates" xml:space="preserve">
+
+<t t-name="fuel_station.petty_cash">
+    <div class="o_view_controller o_action_manager fuel_petty_cash_view p-4">
+        <div class="o_content">
+
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h2 class="o_page_title mb-1">
+                        Fuel Station – Petty Cash Management
+                    </h2>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <label class="o_form_label mb-0 text-muted">
+                        Date
+                    </label>
+                    <input
+                        type="date"
+                        class="form-control form-control-sm"
+                        t-att-value="state.date"
+                        t-on-change="onDateChange"
+                    />
+                </div>
+            </div>
+
+
+            <!-- PETTY CASH CARDS -->
+            <div class="fuel_petty_cash_cards">
+                <t t-if="state.shifts.length">
+                    <t t-foreach="state.shifts" t-as="s" t-key="s.id">
+                        <div class="petty-card">
+                            <div class="petty-card-header">
+                                <div>
+                                    <strong class="emp-name">
+                                        <t t-esc="s.employee_id?.[1]"/>
+                                    </strong>
+                                    <div class="text-muted small">
+                                        <t t-esc="s.employee_coa_id?.[1]"/>
+                                    </div>
+                                </div>
+
+                                <span class="badge bg-secondary">
+                                    <t t-esc="s.shift_id?.[1]"/>
+                                </span>
+                            </div>
+
+                            <div class="petty-card-row">
+                                <span>Current Balance</span>
+                                <span class="fw-semibold">
+                                    <t t-esc="s.petty_cash_balance.toFixed(2)"/>
+                                </span>
+                            </div>
+
+                            <div class="petty-card-actions">
+                                <input
+                                    type="number"
+                                    class="form-control form-control-sm"
+                                    placeholder="Amount"
+                                    t-att-value="s.amount"
+                                    t-on-input="(ev) => onAmountChange(ev, s)"
+                                />
+
+                                <button
+                                    class="btn btn-sm btn-primary"
+                                    t-on-click="() => createPettyCash(s)"
+                                    t-att-disabled="state.loading"
+                                >
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+
+                <t t-else="">
+                    <div class="text-center text-muted py-4">
+                        No open shifts found for selected date
+                    </div>
+                </t>
+            </div>
+
+                </div>
+            </div>
+</t>
+
+</templates>

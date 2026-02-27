@@ -1,0 +1,108 @@
+<t t-name="fuel_station.customer_outstanding">
+    <div class="o_view_controller fuel_customer_outstanding_view p-4">
+        <div class="o_content">
+
+            <!-- HEADER -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                    <h2 class="o_page_title mb-1">
+                        Customer Outstanding Report
+                    </h2>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+                    <input type="date"
+                           class="form-control form-control-sm"
+                           t-model="state.start_date"/>
+
+                    <input type="date"
+                           class="form-control form-control-sm"
+                           t-model="state.end_date"/>
+
+                    <select class="form-select form-select-sm"
+                            t-model="state.customer_id">
+                        <option value="">All Customers</option>
+                        <t t-foreach="state.customers" t-as="cust" t-key="cust.id">
+                            <option t-att-value="cust.id">
+                                <t t-esc="cust.name"/>
+                            </option>
+                        </t>
+                    </select>
+
+                    <button class="btn btn-primary btn-sm o-nowrap"
+                            t-on-click="printReport">
+                        Print PDF
+                    </button>
+                </div>
+            </div>
+
+            <!-- LOADING -->
+            <t t-if="state.loading">
+                <div class="text-center text-muted py-4">
+                    Loading…
+                </div>
+            </t>
+
+            <!-- DATA -->
+            <t t-if="state.data.length">
+
+                <t t-foreach="state.data" t-as="cust" t-key="cust.id">
+
+                    <div class="card o_card mt-3">
+                        <div class="card-header py-2">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>
+                                    <t t-esc="cust.name"/>
+                                </strong>
+                                <span class="text-muted">
+                                    Invoices: <t t-esc="cust.count"/> |
+                                    Outstanding: <strong><t t-esc="cust.outstanding"/></strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-0">
+                            <table class="table o_list_view mb-0 fuel-outstanding-table">
+                                <thead>
+                                    <tr>
+                                        <th>Invoice</th>
+                                        <th>Date</th>
+                                        <th>Due</th>
+                                        <th>State</th>
+                                        <th>Payment</th>
+                                        <th class="text-end">Total</th>
+                                        <th class="text-end">Outstanding</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="cust.invoices" t-as="inv" t-key="inv.name">
+                                        <tr>
+                                            <td><t t-esc="inv.name"/></td>
+                                            <td><t t-esc="inv.date"/></td>
+                                            <td><t t-esc="inv.due"/></td>
+                                            <td><t t-esc="inv.state"/></td>
+                                            <td><t t-esc="inv.payment_state"/></td>
+                                            <td class="text-end"><t t-esc="inv.total"/></td>
+                                            <td class="text-end fw-semibold">
+                                                <t t-esc="inv.balance"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </t>
+            </t>
+
+            <!-- NO DATA -->
+            <t t-if="!state.loading and !state.data.length">
+                <div class="text-muted text-center py-4">
+                    No data for selected filters
+                </div>
+            </t>
+
+        </div>
+    </div>
+</t>

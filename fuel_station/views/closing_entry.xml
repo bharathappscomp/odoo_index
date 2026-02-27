@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_closing_entry_tree" model="ir.ui.view">
+        <field name="name">closing.entry.tree</field>
+        <field name="model">closing.entry</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="create_date"/>
+                <field name="shift_id"/>
+                <field name="employee_id"/>
+                <field name="pump_id"/>
+                <field name="nozzle_id"/>
+                <field name="fuel_id"/>
+                <field name="start_reading"/>
+                <field name="end_reading"/>
+                <field name="total_reading"/>
+                <field name="opening_amount" widget='monetary'
+                       options="{'currency_field': 'currency_id'}" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_closing_entry_form" model="ir.ui.view">
+        <field name="name">closing.entry.form</field>
+        <field name="model">closing.entry</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Closing Details">
+                        <group>
+                            <field name="company_id"/>
+                            <field name="currency_id"/>
+                            <field name="shift_manager_id"/>
+                            <field name="shift_id"/>
+                            <field name="pump_id"/>
+                            <field name="nozzle_id"/>
+                            <field name="fuel_id"/>
+                            <field name="price" widget='monetary'
+                                   options="{'currency_field': 'currency_id'}"/>
+
+                        </group>
+                        <group>
+                            <field name="start_reading"/>
+                            <field name="end_reading"/>
+                            <field name="total_reading"/>
+                            <field name="opening_amount" widget='monetary'
+                                   options="{'currency_field': 'currency_id'}" invisible="1"/>
+                            <field name="opening_journal_id" invisible="1"/>
+                            <field name="total_sale_amount" widget='monetary'
+                                   options="{'currency_field': 'currency_id'}"/>
+                            <field name="employee_id"/>
+                            <field name="create_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Walk-In Sales">
+                            <field name="walkin_ids">
+                                <tree>
+                                    <field name="company_id" column_invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="shift_manager_id"/>
+                                    <field name="nozzle_id"/>
+                                    <field name="price" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="quantity"/>
+
+                                    <field name="amount" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="is_dip_adjustment"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer" col="2">
+                                <field name="walkin_total_amount" readonly="1"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page string="Credit Sales">
+                            <field name="credit_ids">
+                                <tree>
+                                    <field name="company_id" column_invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="customer_id"/>
+                                    <field name="shift_manager_id"/>
+                                    <field name="nozzle_id"/>
+                                    <field name="vehicle_no"/>
+                                    <field name="price" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="quantity"/>
+                                    <field name="amount" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer" col="2">
+                                <field name="credit_total_amount" readonly="1"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+
+                        </page>
+                        <page string="Loyalty">
+                            <field name="loyalty_line_ids">
+                                <tree>
+                                    <field name="company_id" column_invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="customer_id"/>
+                                    <field name="price" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="quantity"/>
+                                    <field name="shift_manager_id"/>
+                                    <field name="nozzle_id"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer" col="2">
+                                <field name="loyalty_total_amount" readonly="1"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page string="Closing Amount Split">
+                            <field name="payment_line_ids">
+                                <tree>
+                                    <field name="company_id" column_invisible="1"/>
+                                    <field name="currency_id" column_invisible="1"/>
+                                    <field name="shift_manager_id"/>
+                                    <field name="nozzle_id"/>
+                                    <field name="journal_id"/>
+                                    <field name="amount" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer" col="2">
+                                <field name="closing_amount" readonly="1"
+                                       widget="monetary"
+                                       options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                        </page>
+                        <page string="DIP Test">
+                            <group>
+                                <group>
+                                    <field name="dip_taken_qty"/>
+                                    <field name="dip_returned_qty"/>
+                                </group>
+                                <group>
+                                </group>
+                            </group>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_closing_entry" model="ir.actions.act_window">
+        <field name="name">Closing Entry</field>
+        <field name="res_model">closing.entry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

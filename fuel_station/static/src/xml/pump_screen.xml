@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="pump_screen_templates" xml:space="preserve">
+    <t t-name="fuel_station.pump_screen">
+
+        <div class="pump-screen">
+
+            <!-- Back Button -->
+            <button class="back-btn" t-on-click="onBackClick">
+                ← Back
+            </button>
+
+            <h1>PUMPS SCREEN</h1>
+
+        </div>
+
+    </t>
+</templates>

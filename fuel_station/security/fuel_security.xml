@@ -1,0 +1,23 @@
+<odoo>
+    <!-- Create new module category -->
+    <record id="module_category_fuel_station" model="ir.module.category">
+        <field name="name">Fuel Station</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <!-- Employee Group -->
+    <record id="group_fuel_employee" model="res.groups">
+        <field name="name">Employee</field>
+        <field name="category_id" ref="module_category_fuel_station"/>
+        <field name="implied_ids" eval="[(6, 0, [ref('base.group_user')])]"/>
+        <field name="comment">Employees</field>
+    </record>
+
+    <!-- Admin Group -->
+    <record id="group_fuel_admin" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="comment">FULL ACCESS</field>
+        <field name="category_id" ref="module_category_fuel_station"/>
+        <field name="implied_ids" eval="[(4, ref('group_fuel_employee'))]"/>
+    </record>
+</odoo>

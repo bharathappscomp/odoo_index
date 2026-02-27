@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Fuel Sales Action -->
+    <record id="action_fuel_sale_orders" model="ir.actions.act_window">
+        <field name="name">Fuel Sales</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('is_fuel_sale', '=', True)]</field>
+        <field name="context">{'from_fuel_station': True}</field>
+    </record>
+
+    <menuitem
+            id="menu_fuel_sales_root"
+            name="Fuel Sales"
+            web_icon="fuel_station,static/src/img/fuel_sales.png"
+            groups="fuel_station.group_fuel_admin"
+            sequence="10">
+
+        <menuitem id="fuel_sales_menu"
+                  name="Sales"
+                  action="action_fuel_sale_orders"
+                  sequence="1"/>
+
+        <menuitem id="product_menu_catalog"
+                  name="Products"
+                  action="sale.product_template_action"
+                  sequence="2"/>
+
+        <menuitem
+                id="menu_discount_loyalty_type_fuel"
+                action="loyalty.loyalty_program_discount_loyalty_action"
+                name="Discount &amp; Loyalty"
+                sequence="3"/>
+
+        <menuitem id="sale.menu_sale_report"
+                  name="Reporting"
+                  sequence="4">
+
+            <menuitem id="sale.menu_reporting_sales"
+                      name="Sales"
+                      action="sale.action_order_report_all"
+                      sequence="10"/>
+            <menuitem id="sale.menu_reporting_salespeople"
+                      name="Salespersons"
+                      action="sale.action_order_report_salesperson"
+                      sequence="20"/>
+            <menuitem id="sale.menu_reporting_product"
+                      name="Products"
+                      action="sale.action_order_report_products"
+                      sequence="30"/>
+            <menuitem id="sale.menu_reporting_customer"
+                      name="Customers"
+                      action="sale.action_order_report_customers"
+                      sequence="40"/>
+
+        </menuitem>
+    </menuitem>
+
+
+    <record id="fuel_sale_order_view_form" model="ir.ui.view">
+        <field name="name">sale.order.view.form.inherit.fuel.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="is_fuel_sale" invisible="1"/>
+                <field name="fuel_sale_type" readonly="1"/>
+                <field name="shift_manager_id" readonly="1" invisible="1"/>
+                <field name="nozzle_id" readonly="1"/>
+                <field name="dip_taken_qty" readonly="1"/>
+                <field name="dip_returned_qty" readonly="1"/>
+                <field name="settlement_id" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="fuel_sale_order_view_tree" model="ir.ui.view">
+        <field name="name">sale.order.view.tree.inherit.fuel.sale</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="fuel_sale_type" decoration-success="fuel_sale_type == 'walk'"
+                       decoration-info="fuel_sale_type == 'credit'"
+                       decoration-warning="fuel_sale_type == 'loyalty'"
+                       widget="badge"
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="seq_sale_order_fuel" model="ir.sequence">
+        <field name="name">Fuel Sale Order</field>
+        <field name="code">sale.order.fuel</field>
+        <field name="prefix">FS/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+</odoo>

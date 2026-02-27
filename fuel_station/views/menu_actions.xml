@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="fuel_dashboard_action_client" model="ir.actions.client">
+            <field name="name">Fuel Dashboard</field>
+            <field name="tag">fuel_station.fuel_dashboard_main</field>
+        </record>
+
+        <record id="action_pump_screen" model="ir.actions.client">
+            <field name="name">Pump Screen</field>
+            <field name="tag">fuel_station.pump_screen</field>
+        </record>
+
+        <record id="action_nozzle_screen" model="ir.actions.client">
+            <field name="name">Nozzle Screen</field>
+            <field name="tag">fuel_station.nozzle_screen</field>
+        </record>
+
+        <record id="action_user_login_screen" model="ir.actions.client">
+            <field name="name">User Login Screen</field>
+            <field name="tag">fuel_station.user_login_screen</field>
+        </record>
+
+        <record id="action_user_screen" model="ir.actions.client">
+            <field name="name">User Screen</field>
+            <field name="tag">fuel_station.user_screen</field>
+        </record>
+
+        <record id="action_pricing_screen" model="ir.actions.client">
+            <field name="name">Pricing Screen</field>
+            <field name="tag">fuel_station.pricing_screen</field>
+        </record>
+
+        <record id="action_petty_cash_screen" model="ir.actions.client">
+            <field name="name">Petty Cash</field>
+            <field name="tag">fuel_station.petty_cash</field>
+        </record>
+
+        <record id="action_meter_reading_screen" model="ir.actions.client">
+            <field name="name">Meter Reading</field>
+            <field name="tag">fuel_station.meter_reading</field>
+        </record>
+
+        <record id="action_shift_report" model="ir.actions.client">
+            <field name="name">Shift Report</field>
+            <field name="tag">fuel_station.shift_report</field>
+        </record>
+
+        <record id="action_customer_outstanding" model="ir.actions.client">
+            <field name="name">Customer Outstanding Report</field>
+            <field name="tag">fuel_station.customer_outstanding</field>
+        </record>
+
+        <record id="action_payment_mode" model="ir.actions.client">
+            <field name="name">Payment Mode Report</field>
+            <field name="tag">fuel_station.payment_mode</field>
+        </record>
+
+        <record id="action_cash_settlement" model="ir.actions.client">
+            <field name="name">Cash Settlement</field>
+            <field name="tag">fuel_station.cash_settlement</field>
+        </record>
+
+        <menuitem id="main_menu_fuel_station"
+                  web_icon="fuel_station,static/src/img/fuel_station.png"
+                  name="Fuel Station">
+
+            <menuitem id="fuel_station_main_dashboard"
+                      name="Dashboard"
+                      action="fuel_dashboard_action_client"
+                      groups="fuel_station.group_fuel_admin"
+                      sequence="1"/>
+
+            <menuitem id="fuel_station_petty_cash_dashboard"
+                      name="Petty Cash"
+                      action="action_petty_cash_screen"
+                      groups="fuel_station.group_fuel_admin"
+                      sequence="2"/>
+
+            <menuitem id="fuel_station_user_dashboard"
+                      name="Meter Closing"
+                      action="action_user_screen"
+                      sequence="3"/>
+
+            <menuitem id="fuel_settlements_menu"
+                      name="Settlements"
+                      sequence="4">
+
+                <menuitem id="fuel_station_cash_settlement"
+                          name="Cash Settlement"
+                          action="action_cash_settlement"
+                          sequence="1"/>
+
+                <menuitem id="menu_cash_settlement"
+                          name="Settlements Confirmation"
+                          sequence="2"
+                          groups="fuel_station.group_fuel_admin"
+                          action="action_cash_settlement_master"/>
+            </menuitem>
+
+            <menuitem id="fuel_station_pricing_screen"
+                      name="Pricing Screen"
+                      action="action_pricing_screen"
+                      groups="fuel_station.group_fuel_admin"
+                      sequence="5"/>
+
+            <menuitem id="fuel_reports_menu"
+                      name="Reports"
+                      groups="fuel_station.group_fuel_admin"
+                      sequence="6">
+
+                <menuitem id="menu_fuel_station_meter_reading"
+                          name="Meter Reading Report"
+                          sequence="1"
+                          action="action_meter_reading_screen"/>
+
+                <menuitem id="menu_fuel_station_shift_report"
+                          name="Shift Wise Report"
+                          sequence="2"
+                          action="action_shift_report"/>
+
+                <menuitem id="menu_fuel_station_customer_outstanding_report"
+                          name="Customer Outstanding Report"
+                          sequence="3"
+                          action="action_customer_outstanding"/>
+
+                <menuitem id="menu_fuel_station_payment_mode_report"
+                          name="Payment Mode Report"
+                          sequence="4"
+                          action="action_payment_mode"/>
+
+            </menuitem>
+
+            <menuitem id="fuel_station_configuration"
+                      name="Configuration"
+                      groups="fuel_station.group_fuel_admin"
+                      sequence="7">
+
+                <menuitem id="menu_fuel_station_tank"
+                          name="Tank"
+                          sequence="1"
+                          action="action_fuel_station_tank"/>
+                <menuitem id="menu_fuel_station_pump"
+                          name="Pump"
+                          sequence="2"
+                          action="action_fuel_station_pump"/>
+                <menuitem id="menu_fuel_station_nozzle"
+                          name="Nozzle"
+                          sequence="3"
+                          action="action_fuel_station_nozzle"/>
+                <menuitem id="menu_fuel_station_shift"
+                          name="Shift"
+                          sequence="4"
+                          action="action_fuel_station_shift"/>
+                <menuitem id="menu_fuel_pricing"
+                          name="Pricing"
+                          sequence="5"
+                          action="action_fuel_pricing"/>
+
+                <menuitem id="fuel_shift_manager_menu"
+                          name="Shift Manager"
+                          action="action_fuel_shift_manager"
+                          groups="fuel_station.group_fuel_admin"
+                          sequence="6"/>
+
+                <menuitem id="menu_closing_entry"
+                          name="Closing Entries"
+                          sequence="7"
+                          groups="fuel_station.group_fuel_admin"
+                          action="action_closing_entry"/>
+            </menuitem>
+        </menuitem>
+
+    </data>
+</odoo>

@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="fuel_station_templates" xml:space="preserve">
+
+    <t t-name="fuel_station.fuel_dashboard_main">
+        <div class="fuel-dashboard">
+
+            <div class="stock-col">
+
+                <!-- STOCK ONLY (NO CARD, NO TITLE) -->
+                <div class="stock-grid stock-grid-top">
+
+                    <t t-if="state.products_stock.length">
+
+                        <t t-foreach="state.products_stock" t-as="p" t-key="p.id">
+
+                            <div class="stock-tile">
+
+                                <div class="stock-header">
+                                    <img class="stock-image"
+                                         t-att-src="this.getProductImageUrl(p.product_id)"
+                                         alt="product"/>
+
+                                    <div class="stock-header-text">
+                                        <div class="stock-name">
+                                            <t t-esc="p.product_name"/>
+                                        </div>
+                                        <div class="location-name">
+                                            <t t-esc="p.location_name"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="stock-value">
+                                    <span class="qty">
+                                        <t t-esc="p.qty"/>
+                                    </span>
+                                    <span class="uom">
+                                        <t t-esc="p.uom"/>
+                                    </span>
+                                </div>
+
+                                <!-- PRICE -->
+                                <div class="stock-divider"></div>
+
+                                <div class="stock-price-row">
+
+                                    <!-- LEFT : PRICE -->
+                                    <div class="price-left">
+                                        <div class="price-label">Price</div>
+                                        <div class="price-value">
+                                            <t t-esc="p.price.toFixed(2)"/>
+                                        </div>
+                                    </div>
+
+                                    <!-- RIGHT : STOCK VALUE -->
+                                    <div class="price-right">
+                                        <div class="price-label">Stock Value</div>
+                                        <div class="price-value text-success">
+                                            <t t-esc="p.stock_value.toFixed(2)"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </t>
+
+                        <div class="stock-tile credit-summary-tile">
+
+                            <div class="credit-header">
+                                <div class="credit-name">
+                                    Unpaid Credit Due
+                                </div>
+                            </div>
+
+                            <div class="credit-name">
+                                Outstanding Amount
+                            </div>
+
+                            <div class="credit-value">
+                                <span class="amt text-danger">
+                                    <t t-esc="totalUnpaidCreditDue.toFixed(2)"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="stock-tile day-sales-tile">
+
+                            <div class="credit-header">
+                                <div class="credit-name">
+                                    Day Sales
+                                </div>
+                            </div>
+
+                            <div class="credit-name">
+                                <t t-esc="new Date().toLocaleDateString()"/>
+                            </div>
+
+                            <div class="credit-value">
+                                <t t-if="state.today_sales_loading">
+                                    <span class="text-muted">Loading…</span>
+                                </t>
+                                <t t-else="">
+                                    <span class="amt text-success">
+                                        <t t-esc="state.today_sales_amount.toFixed(2)"/>
+                                    </span>
+                                </t>
+                            </div>
+
+                        </div>
+                    </t>
+
+                </div>
+
+            </div>
+
+            <div class="dashboard-row"> <!-- DASHBOARD ROW - 01 -->
+
+                <div class="dashboard-card matrix-card"> <!-- LEFT CARD -->
+                    <div class="card-title title-with-actions enhanced-title">
+                        <span class="title-text">Employee Assignments</span>
+
+                        <div class="action-group">
+                            <input type="date"
+                                   t-model="state.assign_date"
+                                   t-on-change="onDateChange"
+                                   class="assign-date enhanced-date"/>
+
+                            <button class="btn btn-primary" t-on-click="onAssignClick">
+                                <strong>Assign</strong>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- MATRIX TABLE -->
+                    <div class="matrix-container">
+                        <div class="table-wrapper">
+                            <table class="matrix-table">
+                                <thead>
+                                    <tr>
+                                        <th class="corner-col">SHIFT / NOZZLE</th>
+
+                                        <t t-foreach="state.nozzlesFlat" t-as="n" t-key="`nz_${n.id}`">
+                                            <th class="nozzle-col">
+                                                <div class="nozzle-title"><t t-esc="n.name"/></div>
+                                                <div class="pump-sub"><t t-esc="n.pump_name"/></div>
+                                            </th>
+                                        </t>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <t t-foreach="state.shifts" t-as="s" t-key="`sh_${s.id}`">
+                                        <tr>
+                                            <td class="shift-cell">
+                                                <div class="shift-name"><t t-esc="s.name"/></div>
+                                            </td>
+
+                                            <t t-foreach="state.nozzlesFlat" t-as="n" t-key="`cell_${s.id}_${n.id}`">
+                                                <td t-attf-class="matrix-cell #{this.getSelected(s.id, n.id) ? 'cell-selected' : 'cell-empty'}">
+                                                    <select class="emp-select"
+                                                            t-att-data-assigned="state.assignedCells[s.id] and state.assignedCells[s.id][n.id]"
+                                                            t-on-change="(ev) => this.onSelectEmployee(s.id, n.id, ev)">
+                                                        <option value="">Select</option>
+
+                                                        <t t-foreach="state.employees" t-as="emp" t-key="`emp_${emp.id}`">
+                                                            <option t-att-value="emp.id"
+                                                                    t-att-selected="this.getSelected(s.id, n.id) == emp.id">
+                                                                <t t-esc="emp.name"/>
+                                                            </option>
+                                                        </t>
+
+                                                    </select>
+                                                </td>
+                                            </t>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+            <div class="dashboard-row"> <!-- DASHBOARD ROW - 02 -->
+                <div class="dashboard-card">
+
+                    <div class="card-title enhanced-title">
+                        <span class="title-text">Recent Closings</span>
+                        <div class="action-group">
+                            <button class="btn btn-primary" t-on-click="onClickClose">
+                                <strong>View All</strong>
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="recent-table">
+                            <thead>
+                                <tr>
+                                    <th t-on-click="() => this.sortByColumn('create_date')">
+                                        Closed On <t t-esc="this.getSortIcon('create_date')"/>
+                                    </th>
+
+                                    <th t-on-click="() => this.sortByColumn('employee_id')">
+                                        Employee <t t-esc="this.getSortIcon('employee_id')"/>
+                                    </th>
+
+                                    <th t-on-click="() => this.sortByColumn('pump_id')">
+                                        Pump <t t-esc="this.getSortIcon('pump_id')"/>
+                                    </th>
+
+                                    <th t-on-click="() => this.sortByColumn('shift_id')">
+                                        Shift <t t-esc="this.getSortIcon('shift_id')"/>
+                                    </th>
+
+                                    <th t-on-click="() => this.sortByColumn('fuel_id')">
+                                        Fuel <t t-esc="this.getSortIcon('fuel_id')"/>
+                                    </th>
+
+                                    <th t-on-click="() => this.sortByColumn('nozzle_id')">
+                                        Nozzle <t t-esc="this.getSortIcon('nozzle_id')"/>
+                                    </th>
+
+                                    <th t-on-click="() => this.sortByColumn('start_reading')">
+                                        Start Reading <t t-esc="this.getSortIcon('start_reading')"/>
+                                    </th>
+
+                                    <th t-on-click="() => this.sortByColumn('end_reading')">
+                                        End Reading <t t-esc="this.getSortIcon('end_reading')"/>
+                                    </th>
+
+<!--                                    <th t-on-click="() => this.sortByColumn('opening_amount')">-->
+<!--                                        Opening Amount <t t-esc="this.getSortIcon('opening_amount')"/>-->
+<!--                                    </th>-->
+
+<!--                                    <th t-on-click="() => this.sortByColumn('closing_amount')">-->
+<!--                                        Closing Amount <t t-esc="this.getSortIcon('closing_amount')"/>-->
+<!--                                    </th>-->
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-if="state.recent_closings.length > 0">
+                                    <t t-foreach="state.recent_closings" t-as="c" t-key="c.id">
+                                        <tr>
+                                            <td><t t-esc="c.create_date"/></td>
+                                            <td><t t-esc="c.employee_id and c.employee_id[1]"/></td>
+                                            <td><t t-esc="c.pump_id and c.pump_id[1]"/></td>
+                                            <td><t t-esc="c.shift_id and c.shift_id[1]"/></td>
+                                            <td><t t-esc="c.fuel_id and c.fuel_id[1]"/></td>
+                                            <td><t t-esc="c.nozzle_id and c.nozzle_id[1]"/></td>
+                                            <td><t t-esc="c.start_reading"/></td>
+                                            <td><t t-esc="c.end_reading"/></td>
+<!--                                            <td><t t-esc="c.opening_amount"/></td>-->
+<!--                                            <td><t t-esc="c.closing_amount"/></td>-->
+
+                                        </tr>
+                                    </t>
+                                </t>
+
+                                <t t-else="">
+                                    <tr>
+                                        <td colspan="10" style="text-align:center; padding:10px;">
+                                            No Closing Entries Found.
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-row"> <!-- DASHBOARD ROW - 03 -->
+                <div class="dashboard-card">
+
+                <!-- HEADER -->
+                    <div class="card-title enhanced-title d-flex justify-content-between align-items-center">
+                        <span class="title-text">Fuel Sales</span>
+
+                        <select class="form-select w-auto"
+                                t-model="state.fuel_sale_type"
+                                t-on-change="onFuelSaleTypeChange">
+                            <option value="all">All</option>
+                            <option value="walk">Walk-In</option>
+                            <option value="credit">Credit Sale</option>
+                            <option value="loyalty">Loyalty</option>
+                        </select>
+                    </div>
+
+                    <!-- TABLE -->
+                    <div class="table-wrapper">
+                        <table class="recent-table mt-2">
+                            <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Type</th>
+                                    <th>Product</th>
+                                    <th class="text-end">Qty</th>
+                                    <th class="text-end">Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-if="state.fuel_sales.length">
+                                    <t t-foreach="state.fuel_sales"
+                                       t-as="s"
+                                       t-key="s.id">
+                                        <tr>
+                                            <td><t t-esc="s.name"/></td>
+                                            <td><t t-esc="s.date_order"/></td>
+                                            <td><t t-if="s.partner_id">
+                                                <t t-esc="s.partner_id[1]"/>
+                                                </t>
+                                                <t t-else="">
+                                                    -
+                                                </t>
+                                            </td>
+                                            <td>
+                                                <span t-att-class="'fuel-badge ' + s.fuel_sale_type">
+                                                    <t t-if="s.fuel_sale_type == 'walk'">Walk-In</t>
+                                                    <t t-elif="s.fuel_sale_type == 'credit'">Credit Sale</t>
+                                                    <t t-elif="s.fuel_sale_type == 'loyalty'">Loyalty</t>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <t t-esc="s.product_name"/>
+                                            </td>
+                                            <td class="text-end">
+                                                <t t-esc="s.quantity.toFixed(2)"/>
+                                            </td>
+                                            <td class="text-end">
+                                                <t t-esc="s.amount_total.toFixed(2)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+                                <t t-else="">
+                                    <tr>
+                                        <td colspan="7" class="text-center py-3">
+                                            No fuel sales found
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div class="d-flex justify-content-end gap-2 mt-2">
+                        <button class="btn btn-outline-secondary btn-sm"
+                                t-on-click="this.onPrevPage"
+                                t-att-disabled="!state.hasPrev">
+                            ◀
+                        </button>
+
+                        <button class="btn btn-outline-secondary btn-sm"
+                                t-on-click="this.onNextPage"
+                                t-att-disabled="!state.hasNext">
+                            ▶
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-card">
+
+                    <!-- HEADER -->
+                    <div class="card-title enhanced-title d-flex justify-content-between align-items-center">
+
+                        <!-- LEFT : TITLE + GROUP BY -->
+                        <div class="d-flex align-items-center gap-3">
+
+                            <span class="title-text">
+                                Sales
+                            </span>
+
+                            <div class="btn-group btn-group-sm collection-toggle">
+                                <button t-on-click="() => this.setGroupBy('shift')"
+                                        t-att-class="state.group_by === 'shift'
+                                            ? 'btn btn-primary'
+                                            : 'btn btn-outline-primary'">
+                                    Shift
+                                </button>
+
+                                <button t-on-click="() => this.setGroupBy('nozzle')"
+                                        t-att-class="state.group_by === 'nozzle'
+                                            ? 'btn btn-primary'
+                                            : 'btn btn-outline-primary'">
+                                    Nozzle
+                                </button>
+
+                                <button t-on-click="() => this.setGroupBy('pump')"
+                                        t-att-class="state.group_by === 'pump'
+                                            ? 'btn btn-primary'
+                                            : 'btn btn-outline-primary'">
+                                    Pump
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- RIGHT : DATE RANGE -->
+                        <div class="d-flex align-items-center gap-2">
+
+                            <span class="filter-label">From</span>
+                            <input type="date"
+                                   t-model="state.from_date"
+                                   t-on-change="onCollectionDateChange"
+                                   class="assign-date"/>
+
+                            <span class="filter-label">To</span>
+                            <input type="date"
+                                   t-model="state.to_date"
+                                   t-on-change="onCollectionDateChange"
+                                   class="assign-date"/>
+
+                        </div>
+
+                    </div>
+
+                    <!-- TABLE -->
+                    <div class="table-wrapper">
+                        <table class="recent-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <t t-if="state.group_by === 'shift'">Shift</t>
+                                        <t t-if="state.group_by === 'nozzle'">Nozzle</t>
+                                        <t t-if="state.group_by === 'pump'">Pump</t>
+                                    </th>
+
+                                    <th class="text-end">
+                                        Total Sales (Qty)
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <t t-if="paginatedRows.length">
+                                    <t t-foreach="paginatedRows" t-as="row" t-key="row.name">
+                                        <tr>
+                                            <td>
+                                                <strong><t t-esc="row.name"/></strong>
+                                            </td>
+                                            <td class="text-end">
+                                                <t t-esc="row.total_sales.toFixed(2)"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+                                <t t-else="">
+                                    <tr>
+                                        <td colspan="2" class="text-center py-3">
+                                            No data for selected date range
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2 mt-2">
+                        <button class="btn btn-outline-secondary btn-sm"
+                                t-on-click="prevPage"
+                                t-att-disabled="state.collection_page === 1">
+                            ◀
+                        </button>
+
+                        <button class="btn btn-outline-secondary btn-sm"
+                                t-on-click="nextPage"
+                                t-att-disabled="
+                                    state.collection_page * state.collection_page_size
+                                    >= state.collection.length">
+                            ▶
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="dashboard-row"> <!-- DASHBOARD ROW - 04 -->
+                <div class="dashboard-card">
+
+                    <div class="card-title enhanced-title d-flex justify-content-between align-items-center">
+                        <span class="title-text">Fuel Pricing</span>
+
+                        <input type="date"
+                               class="assign-date"
+                               t-model="state.pricing_date"
+                               t-on-change="onPricingDateChange"/>
+                    </div>
+
+                    <!-- PRICING GRID -->
+                    <div class="fuel-pricing-grid">
+
+                        <t t-if="state.fuel_pricing.length">
+                            <t t-foreach="state.fuel_pricing"
+                               t-as="row"
+                               t-key="row.product_name">
+
+                                <div class="fuel-price-tile">
+                                    <div class="fuel-name">
+                                        <t t-esc="row.product_name"/>
+                                    </div>
+
+                                    <div class="fuel-price">
+                                        <t t-esc="row.price.toFixed(2)"/>
+                                    </div>
+                                </div>
+
+                            </t>
+                        </t>
+
+                        <t t-else="">
+                            <div class="no-data">
+                                No pricing found for selected date
+                            </div>
+                        </t>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-card">
+
+                    <!-- HEADER -->
+                    <div class="card-title enhanced-title d-flex justify-content-between align-items-center">
+                        <span class="title-text">Unpaid Credit Invoices</span>
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   t-on-change="toggleCustomerWise"
+                                   t-att-checked="state.customer_wise"/>
+                            <label class="form-check-label">
+                                Customer Wise
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- LOADING -->
+                    <t t-if="state.credit_loading">
+                        <div class="text-muted p-3">Loading credit invoices...</div>
+                    </t>
+
+
+                    <!-- TABLE -->
+                    <t t-else="">
+                        <t t-if="state.credit_invoices.length">
+                            <div class="table-wrapper">
+                                <table class="recent-table">
+
+                                    <t t-if="state.customer_wise">
+                                        <thead>
+                                            <tr>
+                                                <th>Customer</th>
+                                                <th class="text-end">Total</th>
+                                                <th class="text-end">Due</th>
+
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <t t-foreach="customerWiseInvoices"
+                                               t-as="row"
+                                               t-key="row.partner_id">
+
+                                                <tr>
+                                                    <td>
+                                                        <strong><t t-esc="row.partner_name"/></strong>
+                                                    </td>
+
+                                                    <td class="text-end">
+                                                        <t t-esc="row.total_amount.toFixed(2)"/>
+                                                    </td>
+
+                                                    <td class="text-end text-danger">
+                                                        <t t-esc="row.due_amount.toFixed(2)"/>
+                                                    </td>
+
+                                                </tr>
+
+                                            </t>
+                                        </tbody>
+                                    </t>
+
+
+                                    <t t-else="">
+                                        <thead>
+                                            <tr>
+                                                <th>Invoice</th>
+                                                <th>Date</th>
+                                                <th>Customer</th>
+                                                <th class="text-end">Total</th>
+                                                <th class="text-end">Due</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                            <t t-foreach="state.credit_invoices" t-as="inv" t-key="inv.id">
+                                                <tr>
+                                                    <td>
+                                                        <strong><t t-esc="inv.name"/></strong>
+                                                    </td>
+
+                                                    <td>
+                                                        <t t-esc="inv.invoice_date"/>
+                                                    </td>
+
+                                                    <td>
+                                                        <t t-if="inv.partner_id">
+                                                            <t t-esc="inv.partner_id[1]"/>
+                                                        </t>
+                                                    </td>
+
+                                                    <td class="text-end">
+                                                        <t t-esc="inv.amount_total.toFixed(2)"/>
+                                                    </td>
+
+                                                    <td class="text-end text-danger">
+                                                        <t t-esc="inv.amount_residual_signed.toFixed(2)"/>
+                                                    </td>
+
+                                                    <td>
+                                                        <span t-att-class="
+                                                            inv.payment_state === 'partial'
+                                                            ? 'badge bg-warning'
+                                                            : 'badge bg-danger'
+                                                        ">
+                                                            <t t-esc="inv.payment_state"/>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </t>
+                                </table>
+                            </div>
+                            <!-- PAGINATION -->
+                            <div class="d-flex justify-content-end gap-2 mt-2">
+                                <button class="btn btn-outline-secondary btn-sm"
+                                        t-on-click="onCreditPrevPage"
+                                        t-att-disabled="!state.credit_hasPrev">
+                                    ◀
+                                </button>
+
+                                <button class="btn btn-outline-secondary btn-sm"
+                                        t-on-click="onCreditNextPage"
+                                        t-att-disabled="!state.credit_hasNext">
+                                    ▶
+                                </button>
+                            </div>
+
+                        </t>
+
+                        <t t-else="">
+                            <div class="text-muted p-3 text-center">
+                                No unpaid credit invoices found
+                            </div>
+                        </t>
+                    </t>
+
+                </div>
+
+
+            </div>
+
+        </div>
+    </t>
+
+</templates>

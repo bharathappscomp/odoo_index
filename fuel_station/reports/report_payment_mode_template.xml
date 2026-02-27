@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- REPORT ACTION -->
+    <record id="action_payment_mode_report" model="ir.actions.report">
+        <field name="name">Payment Mode Report</field>
+        <field name="model">account.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">fuel_station.report_payment_mode_template</field>
+        <field name="report_file">fuel_station.report_payment_mode_template</field>
+    </record>
+
+    <!-- QWEB TEMPLATE -->
+    <template id="report_payment_mode_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                    <h2 class="text-center">Payment Mode Report</h2>
+
+                    <p>
+                        <strong>From:</strong>
+                        <t t-esc="start_date"/>
+                        <strong>To:</strong>
+                        <t t-esc="end_date"/>
+                    </p>
+
+                    <table class="table table-sm table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <!--                                <th>Salesperson</th>-->
+                                <th>Pump</th>
+                                <th>Nozzle</th>
+                                <th>Payment Mode</th>
+                                <th class="text-end">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="data" t-as="d">
+                                <tr>
+                                    <td>
+                                        <t t-esc="d['date']"/>
+                                    </td>
+                                    <!--                                    <td><t t-esc="d['sales_person']"/></td>-->
+                                    <td>
+                                        <t t-esc="d['pump']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="d['nozzle']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="d['journal']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="d['amount']"
+                                           t-options='{"widget":"monetary","display_currency":currency}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                            <tr>
+                                <td colspan="4" class="text-end">
+                                    <strong>Total</strong>
+                                </td>
+                                <td class="text-end">
+                                    <t t-esc="total"
+                                       t-options='{"widget":"monetary","display_currency":currency}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h5 class="mt-4">Payment Mode Summary</h5>
+                    <table class="table table-sm table-bordered w-50">
+                        <thead>
+                            <tr>
+                                <th>Payment Mode</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="journal_summary.items()" t-as="j">
+                                <tr>
+                                    <td>
+                                        <t t-esc="j[0]"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="j[1]"
+                                           t-options='{"widget":"monetary","display_currency":currency}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <h5 class="mt-4">Pump Summary</h5>
+                    <table class="table table-sm table-bordered w-50">
+                        <thead>
+                            <tr>
+                                <th>Pump</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="pump_summary.items()" t-as="p">
+                                <tr>
+                                    <td>
+                                        <t t-esc="p[0]"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="p[1]"
+                                           t-options='{"widget":"monetary","display_currency":currency}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <h5 class="mt-4">Nozzle Summary</h5>
+                    <table class="table table-sm table-bordered w-50">
+                        <thead>
+                            <tr>
+                                <th>Nozzle</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="nozzle_summary.items()" t-as="n">
+                                <tr>
+                                    <td>
+                                        <t t-esc="n[0]"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="n[1]"
+                                           t-options='{"widget":"monetary","display_currency":currency}'/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>

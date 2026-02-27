@@ -1,0 +1,44 @@
+<odoo>
+    <record id="view_move_form_fuel" model="ir.ui.view">
+        <field name="name">account.move.form.fuel</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field name="is_fuel_invoice" invisible="1"/>
+                <field name="fuel_inv_type" readonly="1"/>
+                <field name="shift_manager_id" readonly="1" invisible="1"/>
+                <field name="nozzle_id" readonly="1"/>
+                <field name="settlement_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_move_tree_fuel" model="ir.ui.view">
+        <field name="name">account.move.tree.fuel</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_out_invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="payment_state" position="before">
+                <field name="fuel_inv_type" decoration-success="fuel_inv_type == 'walk'"
+                       decoration-info="fuel_inv_type == 'credit'"
+                       decoration-warning="fuel_inv_type == 'loyalty'"
+                       widget="badge"
+                       optional="show"/>
+            </field>
+        </field>
+    </record>
+    <record id="view_payment_form_fuel" model="ir.ui.view">
+        <field name="name">account.payment.form.fuel</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="account.view_account_payment_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="is_fuel_payment" readonly="1" invisible="1"/>
+                <field name="is_petty_cash" readonly="1" invisible="0"/>
+                <field name="shift_manager_id" readonly="1" invisible="1"/>
+                <field name="nozzle_id" readonly="1"/>
+                <field name="settlement_id" readonly="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

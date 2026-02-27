@@ -233,130 +233,212 @@
         </table>
     </div>
 
-    <!-- INTERFACE GALLERY - Carousel -->
+    <!-- INTERFACE GALLERY - Tabs + Carousel -->
     <section class="oe_container" style="background-color: #eff6ff; padding: 28px 4%;">
         <div class="text-center" style="margin-bottom: 24px;">
             <h2 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 0 0 12px;">Interface Gallery</h2>
             <p style="color: #64748b; font-size: 16px; margin: 0;">Explore the clean and intuitive user interface of our module</p>
+            <div style="width: 48px; height: 3px; background-color: #875A7B; margin: 16px auto 0;"></div>
         </div>
 
-        <!-- Bootstrap 5 Carousel - works on Odoo Apps Store via their injected Bootstrap JS -->
-        <div id="fsl-gallery-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" style="background-color: #fff; border-radius: 16px; border: 2px solid #e2e8f0; box-shadow: 0 8px 32px rgba(0,0,0,0.06); overflow: hidden;">
+        <!-- TAB NAV - using <table> row so Bootstrap flex on .nav doesn't break on Odoo store -->
+        <div style="background-color: #fff; border: 2px solid #e2e8f0; border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <ul class="nav nav-pills" role="tablist" style="list-style: none; padding: 0; margin: 0;">
+                <li style="list-style: none; display: inline-block; margin: 0 4px 4px 0;">
+                    <a href="#gallery_tab_all" class="nav-link active" data-bs-toggle="tab" role="tab" style="padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; display: inline-block;">📸 All Screenshots</a>
+                </li>
+                <li style="list-style: none; display: inline-block; margin: 0 4px 4px 0;">
+                    <a href="#gallery_tab_dashboard" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; display: inline-block;">📊 Dashboard</a>
+                </li>
+                <li style="list-style: none; display: inline-block; margin: 0 4px 4px 0;">
+                    <a href="#gallery_tab_automation" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; display: inline-block;">⚙️ Automation</a>
+                </li>
+                <li style="list-style: none; display: inline-block; margin: 0 4px 4px 0;">
+                    <a href="#gallery_tab_reports" class="nav-link" data-bs-toggle="tab" role="tab" style="padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px; text-decoration: none; display: inline-block;">📈 Reports</a>
+                </li>
+            </ul>
+        </div>
 
-            <!-- Slide indicators / dots - using <a> tags (Odoo strips <button> elements) -->
-            <div class="carousel-indicators" style="margin-bottom: 0; bottom: 12px;">
-                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
-                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="1" aria-label="Slide 2" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
-                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="2" aria-label="Slide 3" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
-                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="3" aria-label="Slide 4" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
-                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="4" aria-label="Slide 5" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
-                <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="5" aria-label="Slide 6" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+        <!-- TAB CONTENT -->
+        <div class="tab-content" id="gallery_tabs_content">
+
+            <!-- TAB 1: All Screenshots — carousel -->
+            <div class="tab-pane active" id="gallery_tab_all" role="tabpanel">
+                <div style="background-color: #fff; border: 2px solid #875A7B; border-radius: 14px; padding: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                    <!-- Bootstrap 5 Carousel — <a> tags used because Odoo strips <button> elements -->
+                    <div id="fsl-gallery-carousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" style="background-color: #f8fafc; border-radius: 10px; border: 1px solid #e2e8f0; overflow: hidden;">
+
+                        <!-- Dot indicators -->
+                        <div class="carousel-indicators" style="margin-bottom: 0; bottom: 10px;">
+                            <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                            <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="1" aria-label="Slide 2" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                            <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="2" aria-label="Slide 3" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                            <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="3" aria-label="Slide 4" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                            <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="4" aria-label="Slide 5" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                            <a href="#fsl-gallery-carousel" data-bs-target="#fsl-gallery-carousel" data-bs-slide-to="5" aria-label="Slide 6" style="display: inline-block; background-color: #875A7B; width: 10px; height: 10px; border-radius: 50%; margin: 0 4px; text-indent: -9999px; opacity: 0.5;"></a>
+                        </div>
+
+                        <div class="carousel-inner" style="border-radius: 9px;">
+                            <div class="carousel-item active">
+                                <div style="padding: 24px 28px 48px;">
+                                    <div style="margin-bottom: 14px;"><span style="display: inline-block; background-color: #875A7B; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MAIN INTERFACE</span></div>
+                                    <img src="hero_gas_station.jpg" alt="Main Interface" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
+                                    <div style="text-align: center; margin-top: 16px;">
+                                        <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Main Interface</p>
+                                        <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Primary forecourt management screen</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="padding: 24px 28px 48px;">
+                                    <div style="margin-bottom: 14px;"><span style="display: inline-block; background-color: #3b82f6; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">ANALYTICS</span></div>
+                                    <img src="integration.jpg" alt="Real-time KPI Analytics" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
+                                    <div style="text-align: center; margin-top: 16px;">
+                                        <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Real-time KPI</p>
+                                        <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Live loyalty points and redemption analytics</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="padding: 24px 28px 48px;">
+                                    <div style="margin-bottom: 14px;"><span style="display: inline-block; background-color: #10b981; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">AUTOMATION</span></div>
+                                    <img src="fuel_pump.jpg" alt="Workflow Automation" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
+                                    <div style="text-align: center; margin-top: 16px;">
+                                        <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Workflow Logic</p>
+                                        <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Automated point calculation at the pump</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="padding: 24px 28px 48px;">
+                                    <div style="margin-bottom: 14px;"><span style="display: inline-block; background-color: #f59e0b; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">REPORTS</span></div>
+                                    <img src="loyalty_rewards.jpg" alt="Custom Reports" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
+                                    <div style="text-align: center; margin-top: 16px;">
+                                        <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Custom Builder</p>
+                                        <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Detailed loyalty and sales reporting</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="padding: 24px 28px 48px;">
+                                    <div style="margin-bottom: 14px;"><span style="display: inline-block; background-color: #06b6d4; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">DASHBOARD</span></div>
+                                    <img src="integration.jpg" alt="Dashboard Widgets" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
+                                    <div style="text-align: center; margin-top: 16px;">
+                                        <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Dashboard Widgets</p>
+                                        <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Configurable KPI widgets and overview panels</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="padding: 24px 28px 48px;">
+                                    <div style="margin-bottom: 14px;"><span style="display: inline-block; background-color: #64748b; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">CONFIGURATION</span></div>
+                                    <img src="fuel_pump.jpg" alt="Setup and Configuration" style="width: 100%; border-radius: 10px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
+                                    <div style="text-align: center; margin-top: 16px;">
+                                        <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Setup &amp; Configuration</p>
+                                        <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Simple loyalty program setup in minutes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.carousel-inner -->
+
+                        <a class="carousel-control-prev" href="#fsl-gallery-carousel" role="button" data-bs-slide="prev" style="background-color: rgba(135,90,123,0.75); width: 10%; opacity: 1;">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#fsl-gallery-carousel" role="button" data-bs-slide="next" style="background-color: rgba(135,90,123,0.75); width: 10%; opacity: 1;">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </div><!-- /.carousel -->
+                    <p style="text-align: center; color: #94a3b8; font-size: 12px; margin: 12px 0 0;">Use the arrows or dots to browse all screenshots</p>
+                </div>
             </div>
 
-            <!-- Slides -->
-            <div class="carousel-inner" style="border-radius: 14px;">
-
-                <!-- Slide 1: Main Interface -->
-                <div class="carousel-item active">
-                    <div style="padding: 24px 28px 48px;">
-                        <div style="margin-bottom: 14px;">
-                            <span style="display: inline-block; background-color: #875A7B; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">MAIN INTERFACE</span>
-                        </div>
-                        <img src="hero_gas_station.jpg" alt="Main Interface" style="width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Main Interface</p>
-                            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Primary forecourt management screen</p>
-                        </div>
-                    </div>
+            <!-- TAB 2: Dashboard & Analytics -->
+            <div class="tab-pane" id="gallery_tab_dashboard" role="tabpanel">
+                <div style="background-color: #fff; border: 2px solid #3b82f6; border-radius: 14px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-spacing: 16px; border-collapse: separate;">
+                        <tr>
+                            <td style="width: 50%; vertical-align: top;">
+                                <div style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                                    <img src="integration.jpg" alt="KPI Dashboard" style="width: 100%; display: block;"/>
+                                    <div style="padding: 12px 16px; background-color: #f8fafc;">
+                                        <p style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0;">KPI Dashboard</p>
+                                        <p style="color: #64748b; font-size: 12px; margin: 4px 0 0;">Real-time loyalty metrics overview</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 50%; vertical-align: top;">
+                                <div style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                                    <img src="hero_gas_station.jpg" alt="Analytics View" style="width: 100%; display: block;"/>
+                                    <div style="padding: 12px 16px; background-color: #f8fafc;">
+                                        <p style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0;">Analytics View</p>
+                                        <p style="color: #64748b; font-size: 12px; margin: 4px 0 0;">Points earned vs redeemed trends</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+            </div>
 
-                <!-- Slide 2: Analytics -->
-                <div class="carousel-item">
-                    <div style="padding: 24px 28px 48px;">
-                        <div style="margin-bottom: 14px;">
-                            <span style="display: inline-block; background-color: #3b82f6; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">ANALYTICS</span>
-                        </div>
-                        <img src="integration.jpg" alt="Real-time KPI Analytics" style="width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Real-time KPI</p>
-                            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Live loyalty points and redemption analytics</p>
-                        </div>
-                    </div>
+            <!-- TAB 3: Automation & Workflow -->
+            <div class="tab-pane" id="gallery_tab_automation" role="tabpanel">
+                <div style="background-color: #fff; border: 2px solid #10b981; border-radius: 14px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-spacing: 16px; border-collapse: separate;">
+                        <tr>
+                            <td style="width: 50%; vertical-align: top;">
+                                <div style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                                    <img src="fuel_pump.jpg" alt="Point Calculation" style="width: 100%; display: block;"/>
+                                    <div style="padding: 12px 16px; background-color: #f8fafc;">
+                                        <p style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0;">Point Calculation</p>
+                                        <p style="color: #64748b; font-size: 12px; margin: 4px 0 0;">Automatic points at the pump</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 50%; vertical-align: top;">
+                                <div style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                                    <img src="integration.jpg" alt="Reward Redemption" style="width: 100%; display: block;"/>
+                                    <div style="padding: 12px 16px; background-color: #f8fafc;">
+                                        <p style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0;">Reward Redemption</p>
+                                        <p style="color: #64748b; font-size: 12px; margin: 4px 0 0;">One-click redemption workflow</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+            </div>
 
-                <!-- Slide 3: Automation -->
-                <div class="carousel-item">
-                    <div style="padding: 24px 28px 48px;">
-                        <div style="margin-bottom: 14px;">
-                            <span style="display: inline-block; background-color: #10b981; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">AUTOMATION</span>
-                        </div>
-                        <img src="fuel_pump.jpg" alt="Workflow Automation" style="width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Workflow Logic</p>
-                            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Automated point calculation at the pump</p>
-                        </div>
-                    </div>
+            <!-- TAB 4: Reports & Configuration -->
+            <div class="tab-pane" id="gallery_tab_reports" role="tabpanel">
+                <div style="background-color: #fff; border: 2px solid #f59e0b; border-radius: 14px; padding: 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
+                    <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-spacing: 16px; border-collapse: separate;">
+                        <tr>
+                            <td style="width: 50%; vertical-align: top;">
+                                <div style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                                    <img src="loyalty_rewards.jpg" alt="Loyalty Reports" style="width: 100%; display: block;"/>
+                                    <div style="padding: 12px 16px; background-color: #f8fafc;">
+                                        <p style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0;">Loyalty Reports</p>
+                                        <p style="color: #64748b; font-size: 12px; margin: 4px 0 0;">Detailed sales and redemption reports</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="width: 50%; vertical-align: top;">
+                                <div style="border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden;">
+                                    <img src="fuel_pump.jpg" alt="Program Setup" style="width: 100%; display: block;"/>
+                                    <div style="padding: 12px 16px; background-color: #f8fafc;">
+                                        <p style="color: #1e293b; font-size: 14px; font-weight: 700; margin: 0;">Program Setup</p>
+                                        <p style="color: #64748b; font-size: 12px; margin: 4px 0 0;">Easy loyalty program configuration</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
+            </div>
 
-                <!-- Slide 4: Reports -->
-                <div class="carousel-item">
-                    <div style="padding: 24px 28px 48px;">
-                        <div style="margin-bottom: 14px;">
-                            <span style="display: inline-block; background-color: #f59e0b; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">REPORTS</span>
-                        </div>
-                        <img src="loyalty_rewards.jpg" alt="Custom Reports" style="width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Custom Builder</p>
-                            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Detailed loyalty and sales reporting</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 5: Dashboard Views -->
-                <div class="carousel-item">
-                    <div style="padding: 24px 28px 48px;">
-                        <div style="margin-bottom: 14px;">
-                            <span style="display: inline-block; background-color: #06b6d4; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">DASHBOARD</span>
-                        </div>
-                        <img src="integration.jpg" alt="Dashboard Widgets" style="width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Dashboard Widgets</p>
-                            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Configurable KPI widgets and overview panels</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slide 6: Configuration / Setup -->
-                <div class="carousel-item">
-                    <div style="padding: 24px 28px 48px;">
-                        <div style="margin-bottom: 14px;">
-                            <span style="display: inline-block; background-color: #64748b; color: #fff; padding: 4px 12px; border-radius: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">CONFIGURATION</span>
-                        </div>
-                        <img src="fuel_pump.jpg" alt="Setup and Configuration" style="width: 100%; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.10);"/>
-                        <div style="text-align: center; margin-top: 16px;">
-                            <p style="color: #1e293b; font-size: 15px; font-weight: 700; margin: 0;">Setup &amp; Configuration</p>
-                            <p style="color: #64748b; font-size: 13px; margin: 4px 0 0;">Simple loyalty program setup in minutes</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- /.carousel-inner -->
-
-            <!-- Prev / Next controls - using <a> tags (Odoo strips <button> elements) -->
-            <!-- position/top/left/right stripped by Odoo; Bootstrap's carousel-control-prev/next classes handle absolute positioning -->
-            <a class="carousel-control-prev" href="#fsl-gallery-carousel" role="button" data-bs-slide="prev" style="background-color: rgba(135,90,123,0.75); width: 10%; opacity: 1;">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#fsl-gallery-carousel" role="button" data-bs-slide="next" style="background-color: rgba(135,90,123,0.75); width: 10%; opacity: 1;">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </a>
-
-        </div><!-- /.carousel -->
-
-        <!-- Slide counter caption -->
-        <p style="text-align: center; color: #94a3b8; font-size: 13px; margin: 16px 0 0;">Use the arrows or dots to browse all screenshots</p>
+        </div><!-- /.tab-content -->
     </section>
 
     <!-- BUILT FOR FUEL STATIONS -->

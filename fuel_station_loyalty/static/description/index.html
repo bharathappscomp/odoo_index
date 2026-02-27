@@ -57,18 +57,30 @@
         .fsl-dark-wrap, div.fsl-dark-wrap { background-color: #1a2234 !important; background: #1a2234 !important; background-image: none !important; }
         .fsl-dark-card, div.fsl-dark-card { background-color: #242d3f !important; background: #242d3f !important; background-image: none !important; }
         .fsl-dark-specs, div.fsl-dark-specs { background-color: #111827 !important; background: #111827 !important; background-image: none !important; }
-        /* FAQ Accordion */
-        .fsl-accordion-item { border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-        .fsl-accordion-item.fsl-open { border-color: #875A7B; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.12); }
-        .fsl-accordion-header { padding: 18px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b; user-select: none; }
-        .fsl-accordion-header:hover { background: #f8fafc; }
-        .fsl-accordion-header .fsl-accordion-icon { font-size: 18px; color: #875A7B; transition: transform 0.2s; }
-        .fsl-accordion-item.fsl-open .fsl-accordion-icon { transform: rotate(180deg); }
-        .fsl-accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .fsl-accordion-body-inner { padding: 0 24px 20px; }
-        .fsl-accordion-body p { margin: 0; color: #64748b; font-size: 14px; line-height: 1.6; }
+        /* FAQ - Native details/summary (no JS, works on Odoo store) */
+        .fsl-faq-item { border: 2px solid #cbd5e1; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .fsl-faq-item[open] { border-color: #875A7B; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.12); }
+        .fsl-faq-item summary { padding: 18px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b; user-select: none; list-style: none; }
+        .fsl-faq-item summary::-webkit-details-marker { display: none; }
+        .fsl-faq-item summary::after { content: '▼'; font-size: 18px; color: #875A7B; transition: transform 0.2s; }
+        .fsl-faq-item[open] summary::after { transform: rotate(180deg); }
+        .fsl-faq-item summary:hover { background: #f8fafc; }
+        .fsl-faq-body { padding: 0 24px 20px; }
+        .fsl-faq-body p { margin: 0; color: #64748b; font-size: 14px; line-height: 1.6; }
         /* Override Odoo Apps Store link styles - ensure CTA buttons stay visible */
         a.fsl-cta-btn, a[href^="mailto:support@appscomp.com"] { display: inline-block !important; text-decoration: none !important; }
+        /* Flex layouts - Odoo strips flex-wrap/gap/align-items from inline styles; use classes instead */
+        .fsl-flex-wrap { display: flex; flex-wrap: wrap; gap: 10px; }
+        .fsl-flex-wrap-center { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+        .fsl-flex-row { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .fsl-flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .fsl-flex-col { display: flex; flex-direction: column; justify-content: center; }
+        .fsl-nav-col { flex-direction: column; gap: 4px; }
+        .fsl-nav-link-inner { display: flex; align-items: center; gap: 10px; }
+        .fsl-gallery-nav { gap: 4px; }
+        .fsl-row-align { align-items: center; }
+        .fsl-row-center { justify-content: center; }
+        .fsl-flex-gap-12 { display: flex; align-items: center; gap: 12px; }
     </style>
     <script>
         (function() {
@@ -91,28 +103,7 @@
                 });
             });
         })();
-        document.addEventListener('DOMContentLoaded', function() {
-            function setAccordionHeight(item, open) {
-                var body = item.querySelector('.fsl-accordion-body');
-                body.style.maxHeight = open ? '400px' : '0';
-            }
-            document.querySelectorAll('.fsl-accordion-header').forEach(function(header) {
-                header.addEventListener('click', function() {
-                    var item = this.closest('.fsl-accordion-item');
-                    var wasOpen = item.classList.contains('fsl-open');
-                    document.querySelectorAll('.fsl-accordion-item').forEach(function(i) {
-                        i.classList.remove('fsl-open');
-                        setAccordionHeight(i, false);
-                    });
-                    if (!wasOpen) {
-                        item.classList.add('fsl-open');
-                        setAccordionHeight(item, true);
-                    }
-                });
-            });
-            var first = document.querySelector('.fsl-accordion-item.fsl-open');
-            if (first) setAccordionHeight(first, true);
-        });
+        /* FAQ uses native details/summary - no JS needed */
     </script>
 </head>
 <body>
@@ -121,7 +112,7 @@
 
     <!-- HERO SECTION -->
     <section class="oe_container" style="background: linear-gradient(135deg, #f5f3ff 0%, #eef2ff 50%, #eff6ff 100%) !important; background-color: #f5f3ff !important; font-family: sans-serif; padding: 32px 4% 24px; margin: 0;">
-        <div class="row" style="align-items: center; margin: 0 -16px;">
+        <div class="row fsl-row-align" style="margin: 0 -16px;">
             <div class="col-md-6" style="padding: 0 16px 24px;">
                 <div style="display: inline-block; background: #fff; color: #875A7B; padding: 6px 14px; border-radius: 50px; font-size: 11px; font-weight: 700; margin-bottom: 20px; border: 1px solid #e9d5ff;">
                     ✨ NEW RELEASE v19 COMPATIBLE
@@ -132,14 +123,14 @@
                 <p style="color: #64748b; font-size: 17px; line-height: 1.6; margin: 0 0 28px; max-width: 440px;">
                     Extend Odoo's standard loyalty system for fuel stations. Drive repeat business with intelligent rewards, point redemption, and seamless integration with the Advance Fuel Station Management System.
                 </p>
-                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px;">
-                    <span style="display: inline-block; background: #fff; color: #10b981; border: 1px solid #10b981; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;">✓ v16 - v19</span>
-                    <span style="display: inline-block; background: #fff; color: #3b82f6; border: 1px solid #3b82f6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;">✓ Enterprise</span>
-                    <span style="display: inline-block; background: #fff; color: #8b5cf6; border: 1px solid #8b5cf6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;">✓ Community</span>
+                <div class="fsl-flex-wrap" style="margin-bottom: 24px;">
+                    <span style="display: inline-block; background: #fff; color: #10b981; border: 1px solid #10b981; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;margin-right: 15px;">✓ v16 - v19</span>
+                    <span style="display: inline-block; background: #fff; color: #3b82f6; border: 1px solid #3b82f6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;margin-right: 15px;">✓ Enterprise</span>
+                    <span style="display: inline-block; background: #fff; color: #8b5cf6; border: 1px solid #8b5cf6; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;margin-right: 15px;">✓ Community</span>
                 </div>
                 <div style="background: linear-gradient(135deg, #875A7B 0%, #6d4a6a 100%) !important; background-color: #875A7B !important; border: 2px solid #6d4a6a !important; border-radius: 14px; padding: 20px 24px; max-width: 400px;">
                     <div style="color: #fff !important; font-size: 14px; font-weight: 700; margin-bottom: 12px;">Book Your Personalized Demo</div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+                    <div class="fsl-flex-wrap-center">
                         <a href="mailto:support@appscomp.com" class="fsl-cta-btn" style="display: inline-block !important; background: #fff !important; background-color: #fff !important; color: #875A7B !important; padding: 10px 24px; border-radius: 50px; font-weight: 700; font-size: 14px; text-decoration: none !important; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #e2e8f0;">Get in Touch →</a>
                         <span style="color: rgba(255,255,255,0.9); font-size: 12px;">support@appscomp.com</span>
                     </div>
@@ -151,7 +142,7 @@
         </div>
 
         <div style="padding: 24px 4% 32px; max-width: 1000px; margin: 0 auto;">
-            <div class="row" style="justify-content: center; margin: 0 -12px;">
+            <div class="row fsl-row-center" style="margin: 0 -12px;">
                 <div class="col-md-4 mb-3" style="padding: 0 12px;">
                     <div style="background: #fff !important; padding: 24px 16px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); text-align: center; border: 2px solid #875A7B !important; height: 100%;">
                         <h3 style="color: #875A7B; font-size: 28px; font-weight: 800; margin: 0;">100%</h3>
@@ -186,7 +177,7 @@
             <p style="color: #64748b; font-size: 16px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">The only loyalty module built specifically for fuel retail. Native Odoo integration, forecourt-ready workflows, and zero manual entry.</p>
             <div style="width: 48px; height: 3px; background: #875A7B; margin: 16px auto 0;"></div>
         </div>
-        <div class="row" style="justify-content: center; margin: 0 -12px;">
+        <div class="row fsl-row-center" style="margin: 0 -12px;">
             <div class="col-md-3 mb-4" style="padding: 0 12px;">
                 <div style="background: #fff !important; padding: 20px 16px; border-radius: 12px; border: 2px solid #875A7B !important; text-align: center; height: 100%; box-shadow: 0 4px 12px rgba(135, 90, 123, 0.12);">
                     <div style="width: 40px; height: 40px; background: #f5f3ff; border-radius: 10px; line-height: 40px; font-size: 20px; margin: 0 auto 12px;">✓</div>
@@ -223,18 +214,18 @@
         <div class="row" style="margin: 0 -12px;">
             <div class="col-md-3" style="padding: 0 12px;">
                 <div style="border: 1px solid #e2e8f0; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); background: #fafafa;">
-                    <ul role="tablist" class="nav nav-pills" style="flex-direction: column; gap: 4px;">
+                    <ul role="tablist" class="nav nav-pills fsl-nav-col">
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_dashboard" class="nav-link active" data-bs-toggle="tab" role="tab" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f0f9ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📊</span> Dashboard</a>
+                            <a href="#tab_dashboard" class="nav-link active fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f0f9ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📊</span> Dashboard</a>
                         </li>
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_automation" class="nav-link" data-bs-toggle="tab" role="tab" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #eff6ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">⚙️</span> Automation</a>
+                            <a href="#tab_automation" class="nav-link fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #eff6ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">⚙️</span> Automation</a>
                         </li>
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_reporting" class="nav-link" data-bs-toggle="tab" role="tab" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f0fdf4; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📈</span> Reporting</a>
+                            <a href="#tab_reporting" class="nav-link fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f0fdf4; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">📈</span> Reporting</a>
                         </li>
                         <li style="list-style: none; margin: 0;">
-                            <a href="#tab_integration" class="nav-link" data-bs-toggle="tab" role="tab" style="display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f5f3ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">🔗</span> Integration</a>
+                            <a href="#tab_integration" class="nav-link fsl-nav-link-inner" data-bs-toggle="tab" role="tab" style="padding: 12px 16px; border-radius: 10px; font-weight: 600; font-size: 14px; color: #64748b; text-decoration: none;"><span style="width: 36px; height: 36px; background: #f5f3ff; border-radius: 10px; line-height: 36px; text-align: center; font-size: 16px;">🔗</span> Integration</a>
                         </li>
                     </ul>
                 </div>
@@ -243,7 +234,7 @@
                 <div class="tab-content" id="feature_tabs_content">
                     <div class="tab-pane active" id="tab_dashboard" role="tabpanel">
                         <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #875A7B; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                            <div class="fsl-flex-row">
                                 <div style="flex: 1; min-width: 240px;">
                                     <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Intelligence</span>
                                     <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Dashboard</h3>
@@ -257,7 +248,7 @@
                     </div>
                     <div class="tab-pane" id="tab_automation" role="tabpanel">
                         <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #3b82f6; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                            <div class="fsl-flex-row">
                                 <div style="flex: 1; min-width: 200px;">
                                     <img src="fuel_pump.jpg" alt="Advanced Automation" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
                                 </div>
@@ -271,7 +262,7 @@
                     </div>
                     <div class="tab-pane" id="tab_reporting" role="tabpanel">
                         <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #10b981; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                            <div class="fsl-flex-row">
                                 <div style="flex: 1; min-width: 240px;">
                                     <span style="color: #875A7B; font-weight: 800; font-size: 12px; text-transform: uppercase;">Analytics</span>
                                     <h3 style="color: #1e293b; font-size: 28px; font-weight: 800; margin: 10px 0 16px;">Intelligent Reporting</h3>
@@ -285,7 +276,7 @@
                     </div>
                     <div class="tab-pane" id="tab_integration" role="tabpanel">
                         <div style="background: #fff; padding: 28px; border-radius: 16px; border: 2px solid #8b5cf6; box-shadow: 0 8px 32px rgba(0,0,0,0.04);">
-                            <div style="display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+                            <div class="fsl-flex-row">
                                 <div style="flex: 1; min-width: 200px;">
                                     <img src="loyalty_rewards.jpg" alt="Integration" style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);"/>
                                 </div>
@@ -310,7 +301,7 @@
         </div>
 
         <div class="d-flex justify-content-center mb-4" style="margin-bottom: 16px;">
-            <ul class="nav nav-pills" style="background: #fff; padding: 8px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; gap: 4px;">
+            <ul class="nav nav-pills fsl-gallery-nav" style="background: #fff; padding: 8px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e2e8f0;">
                 <li style="list-style: none;">
                     <a href="#gallery_all" class="nav-link active" data-bs-toggle="tab" role="tab" style="padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px;">All Screenshots</a>
                 </li>
@@ -410,7 +401,7 @@
             <p style="color: #64748b; font-size: 15px; margin: 0; max-width: 560px; margin-left: auto; margin-right: auto;">Designed for forecourt retail, fleet operators, and fuel retail chains</p>
         </div>
 
-        <div class="row" style="justify-content: center; margin: 0 -12px;">
+        <div class="row fsl-row-center" style="margin: 0 -12px;">
             <div class="col-md-4 mb-4" style="padding: 0 12px;">
                 <div style="background: #f0f9ff; padding: 22px 16px; border-radius: 14px; border: 2px solid #0ea5e9; text-align: center; height: 100%; transition: all 0.2s ease; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.12);">
                     <div style="width: 48px; height: 48px; background: #e0f2fe; border-radius: 12px; line-height: 48px; font-size: 24px; margin: 0 auto 12px;">⛽</div>
@@ -476,19 +467,19 @@
             <div class="col-md-6 mb-4" style="padding: 0 12px;">
                 <div class="fsl-dark-specs" style="background-color: #111827 !important; background: #111827 !important; background-image: none !important; border-radius: 14px; padding: 24px; height: 100%;">
                     <h3 style="color: #fff !important; font-size: 20px; font-weight: 700; margin: 0 0 20px;"><span style="color: #875A7B !important;">&gt;</span> Technical Specs</h3>
-                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
+                    <div class="fsl-flex-between" style="border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
                         <span style="color: #94a3b8 !important; font-size: 14px;">Compatibility</span>
                         <span style="color: #fff !important; font-weight: 600; font-size: 14px;">v16.0 - v19.0+</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
+                    <div class="fsl-flex-between" style="border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
                         <span style="color: #94a3b8 !important; font-size: 14px;">Odoo.sh Support</span>
                         <span style="color: #10b981; font-weight: 600; font-size: 14px;">Full Support ✓</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
+                    <div class="fsl-flex-between" style="border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 12px;">
                         <span style="color: #94a3b8 !important; font-size: 14px;">License</span>
                         <span style="color: #fff !important; font-weight: 600; font-size: 14px;">LGPL-3</span>
                     </div>
-                    <div style="display: flex; justify-content: space-between;">
+                    <div class="fsl-flex-between">
                         <span style="color: #94a3b8 !important; font-size: 14px;">Updates</span>
                         <span style="color: #f59e0b; font-weight: 600; font-size: 14px;">Lifetime Free</span>
                     </div>
@@ -557,25 +548,19 @@
             <div style="width: 40px; height: 3px; background: #875A7B; margin: 12px auto;"></div>
         </div>
 
-        <div style="max-width: 720px; margin: 0 auto;" class="fsl-faq-accordion">
-            <div class="fsl-accordion-item fsl-open" style="border: 2px solid #875A7B !important; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff !important; box-shadow: 0 4px 16px rgba(135, 90, 123, 0.12);">
-                <div class="fsl-accordion-header" style="padding: 18px 24px; cursor: pointer; display: flex !important; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b !important;">Is this compatible with custom modules?<span class="fsl-accordion-icon" style="font-size: 18px; color: #875A7B;">▼</span></div>
-                <div class="fsl-accordion-body" style="max-height: 400px; overflow: hidden;">
-                    <div class="fsl-accordion-body-inner" style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">Yes! We follow Odoo best practices and OCA standards. The module is designed to work seamlessly with other installed modules without conflicts. Our code is clean, documented, and tested across multiple environments.</p></div>
-                </div>
-            </div>
-            <div class="fsl-accordion-item" style="border: 2px solid #cbd5e1 !important; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff !important; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-                <div class="fsl-accordion-header" style="padding: 18px 24px; cursor: pointer; display: flex !important; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b !important;">Do I need the Advance Fuel Station module?<span class="fsl-accordion-icon" style="font-size: 18px; color: #875A7B;">▼</span></div>
-                <div class="fsl-accordion-body" style="max-height: 0; overflow: hidden;">
-                    <div class="fsl-accordion-body-inner" style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">This module works standalone with Odoo's standard loyalty. For full fuel station features (User Screen, loyalty dialog, credit sale loyalty), install the Advance Fuel Station Management System, which depends on this module.</p></div>
-                </div>
-            </div>
-            <div class="fsl-accordion-item" style="border: 2px solid #cbd5e1 !important; border-radius: 12px; margin-bottom: 12px; overflow: hidden; background: #fff !important; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
-                <div class="fsl-accordion-header" style="padding: 18px 24px; cursor: pointer; display: flex !important; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; color: #1e293b !important;">What about future Odoo versions?<span class="fsl-accordion-icon" style="font-size: 18px; color: #875A7B;">▼</span></div>
-                <div class="fsl-accordion-body" style="max-height: 0; overflow: hidden;">
-                    <div class="fsl-accordion-body-inner" style="padding: 0 24px 20px;"><p style="margin: 0; color: #64748b; font-size: 14px; line-height: 1.6;">We provide free migration updates within 30 days of any new Odoo release. When Odoo v20 launches, you'll get the updated module at no extra cost.</p></div>
-                </div>
-            </div>
+        <div style="max-width: 720px; margin: 0 auto;">
+            <details class="fsl-faq-item" open>
+                <summary>Is this compatible with custom modules?</summary>
+                <div class="fsl-faq-body"><p>Yes! We follow Odoo best practices and OCA standards. The module is designed to work seamlessly with other installed modules without conflicts. Our code is clean, documented, and tested across multiple environments.</p></div>
+            </details>
+            <details class="fsl-faq-item">
+                <summary>Do I need the Advance Fuel Station module?</summary>
+                <div class="fsl-faq-body"><p>This module works standalone with Odoo's standard loyalty. For full fuel station features (User Screen, loyalty dialog, credit sale loyalty), install the Advance Fuel Station Management System, which depends on this module.</p></div>
+            </details>
+            <details class="fsl-faq-item">
+                <summary>What about future Odoo versions?</summary>
+                <div class="fsl-faq-body"><p>We provide free migration updates within 30 days of any new Odoo release. When Odoo v20 launches, you'll get the updated module at no extra cost.</p></div>
+            </details>
         </div>
     </section>
 
@@ -594,7 +579,7 @@
     <section class="oe_container" style="padding: 20px 4%; background: #f8fafc !important; background-color: #f8fafc !important;">
         <div style="background: #fff !important; border: 2px solid #e2e8f0 !important; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
             <div class="row" style="margin: 0;">
-                <div style="flex: 0 0 40%; max-width: 40%; padding: 24px; background: #fff; border-right: 1px solid #f1f5f9; display: flex; flex-direction: column; justify-content: center;">
+                <div class="fsl-flex-col" style="flex: 0 0 40%; max-width: 40%; padding: 24px; background: #fff; border-right: 1px solid #f1f5f9;">
                     <h2 style="color: #0f172a; font-size: 22px; font-weight: 800; margin: 0 0 8px;">Related <span style="color: #875A7B;">Module</span></h2>
                     <p style="color: #64748b; font-size: 13px; line-height: 1.5; margin: 0 0 20px;">Full fuel station management.</p>
                     <span style="display: inline-block !important; background: #0f172a !important; background-color: #0f172a !important; color: #fff !important; padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; border: 2px solid #0f172a;">Advance Fuel Station</span>
@@ -604,7 +589,7 @@
                         <span style="color: #94a3b8; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">Works With</span>
                     </div>
                     <div style="padding: 16px 20px;">
-                        <div style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px;">
+                        <div class="fsl-flex-gap-12" style="padding: 12px 16px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px;">
                             <span style="font-size: 20px;">⛽</span>
                             <div>
                                 <div style="color: #1e293b; font-size: 14px; font-weight: 700;">Advance Fuel Station Management System</div>
